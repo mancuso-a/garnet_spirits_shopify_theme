@@ -3,9 +3,21 @@
   <!-- Logo -->
   <a href="/" class="site-header__logo" aria-label="{{ shop.name }} - Home">
     {%- if section.settings.logo != blank -%}
-      {{ section.settings.logo | image_url: width: 160 | image_tag: loading: 'eager', class: 'site-header__logo-img', alt: shop.name }}
+      {{- section.settings.logo | image_url: width: 200 | image_tag:
+          loading: 'eager',
+          class: 'site-header__logo-img',
+          alt: shop.name,
+          width: 140,
+          height: 'auto'
+      -}}
     {%- else -%}
-      {{ shop.name | upcase }}<span>®</span>
+      <img
+        src="{{ 'garnet-logo.png' | asset_url }}"
+        alt="{{ shop.name }}"
+        class="site-header__logo-img"
+        width="140"
+        height="auto"
+        loading="eager">
     {%- endif -%}
   </a>
 
@@ -76,7 +88,7 @@
     {
       "type": "image_picker",
       "id": "logo",
-      "label": "Logo (opzionale, sovrascrive il nome)"
+      "label": "Logo personalizzato (sovrascrive il file asset)"
     }
   ]
 }
