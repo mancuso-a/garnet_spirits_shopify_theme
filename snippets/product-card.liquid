@@ -28,11 +28,8 @@
     <a href="{{ product.url }}" aria-label="{{ product.title }}">
       <div class="product-card__image product-card__image--placeholder {{ img_class }}">
         {%- if product.featured_image != blank -%}
-          {{ product.featured_image | image_url: width: 600 | image_tag:
-            loading: 'lazy',
-            alt: product.featured_image.alt | escape,
-            class: ''
-          }}
+          {%- assign card_img_alt = product.featured_image.alt | escape -%}
+          {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: card_img_alt }}
         {%- endif -%}
       </div>
     </a>
