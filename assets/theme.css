@@ -227,8 +227,17 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   letter-spacing: 0.25em;
   color: var(--color-white);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 .site-header__logo span { color: var(--color-red-light); }
+.site-header__logo-img {
+  display: block;
+  height: 44px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+}
 
 .site-nav {
   display: flex;
@@ -1095,6 +1104,14 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   display: grid;
   grid-template-columns: 1.6fr 1fr 1fr;
   gap: 3rem;
+}
+.site-footer__logo { display: inline-block; }
+.site-footer__logo-img {
+  display: block;
+  height: 56px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
 }
 .site-footer__brand .logo {
   font-family: var(--font-display);
