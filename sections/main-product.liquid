@@ -126,10 +126,18 @@
       <div class="info-block">
         <h4 class="info-block__title">Botaniche principali</h4>
         <div class="botanicals">
-          {%- assign botaniche = product.metafields.custom.botaniche | split: ',' -%}
-          {%- for b in botaniche -%}
-            <span class="botanical">{{ b | strip }}</span>
-          {%- endfor -%}
+          {%- if product.metafields.custom.botaniche.type == 'list.single_line_text_field' -%}
+            {%- comment -%}Metafield tipo Lista — ogni voce è un elemento separato{%- endcomment -%}
+            {%- for b in product.metafields.custom.botaniche.value -%}
+              <span class="botanical">{{ b }}</span>
+            {%- endfor -%}
+          {%- else -%}
+            {%- comment -%}Metafield tipo Testo — valori separati da virgola{%- endcomment -%}
+            {%- assign botaniche_list = product.metafields.custom.botaniche | split: ',' -%}
+            {%- for b in botaniche_list -%}
+              <span class="botanical">{{ b | strip }}</span>
+            {%- endfor -%}
+          {%- endif -%}
         </div>
       </div>
     {%- endif -%}
