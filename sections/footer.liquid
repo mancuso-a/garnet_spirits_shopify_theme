@@ -2,7 +2,15 @@
 
   <!-- Brand column -->
   <div class="site-footer__brand">
-    <a href="/" class="logo">{{ shop.name | upcase }}<span>®</span></a>
+    <a href="/" class="site-footer__logo" aria-label="{{ shop.name }} - Home">
+      <img
+        src="{{ 'garnet-logo.png' | asset_url }}"
+        alt="{{ shop.name }}"
+        class="site-footer__logo-img"
+        width="120"
+        height="auto"
+        loading="lazy">
+    </a>
     <p>{{ section.settings.tagline }}</p>
   </div>
 
