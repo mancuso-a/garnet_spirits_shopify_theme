@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-wishlist",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    }
+  },
+  "order": ["main", "footer"]
+}

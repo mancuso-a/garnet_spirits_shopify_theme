@@ -1,0 +1,67 @@
+{%- comment -%}
+  Related Products section for product template.
+  Shows other products from the same collection or product type.
+{%- endcomment -%}
+
+{%- assign related = collections.all.products -%}
+{%- assign related_count = 0 -%}
+
+{%- if product.collections.size > 0 -%}
+  {%- assign related = product.collections.first.products -%}
+{%- endif -%}
+
+{%- comment -%}Check we have products other than current one{%- endcomment -%}
+{%- assign other_products = '' -%}
+{%- for p in related -%}
+  {%- if p.id != product.id -%}
+    {%- assign related_count = related_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if related_count > 0 -%}
+<section class="related-products page-wrap" aria-labelledby="related-heading">
+  <div class="container">
+    <p class="eyebrow" style="text-align:center;margin-bottom:.25rem;">{{ section.settings.eyebrow }}</p>
+    <h2 class="related-products__title" id="related-heading" style="text-align:center;margin-bottom:2.5rem;">{{ section.settings.title }}</h2>
+
+    <div class="product-grid">
+      {%- assign shown = 0 -%}
+      {%- for p in related -%}
+        {%- if p.id != product.id and shown < section.settings.products_to_show -%}
+          {%- render 'product-card', product: p -%}
+          {%- assign shown = shown | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Related Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Sopratitolo",
+      "default": "Potrebbe interessarti"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titolo sezione",
+      "default": "Scopri anche"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Numero prodotti",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    }
+  ]
+}
+{% endschema %}

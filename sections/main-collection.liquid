@@ -1,0 +1,142 @@
+<div class="collection-header">
+  <p class="eyebrow">La collezione</p>
+  <h1>{{ collection.title }}</h1>
+  {%- if collection.description != blank -%}
+    <p>{{ collection.description | strip_html }}</p>
+  {%- else -%}
+    <p>Ogni elemento — dalla bottiglia al colore, dal nome agli aromi — è pensato per creare un'esperienza coerente e memorabile.</p>
+  {%- endif -%}
+</div>
+
+<!-- Active filter chips -->
+<div id="active-filters" class="active-filters"></div>
+
+<!-- Toolbar -->
+<div class="collection-toolbar">
+  <button id="mobile-filter-toggle" class="mobile-filter-toggle" aria-controls="collection-filters">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="9" y1="18" x2="15" y2="18"/>
+    </svg>
+    Filtri
+  </button>
+  <span id="collection-count" class="collection-toolbar__count">
+    {{ collection.products_count }} prodott{% if collection.products_count == 1 %}o{% else %}i{% endif %}
+  </span>
+  <div class="collection-toolbar__sort">
+    <label for="sort-select">Ordina per</label>
+    <select id="sort-select" class="sort-select">
+      <option value="">Rilevanza</option>
+      <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Prezzo ↑</option>
+      <option value="price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Prezzo ↓</option>
+      <option value="title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>A – Z</option>
+      <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Novità</option>
+    </select>
+  </div>
+</div>
+
+<div class="collection-layout">
+
+  <!-- FILTERS SIDEBAR -->
+  <aside id="collection-filters" class="collection-filters" aria-label="Filtri prodotto">
+    <div class="collection-filters__header">
+      <span class="collection-filters__title">Filtri</span>
+      <button id="clear-filters" class="collection-filters__clear" onclick="CollectionFilters.clearAll()">Rimuovi tutti</button>
+    </div>
+
+    {%- for filter in collection.filters -%}
+      <div class="filter-group">
+        <button class="filter-group__toggle">
+          {{ filter.label }}
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="filter-group__body">
+          {%- if filter.type == 'price_range' -%}
+            <div class="price-range">
+              <div class="price-range__inputs">
+                <input id="filter-price-min" type="number" class="price-range__input" placeholder="Min"
+                  value="{{ filter.min_value.value | money_without_currency | strip_html }}">
+                <span class="price-range__sep">—</span>
+                <input id="filter-price-max" type="number" class="price-range__input" placeholder="Max"
+                  value="{{ filter.max_value.value | money_without_currency | strip_html }}">
+              </div>
+              <button class="price-range__apply" onclick="CollectionFilters.apply()">Applica</button>
+            </div>
+          {%- else -%}
+            {%- for value in filter.values -%}
+              <label class="filter-option">
+                <input type="checkbox" data-filter-name="{{ filter.param_name | remove: 'filter.' }}"
+                  value="{{ value.value }}" {% if value.active %}checked{% endif %}
+                  {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                <span class="filter-option__label">{{ value.label }}</span>
+                <span class="filter-option__count">{{ value.count }}</span>
+              </label>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+    {%- else -%}
+      <!-- Fallback filters when Shopify filters not configured in admin -->
+      <div class="filter-group">
+        <button class="filter-group__toggle">Tipologia
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="filter-group__body">
+          <label class="filter-option"><input type="checkbox" data-filter-name="p.product_type" value="Compound Gin"><span class="filter-option__label">Gin</span></label>
+          <label class="filter-option"><input type="checkbox" data-filter-name="p.product_type" value="Bitter"><span class="filter-option__label">Bitter</span></label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <button class="filter-group__toggle">Prezzo
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="filter-group__body">
+          <div class="price-range">
+            <div class="price-range__inputs">
+              <input id="filter-price-min" type="number" class="price-range__input" placeholder="Min">
+              <span class="price-range__sep">—</span>
+              <input id="filter-price-max" type="number" class="price-range__input" placeholder="Max">
+            </div>
+            <button class="price-range__apply" onclick="CollectionFilters.apply()">Applica</button>
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </aside>
+
+  <!-- RESULTS -->
+  <div id="collection-results" class="collection-results">
+    <div id="product-grid-inner" class="collection-results__grid">
+      <div class="product-grid">
+        {%- paginate collection.products by 12 -%}
+          {%- for product in collection.products -%}
+            {%- render 'product-card', product: product -%}
+          {%- else -%}
+            <p style="color:var(--color-gray);grid-column:1/-1;text-align:center;padding:3rem;">
+              Nessun prodotto corrisponde ai filtri selezionati.
+            </p>
+          {%- endfor -%}
+          {%- if paginate.pages > 1 -%}
+            <div style="display:flex;justify-content:center;gap:.5rem;padding:2rem 0;grid-column:1/-1;">
+              {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="btn btn--outline" style="padding:.6rem 1.25rem;font-size:.72rem;">← Precedente</a>{%- endif -%}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}<a href="{{ part.url }}" class="btn btn--outline" style="padding:.6rem 1rem;font-size:.72rem;">{{ part.title }}</a>
+                {%- elsif part.title == paginate.current_page -%}<span class="btn btn--primary" style="padding:.6rem 1rem;font-size:.72rem;">{{ part.title }}</span>
+                {%- else -%}<span style="padding:.6rem .5rem;color:var(--color-gray);">{{ part.title }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="btn btn--outline" style="padding:.6rem 1.25rem;font-size:.72rem;">Successiva →</a>{%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Main Collection",
+  "settings": []
+}
+{% endschema %}

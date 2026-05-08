@@ -1,0 +1,107 @@
+<div class="cart-page">
+  <h1>Il tuo carrello</h1>
+  <p class="subtitle">
+    {%- if cart.item_count == 0 -%}
+      Il carrello è vuoto.
+    {%- else -%}
+      {{ cart.item_count }} {% if cart.item_count == 1 %}articolo{% else %}articoli{% endif %}
+    {%- endif -%}
+  </p>
+
+  {%- if cart.item_count > 0 -%}
+    {%- form 'cart', cart -%}
+      <div class="cart-page__grid">
+
+        <!-- Items -->
+        <div class="cart-page__items">
+          {%- for item in cart.items -%}
+            {%- assign is_bitter = false -%}
+            {%- if item.product.type contains 'Bitter' or item.product.title contains 'Bitter' -%}
+              {%- assign is_bitter = true -%}
+            {%- endif -%}
+            <div class="cart-page__item">
+              <div class="cart-page__item-img">
+                {%- if item.image != blank -%}
+                  {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: item.title }}
+                {%- endif -%}
+              </div>
+              <div class="cart-page__item-info">
+                <div class="cart-page__item-name">{{ item.product_title }}</div>
+                <div class="cart-page__item-meta">700 ml · {{ item.variant.title }}</div>
+                <div class="qty-selector" style="margin:.75rem 0;" aria-label="Quantità">
+                  <button type="button" class="qty-selector__btn"
+                    onclick="this.nextElementSibling.value=Math.max(0,parseInt(this.nextElementSibling.value)-1);this.closest('form').submit()">−</button>
+                  <input
+                    type="number"
+                    name="updates[]"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    class="qty-selector__val"
+                    style="width:44px;text-align:center;background:none;border:none;color:var(--color-white);"
+                  >
+                  <button type="button" class="qty-selector__btn"
+                    onclick="this.previousElementSibling.value=parseInt(this.previousElementSibling.value)+1;this.closest('form').submit()">+</button>
+                </div>
+                <span style="font-size:.9rem;font-weight:500;color:{% if is_bitter %}var(--color-amber-light){% else %}var(--color-red-light){% endif %};">
+                  {{ item.final_line_price | money }}
+                </span>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <!-- Summary -->
+        <div class="cart-page__summary">
+          <h3>Riepilogo ordine</h3>
+          {%- for item in cart.items -%}
+            <div class="summary-row">
+              <span>{{ item.product_title }} ×{{ item.quantity }}</span>
+              <span>{{ item.final_line_price | money }}</span>
+            </div>
+          {%- endfor -%}
+          {%- assign free_shipping_threshold = 6000 -%}
+          <div class="summary-row">
+            <span>Spedizione</span>
+            <span>
+              {%- if cart.total_price >= free_shipping_threshold -%}
+                Gratuita
+              {%- else -%}
+                € 6,90
+              {%- endif -%}
+            </span>
+          </div>
+          <div class="summary-row summary-row--total">
+            <span>Totale</span>
+            <strong>
+              {%- if cart.total_price >= free_shipping_threshold -%}
+                {{ cart.total_price | money }}
+              {%- else -%}
+                {{ cart.total_price | plus: 690 | money }}
+              {%- endif -%}
+            </strong>
+          </div>
+          <p style="font-size:.7rem;color:var(--color-gray);margin:.75rem 0 1.25rem;line-height:1.5;">
+            Spedizione gratuita per ordini superiori a €60.
+          </p>
+          <a href="/checkout" class="btn btn--primary btn--full">
+            Procedi al checkout →
+          </a>
+          <a href="/collections/all" class="btn btn--outline btn--full mt-1">
+            ← Continua gli acquisti
+          </a>
+          <p style="font-size:.68rem;color:var(--color-gray);text-align:center;margin-top:1rem;line-height:1.5;">
+            La vendita di bevande alcoliche è vietata ai minori di 18 anni.
+          </p>
+        </div>
+
+      </div>
+    {%- endform -%}
+  {%- else -%}
+    <div style="text-align:center;padding:4rem 0;">
+      <p style="color:var(--color-gray);margin-bottom:2rem;">Non hai ancora aggiunto prodotti al carrello.</p>
+      <a href="/collections/all" class="btn btn--primary">Scopri i prodotti</a>
+    </div>
+  {%- endif -%}
+</div>
+
+{%- section 'footer' -%}

@@ -1,0 +1,60 @@
+{%- comment -%}
+  Wishlist page section.
+  Products are stored in localStorage by the Wishlist JS module
+  and rendered client-side. This section provides the HTML shell.
+{%- endcomment -%}
+
+<div class="page-wrap">
+  <div class="container" style="padding-top:4rem;padding-bottom:4rem;">
+    <p class="eyebrow" style="text-align:center;margin-bottom:.25rem;">La tua lista</p>
+    <h1 style="text-align:center;margin-bottom:2.5rem;">Wishlist</h1>
+
+    <!-- JS renders items here; shows empty state if nothing saved -->
+    <div id="wishlist-grid" class="product-grid">
+      <div id="wishlist-empty" style="grid-column:1/-1;text-align:center;padding:3rem 0;color:var(--color-gray);">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="margin-bottom:1rem;opacity:.4;" aria-hidden="true">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        <p style="margin-bottom:1.5rem;">La tua wishlist è vuota.</p>
+        <a href="/collections/all" class="btn btn--outline" style="padding:.7rem 1.5rem;font-size:.78rem;">Scopri i prodotti</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Render wishlist products on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof Wishlist === 'undefined') return;
+    const grid = document.getElementById('wishlist-grid');
+    const empty = document.getElementById('wishlist-empty');
+    const items = Wishlist.get();
+
+    if (!items || items.length === 0) {
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    items.forEach(function(item) {
+      const card = document.createElement('a');
+      card.href = '/products/' + item.handle;
+      card.className = 'product-card';
+      card.innerHTML = '<div class="product-card__body" style="padding:1.5rem;">' +
+        '<h3 class="product-card__name" style="font-size:1rem;">' + item.title + '</h3>' +
+        '<div class="product-card__footer" style="margin-top:1rem;">' +
+        '<span class="product-card__price">' + item.price + '</span>' +
+        '<button class="btn btn--outline" style="padding:.5rem 1rem;font-size:.72rem;" ' +
+        'onclick="Wishlist.toggle(\'' + item.id + '\',\'' + item.title.replace(/'/g, "\\'") + '\');this.closest(\'a\').remove();event.preventDefault();">Rimuovi</button>' +
+        '</div></div>';
+      grid.appendChild(card);
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Wishlist Page",
+  "settings": []
+}
+{% endschema %}

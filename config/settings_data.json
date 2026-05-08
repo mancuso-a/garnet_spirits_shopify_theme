@@ -1,0 +1,14 @@
+{
+  "current": {
+    "color_background": "#0a0a0a",
+    "color_dark": "#111111",
+    "color_card": "#1a1a1a",
+    "color_border": "#2a2a2a",
+    "color_red": "#8B1A1A",
+    "color_red_light": "#C0392B",
+    "color_amber": "#C47A1E",
+    "color_amber_light": "#E8963A",
+    "color_text": "#FFFFFF",
+    "color_text_muted": "#999999"
+  }
+}

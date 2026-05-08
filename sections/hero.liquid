@@ -1,0 +1,106 @@
+<section class="hero">
+  <div class="hero__orb" aria-hidden="true"></div>
+
+  {%- if section.settings.background_image != blank -%}
+    <div class="hero__bg-image" aria-hidden="true" style="
+      position:absolute;inset:0;z-index:0;
+      background-image:url('{{ section.settings.background_image | image_url: width: 1600 }}');
+      background-size:cover;background-position:center;
+      opacity:{{ section.settings.image_opacity | divided_by: 100.0 }};
+    "></div>
+  {%- endif -%}
+
+  <div class="hero__content">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="eyebrow hero__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    <h1 class="hero__title">
+      {{ section.settings.title }}
+    </h1>
+
+    {%- if section.settings.subtitle != blank -%}
+      <p class="hero__subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+
+    <div class="hero__actions">
+      {%- if section.settings.btn_primary_label != blank -%}
+        <a href="{{ section.settings.btn_primary_url }}" class="btn btn--primary">
+          {{ section.settings.btn_primary_label }}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.btn_secondary_label != blank -%}
+        <a href="{{ section.settings.btn_secondary_url }}" class="btn btn--outline">
+          {{ section.settings.btn_secondary_label }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Immagine di sfondo (opzionale)"
+    },
+    {
+      "type": "range",
+      "id": "image_opacity",
+      "label": "Opacità immagine",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 35
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Testo eyebrow",
+      "default": "Nature Inspired · Artigianale Italiano"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Titolo principale",
+      "default": "<p>Incanta<br><em>i sensi</em></p>"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sottotitolo",
+      "default": "Spiriti artigianali nati dalla melagrana, frutto simbolo di energia ed eleganza. Una collezione che racconta passione, territorio e identità."
+    },
+    {
+      "type": "text",
+      "id": "btn_primary_label",
+      "label": "Pulsante principale — testo",
+      "default": "Scopri i prodotti"
+    },
+    {
+      "type": "url",
+      "id": "btn_primary_url",
+      "label": "Pulsante principale — link"
+    },
+    {
+      "type": "text",
+      "id": "btn_secondary_label",
+      "label": "Pulsante secondario — testo",
+      "default": "Chi siamo"
+    },
+    {
+      "type": "url",
+      "id": "btn_secondary_url",
+      "label": "Pulsante secondario — link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

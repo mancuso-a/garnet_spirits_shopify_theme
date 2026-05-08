@@ -1,0 +1,81 @@
+{%- comment -%}
+  Renders a product card.
+  Usage: {% render 'product-card', product: product %}
+{%- endcomment -%}
+
+{%- assign is_bitter = false -%}
+{%- if product.type contains 'Bitter' or product.title contains 'Bitter' -%}
+  {%- assign is_bitter = true -%}
+{%- endif -%}
+
+{%- assign tag_class = 'product-card__tag--gin' -%}
+{%- assign price_class = 'product-card__price--gin' -%}
+{%- assign img_class = 'product-card__image--gin' -%}
+{%- assign btn_class = 'btn--primary' -%}
+{%- assign tag_label = 'Almandino · Compound Gin' -%}
+{%- if is_bitter -%}
+  {%- assign tag_class = 'product-card__tag--amber' -%}
+  {%- assign price_class = 'product-card__price--amber' -%}
+  {%- assign img_class = 'product-card__image--bitter' -%}
+  {%- assign btn_class = 'btn--amber' -%}
+  {%- assign tag_label = 'Spessartina · Bitter artigianale' -%}
+{%- endif -%}
+
+<article class="product-card">
+
+  <!-- Image with overlay actions -->
+  <div class="product-card__img-wrap">
+    <a href="{{ product.url }}" aria-label="{{ product.title }}">
+      <div class="product-card__image product-card__image--placeholder {{ img_class }}">
+        {%- if product.featured_image != blank -%}
+          {{ product.featured_image | image_url: width: 600 | image_tag:
+            loading: 'lazy',
+            alt: product.featured_image.alt | escape,
+            class: ''
+          }}
+        {%- endif -%}
+      </div>
+    </a>
+
+    <!-- Overlay: wishlist + quick add -->
+    <div class="product-card__overlay">
+      <button
+        class="product-card__wishlist{% if is_bitter %} product-card__wishlist--amber{% endif %}"
+        data-wishlist-id="{{ product.id }}"
+        data-wishlist-title="{{ product.title | escape }}"
+        aria-label="Aggiungi alla wishlist"
+        title="Aggiungi alla wishlist">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+
+      <button
+        class="product-card__quickadd btn {{ btn_class }}"
+        onclick="QuickAdd.open('{{ product.first_available_variant.id }}', '{{ product.title | escape }}', '{{ product.price | money | escape }}')"
+        aria-label="Aggiungi rapidamente {{ product.title }} al carrello">
+        + Carrello
+      </button>
+    </div>
+  </div>
+
+  <div class="product-card__body">
+    <p class="product-card__tag {{ tag_class }}">{{ tag_label }}</p>
+    <h3 class="product-card__name">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+    {%- if product.description != blank -%}
+      <p class="product-card__desc">
+        {{ product.description | strip_html | truncate: 120 }}
+      </p>
+    {%- endif -%}
+    <div class="product-card__footer">
+      <span class="product-card__price {{ price_class }}">
+        {{ product.price | money }}
+      </span>
+      <a href="{{ product.url }}" class="btn btn--outline" style="padding:.55rem 1rem;font-size:.72rem;">
+        Scopri →
+      </a>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,186 @@
+<div class="drinks-hero">
+  <p class="eyebrow">Miscelazione</p>
+  <h1>{{ section.settings.title }}</h1>
+  <p>{{ section.settings.subtitle }}</p>
+</div>
+
+<!-- Filter tabs -->
+<div class="drinks-filter" role="tablist">
+  <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Tutti</button>
+  <button class="filter-btn" data-filter="gin" role="tab" aria-selected="false">Garnet Gin</button>
+  <button class="filter-btn" data-filter="bitter" role="tab" aria-selected="false">Garnet Bitter</button>
+</div>
+
+<!-- Cocktail grid -->
+<div class="cocktail-grid">
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'cocktail' -%}
+      <article class="cocktail-card" data-spirit="{{ block.settings.spirit }}">
+
+        <div class="cocktail-card__image">
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 600 | image_tag:
+              loading: 'lazy',
+              alt: block.settings.name | escape
+            }}
+          {%- else -%}
+            <div class="cocktail-card__image-placeholder">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+                <path d="M8 3l4 8 5-5v13H3V6l5 5 4-8z"/>
+              </svg>
+              <span>Foto cocktail</span>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <div class="cocktail-card__body">
+          <p class="cocktail-card__spirit cocktail-card__spirit--{{ block.settings.spirit }}">
+            {%- if block.settings.spirit == 'gin' -%}Garnet Gin{%- else -%}Garnet Bitter{%- endif -%}
+          </p>
+          <h3 class="cocktail-card__name">{{ block.settings.name }}</h3>
+          {%- if block.settings.description != blank -%}
+            <p class="cocktail-card__desc">{{ block.settings.description }}</p>
+          {%- endif -%}
+
+          {%- if block.settings.ingredients != blank or block.settings.method != blank -%}
+            <button class="recipe-toggle" onclick="toggleRecipe(this)" aria-expanded="false">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+              <span class="toggle-label">Vedi ricetta</span>
+            </button>
+
+            <div class="recipe-body" aria-hidden="true">
+              {%- if block.settings.ingredients != blank -%}
+                <p class="recipe-section-title">Ingredienti</p>
+                <ul class="recipe-ingredients">
+                  {%- assign ingredients = block.settings.ingredients | split: newline -%}
+                  {%- for ingredient in ingredients -%}
+                    {%- if ingredient != blank -%}
+                      <li>{{ ingredient }}</li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+              {%- if block.settings.method != blank -%}
+                <p class="recipe-section-title">Preparazione</p>
+                <p class="recipe-method">{{ block.settings.method }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+      </article>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Drink List",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titolo",
+      "default": "Drink List"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sottotitolo",
+      "default": "Ricette pensate per esaltare il carattere dei nostri spiriti. Dai classici alle creazioni più originali."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "cocktail",
+      "name": "Cocktail",
+      "settings": [
+        {
+          "type": "select",
+          "id": "spirit",
+          "label": "Spirito base",
+          "options": [
+            { "value": "gin", "label": "Garnet Gin" },
+            { "value": "bitter", "label": "Garnet Bitter" }
+          ],
+          "default": "gin"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Foto cocktail"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nome cocktail"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descrizione breve"
+        },
+        {
+          "type": "textarea",
+          "id": "ingredients",
+          "label": "Ingredienti (uno per riga)"
+        },
+        {
+          "type": "textarea",
+          "id": "method",
+          "label": "Preparazione"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Drink List",
+      "blocks": [
+        {
+          "type": "cocktail",
+          "settings": {
+            "spirit": "gin",
+            "name": "Garnet & Tonic",
+            "description": "Il classico reinterpretato: la freschezza balsamica del gin incontra la mineralità della tonica per un drink lungo e aromatico.",
+            "ingredients": "50 ml Garnet Gin Almandino\n150 ml acqua tonica premium\nGhiaccio abbondante\n1 fetta di arancia rossa\nScorza di bergamotto",
+            "method": "Riempi un bicchiere balloon con ghiaccio. Versa il gin, aggiungi la tonica versando lentamente sul dorso di un cucchiaio. Guarnisci con l'arancia rossa e la scorza di bergamotto."
+          }
+        },
+        {
+          "type": "cocktail",
+          "settings": {
+            "spirit": "gin",
+            "name": "Pomegranate Sour",
+            "description": "Acidità vivace, dolcezza floreale e la melagrana in primo piano. Un sour elegante e bilanciato.",
+            "ingredients": "50 ml Garnet Gin Almandino\n25 ml succo di limone fresco\n20 ml sciroppo di melagrana\n15 ml albume d'uovo\nChicchi di melograno per guarnire",
+            "method": "Dry shake tutti gli ingredienti senza ghiaccio per 15 secondi. Aggiungi ghiaccio e agita vigorosamente. Filtra in un bicchiere da cocktail raffreddato. Guarnisci con chicchi di melograno."
+          }
+        },
+        {
+          "type": "cocktail",
+          "settings": {
+            "spirit": "bitter",
+            "name": "Garnet Spritz",
+            "description": "La versione contemporanea dello spritz: amaro, frizzante e ricco di carattere. Perfetto per l'aperitivo.",
+            "ingredients": "60 ml Garnet Bitter Spessartina\n90 ml Prosecco secco\n30 ml acqua frizzante\nGhiaccio\n1 fetta d'arancia, scorza di pompelmo",
+            "method": "In un grande bicchiere da vino riempi di ghiaccio. Aggiungi il bitter, poi il Prosecco versato delicatamente, infine l'acqua frizzante. Mescola con cura. Guarnisci con arancia e scorza di pompelmo."
+          }
+        },
+        {
+          "type": "cocktail",
+          "settings": {
+            "spirit": "bitter",
+            "name": "Red Negroni",
+            "description": "Il Garnet Bitter al posto del classico Campari: più fruttato, più complesso, stesso carattere iconico.",
+            "ingredients": "30 ml Garnet Bitter Spessartina\n30 ml gin london dry\n30 ml vermouth rosso\nGhiaccio\nScorza d'arancia",
+            "method": "Mescola tutti gli ingredienti in un mixing glass con ghiaccio per 30 secondi. Filtra in un bicchiere old-fashioned con un grande cubetto di ghiaccio. Spruzza la scorza d'arancia e usala come guarnizione."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

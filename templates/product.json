@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "eyebrow": "Potrebbe interessarti",
+        "title": "Scopri anche",
+        "products_to_show": 3
+      }
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "eyebrow": "Hai guardato di recente",
+        "title": "Visti di recente"
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    }
+  },
+  "order": ["main", "related-products", "recently-viewed", "footer"]
+}

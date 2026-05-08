@@ -1,0 +1,65 @@
+<div class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-label="Carrello">
+
+  <div class="cart-drawer__header">
+    <h2 class="cart-drawer__title">Il tuo carrello</h2>
+    <button class="cart-drawer__close" onclick="CartDrawer.close()" aria-label="Chiudi carrello">✕</button>
+  </div>
+
+  <!-- Free shipping progress bar -->
+  <div class="free-shipping-bar" id="free-shipping-bar" aria-live="polite">
+    <p class="free-shipping-bar__text" id="free-shipping-msg">
+      Aggiungi prodotti per la spedizione gratuita
+    </p>
+    <div class="free-shipping-bar__track">
+      <div class="free-shipping-bar__fill" id="free-shipping-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="cart-drawer__items" id="cart-drawer-items">
+    <div class="cart-drawer__empty">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <p>Il carrello è vuoto</p>
+      <a href="/collections/all" class="btn btn--outline" style="padding:.6rem 1.5rem;font-size:.72rem;" onclick="CartDrawer.close()">
+        Scopri i prodotti
+      </a>
+    </div>
+  </div>
+
+  <div class="cart-drawer__footer" id="cart-drawer-footer" style="display:none;">
+    <div class="cart-drawer__totals">
+      <div class="cart-drawer__total-row">
+        <span>Subtotale</span>
+        <span id="cart-drawer-subtotal">€ 0,00</span>
+      </div>
+      <div class="cart-drawer__total-row">
+        <span>Spedizione</span>
+        <span>Calcolata al checkout</span>
+      </div>
+    </div>
+    <p class="cart-drawer__note">
+      {{ section.settings.shipping_note }}
+    </p>
+    <a href="/checkout" class="btn btn--primary btn--full">
+      Procedi al checkout →
+    </a>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "shipping_note",
+      "label": "Nota spedizione",
+      "default": "Spedizione gratuita per ordini superiori a €60. Consegna in 2–4 giorni lavorativi."
+    }
+  ]
+}
+{% endschema %}

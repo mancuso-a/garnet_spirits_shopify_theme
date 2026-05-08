@@ -1,0 +1,20 @@
+{%- comment -%}
+  Cookie consent banner snippet.
+  Controlled by CookieConsent JS module.
+  Hidden by default; JS shows it if consent not yet given.
+{%- endcomment -%}
+
+<div id="cookie-consent" class="cookie-banner" role="dialog" aria-modal="false" aria-label="Consenso cookie" style="display:none;">
+  <p class="cookie-banner__text">
+    Utilizziamo i cookie per migliorare la tua esperienza di navigazione e analizzare il traffico del sito.
+    <a href="/pages/privacy-policy">Leggi la nostra Privacy Policy</a>.
+  </p>
+  <div class="cookie-banner__actions">
+    <button class="btn btn--outline" onclick="CookieConsent.decline()" style="padding:.55rem 1.2rem;font-size:.72rem;">
+      Solo necessari
+    </button>
+    <button class="btn btn--primary" onclick="CookieConsent.accept()" style="padding:.55rem 1.2rem;font-size:.72rem;">
+      Accetta tutti
+    </button>
+  </div>
+</div>

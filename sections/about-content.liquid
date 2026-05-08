@@ -1,0 +1,104 @@
+<div class="about-hero">
+  <p class="eyebrow">Chi siamo</p>
+  <h1>{{ section.settings.title }}</h1>
+  <p>{{ section.settings.subtitle }}</p>
+</div>
+
+<div class="about-body">
+
+  <h3>La nostra storia</h3>
+  <p>{{ section.settings.story_p1 }}</p>
+  <p>{{ section.settings.story_p2 }}</p>
+  <p>{{ section.settings.story_p3 }}</p>
+
+  <h3>Il significato dei nomi</h3>
+  <p>{{ section.settings.names_intro }}</p>
+
+  <div class="garnet-variants">
+    <div class="garnet-card garnet-card--gin">
+      <div class="garnet-card__name">Almandino</div>
+      <div class="garnet-card__sub">Garnet Gin</div>
+      <p>{{ section.settings.almandino_text }}</p>
+    </div>
+    <div class="garnet-card garnet-card--bitter">
+      <div class="garnet-card__name">Spessartina</div>
+      <div class="garnet-card__sub">Garnet Bitter</div>
+      <p>{{ section.settings.spessartina_text }}</p>
+    </div>
+  </div>
+
+  <p>{{ section.settings.names_closing }}</p>
+
+  <div class="mt-3" style="display:flex;gap:1rem;flex-wrap:wrap;">
+    <a href="/collections/all" class="btn btn--primary">Scopri i prodotti</a>
+    <a href="/pages/drink-list" class="btn btn--outline">Drink List</a>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "About Content",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titolo",
+      "default": "Il progetto dietro ogni bottiglia"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sottotitolo",
+      "default": "Nati nel 2022, cresciuti con una missione: raccontare il Sud Italia attraverso i distillati."
+    },
+    {
+      "type": "textarea",
+      "id": "story_p1",
+      "label": "Storia — paragrafo 1",
+      "default": "Garnet Spirits nasce nel 2022 con una missione precisa: creare una linea di distillati ispirati alla melagrana, frutto simbolo del Sud Italia, in un dialogo costante tra innovazione e radici."
+    },
+    {
+      "type": "textarea",
+      "id": "story_p2",
+      "label": "Storia — paragrafo 2",
+      "default": "Il nostro primo prodotto, il Garnet Gin Almandino, ha portato in bottiglia la visione di un distillato artigianale dal gusto inconfondibile, che racconta una storia di passione, territorio e identità."
+    },
+    {
+      "type": "textarea",
+      "id": "story_p3",
+      "label": "Storia — paragrafo 3",
+      "default": "Oggi Garnet Spirits è un progetto in evoluzione, presente in diverse regioni italiane, con l'obiettivo di diventare un punto di riferimento nel mondo dei distillati artigianali contemporanei."
+    },
+    {
+      "type": "textarea",
+      "id": "names_intro",
+      "label": "Nomi — introduzione",
+      "default": "Tutti i nostri prodotti prendono il nome da varietà di granato, una pietra preziosa che simboleggia passione, energia e trasformazione — gli stessi valori che ispirano Garnet Spirits."
+    },
+    {
+      "type": "textarea",
+      "id": "almandino_text",
+      "label": "Testo card Almandino",
+      "default": "La varietà di granato rosso intenso. Profondo, elegante, persistente — proprio come il nostro gin alla melagrana."
+    },
+    {
+      "type": "textarea",
+      "id": "spessartina_text",
+      "label": "Testo card Spessartina",
+      "default": "Granato dalle tonalità arancio-rossastre. Rappresenta la vivacità e la creatività del nostro bitter."
+    },
+    {
+      "type": "textarea",
+      "id": "names_closing",
+      "label": "Nomi — chiusura",
+      "default": "Le prossime uscite seguiranno questa linea, rendendo ogni bottiglia un tassello di un racconto prezioso."
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Content"
+    }
+  ]
+}
+{% endschema %}

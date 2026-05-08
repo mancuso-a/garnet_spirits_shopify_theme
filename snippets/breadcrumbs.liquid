@@ -1,0 +1,38 @@
+{%- comment -%}
+  Breadcrumbs navigation snippet.
+  Renders automatically based on current template.
+{%- endcomment -%}
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a class="breadcrumbs__item" href="/">Home</a>
+
+  {%- if template.name == 'collection' -%}
+    <span class="breadcrumbs__sep" aria-hidden="true">›</span>
+    <span class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ collection.title }}</span>
+
+  {%- elsif template.name == 'product' -%}
+    {%- if collection -%}
+      <span class="breadcrumbs__sep" aria-hidden="true">›</span>
+      <a class="breadcrumbs__item" href="{{ collection.url }}">{{ collection.title }}</a>
+    {%- else -%}
+      <span class="breadcrumbs__sep" aria-hidden="true">›</span>
+      <a class="breadcrumbs__item" href="/collections/all">Prodotti</a>
+    {%- endif -%}
+    <span class="breadcrumbs__sep" aria-hidden="true">›</span>
+    <span class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ product.title }}</span>
+
+  {%- elsif template.name == 'page' -%}
+    <span class="breadcrumbs__sep" aria-hidden="true">›</span>
+    <span class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ page.title }}</span>
+
+  {%- elsif template.name == 'blog' -%}
+    <span class="breadcrumbs__sep" aria-hidden="true">›</span>
+    <span class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ blog.title }}</span>
+
+  {%- elsif template.name == 'article' -%}
+    <span class="breadcrumbs__sep" aria-hidden="true">›</span>
+    <a class="breadcrumbs__item" href="{{ blog.url }}">{{ blog.title }}</a>
+    <span class="breadcrumbs__sep" aria-hidden="true">›</span>
+    <span class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ article.title }}</span>
+  {%- endif -%}
+</nav>

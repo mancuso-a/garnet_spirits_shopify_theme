@@ -1,0 +1,101 @@
+<section class="featured-products">
+  <div class="container">
+
+    <div class="featured-products__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2>{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p>{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- assign collection = collections[section.settings.collection] -%}
+    {%- if collection != blank and collection.products_count > 0 -%}
+      <div class="product-grid">
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <!-- Fallback: show all products -->
+      <div class="product-grid">
+        {%- for product in collections.all.products limit: section.settings.products_to_show -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_cta -%}
+      <div class="text-center mt-3">
+        <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="btn btn--outline">
+          {{ section.settings.cta_label | default: 'Vedi tutti i prodotti' }}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Spiriti preziosi"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titolo",
+      "default": "La nostra collezione"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sottotitolo",
+      "default": "Ogni prodotto nasce da una varietà di granato: tonalità uniche che guidano aromi, carattere e identità."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collezione da mostrare"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Numero prodotti",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Mostra pulsante 'Vedi tutti'",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Testo pulsante",
+      "default": "Vedi tutti i prodotti"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Link pulsante"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products"
+    }
+  ]
+}
+{% endschema %}

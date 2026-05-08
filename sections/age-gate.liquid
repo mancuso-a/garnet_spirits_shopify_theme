@@ -1,0 +1,67 @@
+<div id="age-gate" class="hidden" role="dialog" aria-modal="true" aria-label="Verifica età">
+  <div class="age-gate__divider"></div>
+
+  <div class="age-gate__logo">
+    {{ shop.name | upcase }}<span>®</span>
+  </div>
+
+  <div class="age-gate__title">{{ section.settings.title }}</div>
+
+  <p class="age-gate__text">{{ section.settings.message }}</p>
+
+  <div class="age-gate__buttons">
+    <button class="btn btn--primary" onclick="AgeGate.accept()">
+      {{ section.settings.accept_label }}
+    </button>
+    <button class="btn btn--outline" onclick="AgeGate.deny()">
+      {{ section.settings.deny_label }}
+    </button>
+  </div>
+
+  <p class="age-gate__legal">{{ section.settings.legal_text }}</p>
+
+  <div class="age-gate__divider"></div>
+</div>
+
+{% schema %}
+{
+  "name": "Age Gate",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titolo",
+      "default": "Benvenuto"
+    },
+    {
+      "type": "textarea",
+      "id": "message",
+      "label": "Messaggio",
+      "default": "Questo sito contiene contenuti relativi a bevande alcoliche. Devi avere almeno 18 anni per accedere."
+    },
+    {
+      "type": "text",
+      "id": "accept_label",
+      "label": "Testo pulsante conferma",
+      "default": "Ho 18+ anni"
+    },
+    {
+      "type": "text",
+      "id": "deny_label",
+      "label": "Testo pulsante rifiuto",
+      "default": "Sono minorenne"
+    },
+    {
+      "type": "text",
+      "id": "legal_text",
+      "label": "Testo legale",
+      "default": "Bevi responsabilmente. Non condividere con minori di 18 anni."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Age Gate"
+    }
+  ]
+}
+{% endschema %}

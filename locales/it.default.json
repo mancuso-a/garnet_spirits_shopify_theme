@@ -1,0 +1,62 @@
+{
+  "general": {
+    "password_page": {
+      "password_label": "Password",
+      "password_placeholder": "La tua password",
+      "login_form_heading": "Accedi con una password",
+      "login_form_submit": "Entra",
+      "signup_button_text": "Non hai la password? Iscriviti"
+    },
+    "meta": {
+      "tags": "Tag: {{ tags }}",
+      "page": "Pagina {{ page }}"
+    }
+  },
+  "products": {
+    "product": {
+      "sold_out": "Esaurito",
+      "unavailable": "Non disponibile",
+      "on_sale": "Saldo",
+      "quantity": {
+        "label": "Quantità",
+        "input_label": "Quantità per {{ product }}",
+        "increase": "Aumenta quantità per {{ product }}",
+        "decrease": "Diminuisci quantità per {{ product }}"
+      },
+      "add_to_cart": "Aggiungi al carrello",
+      "pre_order": "Pre-ordina",
+      "added": "Aggiunto ✓"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Carrello",
+      "subtotal": "Subtotale",
+      "total": "Totale",
+      "empty": "Il carrello è vuoto.",
+      "checkout": "Procedi al checkout",
+      "continue_shopping": "Continua gli acquisti",
+      "remove": "Rimuovi",
+      "count": {
+        "one": "{{ count }} articolo",
+        "other": "{{ count }} articoli"
+      }
+    }
+  },
+  "collections": {
+    "general": {
+      "no_matches": "Spiacenti, non ci sono prodotti in questa collezione"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Salta al contenuto",
+    "close": "Chiudi",
+    "open": "Apri",
+    "loading": "Caricamento..."
+  },
+  "layout": {
+    "footer": {
+      "copyright": "© {{ year }} {{ shop_name }}"
+    }
+  }
+}

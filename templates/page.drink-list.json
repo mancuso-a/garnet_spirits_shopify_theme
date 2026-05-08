@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "drink-list",
+      "settings": {
+        "title": "Drink List",
+        "subtitle": "Ricette pensate per esaltare il carattere dei nostri spiriti. Dai classici alle creazioni più originali."
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    }
+  },
+  "order": ["main", "footer"]
+}

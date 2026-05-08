@@ -1,0 +1,81 @@
+<footer class="site-footer" role="contentinfo">
+
+  <!-- Brand column -->
+  <div class="site-footer__brand">
+    <a href="/" class="logo">{{ shop.name | upcase }}<span>®</span></a>
+    <p>{{ section.settings.tagline }}</p>
+  </div>
+
+  <!-- Nav column -->
+  <div class="site-footer__col">
+    <h4>{{ section.settings.nav_title }}</h4>
+    {%- for link in linklists['footer'].links -%}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    {%- endfor -%}
+  </div>
+
+  <!-- Contact column -->
+  <div class="site-footer__col">
+    <h4>{{ section.settings.contact_title }}</h4>
+    {%- if section.settings.email != blank -%}
+      <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+    {%- endif -%}
+    {%- if section.settings.instagram != blank -%}
+      <a href="{{ section.settings.instagram }}" target="_blank" rel="noopener noreferrer">Instagram</a>
+    {%- endif -%}
+    <a href="/pages/privacy-policy">Privacy Policy</a>
+    <a href="/pages/termini-e-condizioni">Termini e Condizioni</a>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="site-footer__bottom">
+    <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. Tutti i diritti riservati.</span>
+    <span class="site-footer__warning">
+      {{ section.settings.alcohol_warning }}
+    </span>
+  </div>
+
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline brand",
+      "default": "Distillati artigianali ispirati alla melagrana. Nati nel 2022 dal Sud Italia, con passione per il territorio e l'autenticità."
+    },
+    {
+      "type": "text",
+      "id": "nav_title",
+      "label": "Titolo colonna navigazione",
+      "default": "Navigazione"
+    },
+    {
+      "type": "text",
+      "id": "contact_title",
+      "label": "Titolo colonna contatti",
+      "default": "Contatti"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email di contatto",
+      "default": "info@garnetspirits.it"
+    },
+    {
+      "type": "url",
+      "id": "instagram",
+      "label": "URL Instagram"
+    },
+    {
+      "type": "text",
+      "id": "alcohol_warning",
+      "label": "Avvertenza alcol",
+      "default": "Bevi responsabilmente. Vietato ai minori di 18 anni. L'abuso di alcol è dannoso per la salute."
+    }
+  ]
+}
+{% endschema %}

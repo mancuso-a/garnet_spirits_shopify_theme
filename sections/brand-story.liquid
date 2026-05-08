@@ -1,0 +1,101 @@
+<section class="brand-story">
+  <div class="container">
+    <div class="brand-story__grid{% if section.settings.reverse %} brand-story__grid--reverse{% endif %}">
+
+      <div class="brand-story__text">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow{% if section.settings.accent_amber %} eyebrow--amber{% endif %}">
+            {{ section.settings.eyebrow }}
+          </p>
+        {%- endif -%}
+
+        <h2>{{ section.settings.title }}</h2>
+        <p>{{ section.settings.body }}</p>
+
+        {%- if section.settings.btn_label != blank -%}
+          <a href="{{ section.settings.btn_url }}" class="btn btn--outline">
+            {{ section.settings.btn_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="brand-story__visual">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 900 | image_tag:
+            loading: 'lazy',
+            alt: section.settings.image.alt | escape
+          }}
+        {%- else -%}
+          <div class="brand-story__visual--placeholder">
+            <span class="label">{{ section.settings.placeholder_label }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand Story",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "reverse",
+      "label": "Inverti ordine (immagine a sinistra)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "accent_amber",
+      "label": "Usa accento ambra (anziché rosso)",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "La pietra · Il frutto · Lo spirito"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titolo",
+      "default": "Una stessa origine, una stessa forza"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Testo",
+      "default": "Granato e melagrana condividono nome e natura. Da questo legame ancestrale creiamo spiriti autentici e vibranti, dove ogni bottiglia è un tassello di un racconto prezioso."
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Testo pulsante"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Link pulsante"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Immagine"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_label",
+      "label": "Testo placeholder (se no immagine)",
+      "default": "Garnet"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Story"
+    }
+  ]
+}
+{% endschema %}

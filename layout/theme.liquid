@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page_description | escape }}">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:description" content="{{ page_description | escape }}">
+  {%- if page_image -%}
+    <meta property="og:image" content="{{ page_image | image_url: width: 1200 }}">
+  {%- endif -%}
+
+  <title>
+    {{ page_title }}
+    {%- unless page_title contains shop.name %} — {{ shop.name }}{% endunless %}
+  </title>
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">
+  {%- endif -%}
+
+  <link rel="preload" href="{{ 'aliens-cows.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ 'korolev-regular.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
+
+  {{ content_for_header }}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+</head>
+
+<body class="template-{{ template.name }}">
+
+  <!-- Page loader bar -->
+  <div id="page-loader" class="page-loader"></div>
+
+  <!-- Announcement Bar -->
+  {% section 'announcement-bar' %}
+
+  <!-- Age Gate -->
+  {% section 'age-gate' %}
+
+  <!-- Cookie Consent -->
+  {%- render 'cookie-consent' -%}
+
+  <!-- Cart overlay -->
+  <div id="cart-overlay" class="cart-overlay" aria-hidden="true"></div>
+
+  <!-- Filter overlay (mobile) -->
+  <div id="filter-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:249;display:none;"
+    onclick="document.getElementById('collection-filters')?.classList.remove('open');this.style.display='none';"></div>
+
+  <!-- Cart Drawer -->
+  {% section 'cart-drawer' %}
+
+  <!-- Header -->
+  {% section 'header' %}
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Navigazione mobile">
+    {%- for link in linklists['main-menu'].links -%}
+      <a class="mobile-nav__link" href="{{ link.url }}">{{ link.title }}</a>
+    {%- endfor -%}
+    <a class="mobile-nav__link" href="#" onclick="CartDrawer.toggle();return false;">Carrello</a>
+  </nav>
+
+  <!-- Search Overlay -->
+  <div id="search-overlay" class="search-overlay" role="search" aria-label="Ricerca">
+    <button class="search-overlay__close" onclick="PredictiveSearch.close()" aria-label="Chiudi ricerca">✕</button>
+    <div class="search-overlay__inner">
+      <p class="search-overlay__label">Cerca prodotti</p>
+      <form class="search-overlay__form" action="/search" method="get">
+        <input type="search" name="q" id="search-input" class="search-overlay__input"
+          placeholder="Gin, Bitter, melagrana…" autocomplete="off">
+        <button type="submit" class="search-overlay__submit" aria-label="Cerca">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </button>
+      </form>
+      <div id="predictive-results" class="predictive-results" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- Quick Add Modal -->
+  <div id="quick-add-modal" class="quick-add-modal" role="dialog" aria-modal="true">
+    <div id="quick-add-backdrop" class="quick-add-backdrop"></div>
+    <div class="quick-add-sheet">
+      <div class="quick-add-sheet__header">
+        <div>
+          <div class="quick-add-sheet__name" id="qa-product-name"></div>
+          <div class="quick-add-sheet__price" id="qa-product-price"></div>
+        </div>
+        <button class="quick-add-sheet__close" onclick="QuickAdd.close()" aria-label="Chiudi">✕</button>
+      </div>
+      <input type="hidden" id="qa-variant-id">
+      <div class="quick-add-sheet__actions">
+        <div class="qty-selector">
+          <button type="button" class="qty-selector__btn" onclick="changeQty('qa-qty',-1)">−</button>
+          <span class="qty-selector__val" data-qty-id="qa-qty" id="qa-qty">1</span>
+          <button type="button" class="qty-selector__btn" onclick="changeQty('qa-qty',1)">+</button>
+        </div>
+        <button class="btn btn--primary" style="flex:1;" onclick="QuickAdd.submit()">Aggiungi al carrello</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Visualizzatore immagini">
+    <button id="lightbox-close" class="lightbox__close" aria-label="Chiudi">✕</button>
+    <button id="lightbox-prev" class="lightbox__nav lightbox__nav--prev" aria-label="Precedente">‹</button>
+    <img id="lightbox-img" class="lightbox__img" src="" alt="">
+    <button id="lightbox-next" class="lightbox__nav lightbox__nav--next" aria-label="Successiva">›</button>
+    <div id="lightbox-counter" class="lightbox__counter"></div>
+  </div>
+
+  <!-- Newsletter Popup -->
+  {% section 'newsletter-popup' %}
+
+  <!-- Main content -->
+  <main id="main-content" class="page-wrap" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  <!-- Back to top -->
+  <button id="back-to-top" class="back-to-top" aria-label="Torna su">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
+  </button>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  {{ 'theme.js' | asset_url | script_tag }}
+</body>
+</html>

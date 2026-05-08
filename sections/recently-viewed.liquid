@@ -1,0 +1,35 @@
+{%- comment -%}
+  Recently Viewed Products section.
+  Products are stored in localStorage by the RecentlyViewed JS module
+  and rendered client-side. This section provides the HTML shell.
+{%- endcomment -%}
+
+<section class="recently-viewed page-wrap" id="recently-viewed-section" aria-labelledby="recently-viewed-heading" style="display:none;">
+  <div class="container">
+    <p class="eyebrow" style="text-align:center;margin-bottom:.25rem;">{{ section.settings.eyebrow }}</p>
+    <h2 class="recently-viewed__title" id="recently-viewed-heading" style="text-align:center;margin-bottom:2.5rem;">{{ section.settings.title }}</h2>
+
+    <!-- JS renders product cards here -->
+    <div class="recently-viewed__grid product-grid" id="recently-viewed-grid"></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Recently Viewed",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Sopratitolo",
+      "default": "Hai guardato di recente"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titolo sezione",
+      "default": "Visti di recente"
+    }
+  ]
+}
+{% endschema %}
