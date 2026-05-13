@@ -1,7 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "drink-list",
+      "blocks": {
+        "cocktail_qtimVi": {
+          "type": "cocktail",
+          "settings": {
+            "spirit": "gin",
+            "image": "shopify://shop_images/Gin_tonic_con_ghiaccio_e_limone.png",
+            "name": "Garnet Tonic",
+            "description": "Aromatico, morbido, frizzante",
+            "ingredients": "5 cl Garnet Gin Almandino\nTonica Indian Taste a colmare",
+            "method": "Bicchiere: Collins\nGhiaccio: Cube\nGarnish: Twist limone e chicchi di melagrana\nTecnica: Build and top"
+          }
+        }
+      },
+      "block_order": [
+        "cocktail_qtimVi"
+      ],
       "settings": {
         "title": "Drink List",
         "subtitle": "Ricette pensate per esaltare il carattere dei nostri spiriti. Dai classici alle creazioni più originali."
@@ -9,8 +34,18 @@
     },
     "footer": {
       "type": "footer",
-      "settings": {}
+      "settings": {
+        "tagline": "Distillati artigianali ispirati alla melagrana. Nati nel 2022 dal Sud Italia, con passione per il territorio e l'autenticità.",
+        "nav_title": "Navigazione",
+        "contact_title": "Contatti",
+        "email": "info@garnetspirits.it",
+        "instagram": "",
+        "alcohol_warning": "Bevi responsabilmente. Vietato ai minori di 18 anni. L'abuso di alcol è dannoso per la salute."
+      }
     }
   },
-  "order": ["main", "footer"]
+  "order": [
+    "main",
+    "footer"
+  ]
 }
