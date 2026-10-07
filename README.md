@@ -5,7 +5,7 @@ Tema Online Store 2.0 del brand Garnet Spirits (Cm2 Spirits Srls). Fonte di veri
 ## Brand nel tema
 
 - Palette: nero `#0a0a0a`, rosso granato `#8B1A1A` (Gin Almandino), ambra `#C47A1E` (Bitter Spessartina)
-- Font: Aliens & Cows (titoli) · Korolev (testo) — già inclusi in `assets/`
+- Font: Aliens & Cows (titoli) · Jost (testo) — già inclusi in `assets/`
 - Claim: *One sip, one secret.* (announcement bar e footer) · *Incanta i sensi* (hero)
 - Il tema distingue Gin/Bitter dal **Tipo prodotto** (`Compound Gin` / `Bitter`) o dal titolo che contiene "Bitter"
 

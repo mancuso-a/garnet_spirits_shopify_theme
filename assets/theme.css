@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    GARNET SPIRITS — SHOPIFY THEME
-   Fonts: Aliens & Cows (display) · Korolev (body)
+   Fonts: Aliens & Cows (display) · Jost (body)
    ═══════════════════════════════════════════════════════════ */
 
 /* ── FONT FACES ──────────────────────────────────────────── */
@@ -14,36 +14,36 @@
 }
 
 @font-face {
-  font-family: 'Korolev';
-  src: url('korolev-light.woff2') format('woff2'),
-       url('korolev-light.woff') format('woff');
+  font-family: 'Jost';
+  src: url('jost-300.woff2') format('woff2'),
+       url('jost-300.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Korolev';
-  src: url('korolev-regular.woff2') format('woff2'),
-       url('korolev-regular.woff') format('woff');
+  font-family: 'Jost';
+  src: url('jost-400.woff2') format('woff2'),
+       url('jost-400.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Korolev';
-  src: url('korolev-medium.woff2') format('woff2'),
-       url('korolev-medium.woff') format('woff');
+  font-family: 'Jost';
+  src: url('jost-500.woff2') format('woff2'),
+       url('jost-500.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Korolev';
-  src: url('korolev-bold.woff2') format('woff2'),
-       url('korolev-bold.woff') format('woff');
+  font-family: 'Jost';
+  src: url('jost-700.woff2') format('woff2'),
+       url('jost-700.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -64,7 +64,7 @@
   --color-light:        #CCCCCC;
 
   --font-display:  'Aliens & Cows', serif;
-  --font-body:     'Korolev', sans-serif;
+  --font-body:     'Jost', sans-serif;
 
   --nav-height: 72px;
   --transition: 0.22s ease;
