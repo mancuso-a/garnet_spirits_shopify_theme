@@ -39,7 +39,7 @@
         {%- capture info -%}{%- render 'product-spirit', product: p -%}{%- endcapture -%}
         {%- assign parts = info | split: '::' -%}
         {%- if forloop.length == 1 -%}{%- assign spirit_color = parts[1] -%}{%- endif -%}
-        {{- parts[0] -}}{%- unless forloop.last %} + {% endunless -%}
+        <span style="color: {{ parts[1] }};">{{ parts[0] }}</span>{%- unless forloop.last %}<span class="cocktail-card__plus"> + </span>{% endunless -%}
       {%- endfor -%}
     {%- endcapture -%}
     <article class="cocktail-card" data-spirit="{{ slugs | strip }}">
@@ -61,7 +61,7 @@
       </div>
 
       <div class="cocktail-card__body">
-        <p class="cocktail-card__spirit" style="color: {{ spirit_color }};">{{ labels | strip }}</p>
+        <p class="cocktail-card__spirit" style="color: {{ spirit_color }};">{{ labels }}</p>
         <h3 class="cocktail-card__name">{{ c.nome.value }}</h3>
         {%- if c.descrizione_breve.value != blank -%}
           <p class="cocktail-card__desc">{{ c.descrizione_breve.value }}</p>
