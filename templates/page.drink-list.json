@@ -71,6 +71,7 @@
           "type": "cocktail",
           "settings": {
             "spirit": "bitter",
+            "image": "shopify://shop_images/americano.png",
             "name": "Americano Spessartina",
             "description": "Aromatico · Morbido",
             "ingredients": "4,5 cl Garnet Bitter Spessartina\n4,5 cl Vermouth Punt e Mes\nSoda a colmare\nGhiaccio cube",
