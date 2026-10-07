@@ -242,7 +242,7 @@ const DrinkFilter = {
         btn.classList.add('active');
         const spirit = btn.dataset.filter;
         document.querySelectorAll('.cocktail-card').forEach(card => {
-          const match = spirit === 'all' || card.dataset.spirit === spirit;
+          const match = spirit === 'all' || card.dataset.spirit.split(' ').includes(spirit);
           card.dataset.hidden = match ? 'false' : 'true';
         });
       });

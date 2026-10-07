@@ -15,7 +15,7 @@
 <div class="cocktail-grid">
   {%- for block in section.blocks -%}
     {%- if block.type == 'cocktail' -%}
-      <article class="cocktail-card" data-spirit="{{ block.settings.spirit }}">
+      <article class="cocktail-card" data-spirit="{% if block.settings.spirit == 'both' %}gin bitter{% else %}{{ block.settings.spirit }}{% endif %}">
 
         <div class="cocktail-card__image">
           {%- if block.settings.image != blank -%}
@@ -35,7 +35,7 @@
 
         <div class="cocktail-card__body">
           <p class="cocktail-card__spirit cocktail-card__spirit--{{ block.settings.spirit }}">
-            {%- if block.settings.spirit == 'gin' -%}Garnet Gin{%- else -%}Garnet Bitter{%- endif -%}
+            {%- if block.settings.spirit == 'gin' -%}Garnet Gin{%- elsif block.settings.spirit == 'both' -%}Garnet Gin + Garnet Bitter{%- else -%}Garnet Bitter{%- endif -%}
           </p>
           <h3 class="cocktail-card__name">{{ block.settings.name }}</h3>
           {%- if block.settings.description != blank -%}
@@ -103,7 +103,8 @@
           "label": "Spirito base",
           "options": [
             { "value": "gin", "label": "Garnet Gin" },
-            { "value": "bitter", "label": "Garnet Bitter" }
+            { "value": "bitter", "label": "Garnet Bitter" },
+            { "value": "both", "label": "Garnet Gin + Garnet Bitter" }
           ],
           "default": "gin"
         },
@@ -182,7 +183,7 @@
         {
           "type": "cocktail",
           "settings": {
-            "spirit": "bitter",
+            "spirit": "both",
             "name": "Negroni Fashion",
             "description": "Intenso · Amaro",
             "ingredients": "3 cl Garnet Gin Almandino\n4 cl Garnet Bitter Spessartina\n2 cl Vermouth Punt e Mes\nGhiaccio cube",
