@@ -2379,3 +2379,10 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 @media (min-width: 1024px) {
   .band__text p { font-size: 1rem; letter-spacing: 0.28em; line-height: 2.1; }
 }
+
+/* Filtri Drink List: colore del prodotto */
+.filter-btn[style*="--spirit-color"].active { border-bottom-color: var(--spirit-color); }
+.filter-btn[style*="--spirit-color"]::before {
+  content: ''; display: inline-block; width: 0.5rem; height: 0.5rem; border-radius: 50%;
+  background: var(--spirit-color); margin-right: 0.6rem; vertical-align: middle;
+}

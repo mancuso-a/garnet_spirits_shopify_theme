@@ -1,0 +1,16 @@
+{%- comment -%}
+  Restituisce "etichetta::colore" per un prodotto, usato nella Drink List.
+  Etichetta: metafield custom.etichetta_filtro, altrimenti il titolo.
+  Colore: metafield custom.colore (tipo Colore); se vuoto: Bitter arancione, Gin rosso, altri grigio chiaro.
+  Uso: {% render 'product-spirit', product: p %}
+{%- endcomment -%}
+{%- assign sp_label = product.metafields.custom.etichetta_filtro.value | default: product.title -%}
+{%- assign sp_color = '#CCCCCC' -%}
+{%- if product.metafields.custom.colore.value != blank -%}
+  {%- assign sp_color = product.metafields.custom.colore.value | color_to_hex -%}
+{%- elsif product.type contains 'Bitter' or product.title contains 'Bitter' -%}
+  {%- assign sp_color = '#E8963A' -%}
+{%- elsif product.type contains 'Gin' or product.title contains 'Gin' -%}
+  {%- assign sp_color = '#C0392B' -%}
+{%- endif -%}
+{{- sp_label | strip }}::{{ sp_color -}}
