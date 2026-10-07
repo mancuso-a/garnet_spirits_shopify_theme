@@ -16,7 +16,7 @@
           "type": "cocktail",
           "settings": {
             "spirit": "gin",
-            "image": "shopify://shop_images/Garnet_tonic.jpg",
+            "image": "shopify://shop_images/Garnet_tonic_a544e9a8-7725-44e0-891c-2a059db8d462.png",
             "name": "Garnet Tonic",
             "description": "Aromatico · Morbido · Frizzante",
             "ingredients": "5 cl Garnet Gin Almandino\nTonica Indian Taste a colmare\nGhiaccio cube",
@@ -74,7 +74,14 @@
           }
         }
       },
-      "block_order": ["cocktail_tonic","cocktail_almandino","cocktail_spritz","cocktail_rush","cocktail_negroni","cocktail_americano"],
+      "block_order": [
+        "cocktail_tonic",
+        "cocktail_almandino",
+        "cocktail_spritz",
+        "cocktail_rush",
+        "cocktail_negroni",
+        "cocktail_americano"
+      ],
       "settings": {
         "title": "Drink List",
         "subtitle": "Ricette pensate per esaltare il carattere dei nostri spiriti. Dai classici alle creazioni più originali."
@@ -88,6 +95,9 @@
         "contact_title": "Contatti",
         "email": "info@garnetspirits.it",
         "instagram": "",
+        "company_name": "Cm2 Spirits Srls",
+        "company_address": "Via Martin Luther King 21, 70124 Bari (BA)",
+        "vat": "",
         "alcohol_warning": "Bevi responsabilmente. Vietato ai minori di 18 anni. L'abuso di alcol è dannoso per la salute."
       }
     }
