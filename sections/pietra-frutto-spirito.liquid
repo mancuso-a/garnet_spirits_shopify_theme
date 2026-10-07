@@ -1,0 +1,56 @@
+<section class="pfs">
+  <div class="container">
+    <div class="pfs__header">
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.text }}</p>
+    </div>
+
+    <div class="pfs__grid">
+      {%- assign fallbacks = 'home-pietra.jpg,home-frutto.jpg,home-spirito.jpg' | split: ',' -%}
+      {%- for block in section.blocks -%}
+        <figure class="pfs__item" {{ block.shopify_attributes }}>
+          <div class="pfs__img">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.label | escape }}
+            {%- else -%}
+              <img src="{{ fallbacks[forloop.index0] | asset_url }}" alt="{{ block.settings.label | escape }}" loading="lazy">
+            {%- endif -%}
+          </div>
+          <figcaption>{{ block.settings.label }}</figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "La pietra, il frutto, lo spirito",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titolo", "default": "La pietra, il frutto, lo spirito" },
+    { "type": "textarea", "id": "text", "label": "Testo", "default": "Granato e melagrana: stessa origine, stessa forza. da questo legame creiamo spiriti autentici e vibranti." }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Immagine",
+      "limit": 3,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Immagine (se vuota usa quella del tema)" },
+        { "type": "text", "id": "label", "label": "Didascalia", "default": "La pietra" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "La pietra, il frutto, lo spirito",
+      "blocks": [
+        { "type": "item", "settings": { "label": "La pietra" } },
+        { "type": "item", "settings": { "label": "Il frutto" } },
+        { "type": "item", "settings": { "label": "Lo spirito" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

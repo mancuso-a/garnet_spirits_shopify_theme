@@ -3,37 +3,44 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "eyebrow": "Nature Inspired · Artigianale Italiano",
+        "eyebrow": "",
         "title": "<p>Incanta<br><em>i sensi</em></p>",
-        "subtitle": "Spiriti artigianali nati dalla melagrana, frutto simbolo di energia ed eleganza. Una collezione che racconta passione, territorio e identità.",
-        "btn_primary_label": "Scopri i prodotti",
+        "subtitle": "",
+        "btn_primary_label": "Scopri i nostri prodotti",
         "btn_primary_url": "/collections/all",
-        "btn_secondary_label": "Chi siamo",
-        "btn_secondary_url": "/pages/chi-siamo"
+        "btn_secondary_label": "",
+        "btn_secondary_url": ""
       }
     },
-    "brand_story_1": {
-      "type": "brand-story",
+    "nature_inspired": {
+      "type": "nature-inspired",
       "settings": {
-        "reverse": false,
-        "accent_amber": false,
-        "eyebrow": "La pietra · Il frutto · Lo spirito",
-        "title": "Una stessa origine, una stessa forza",
-        "body": "Granato e melagrana condividono nome e natura. Da questo legame ancestrale creiamo spiriti autentici e vibranti, dove ogni bottiglia è un tassello di un racconto prezioso.",
-        "btn_label": "La nostra storia",
-        "btn_url": "/pages/chi-siamo",
-        "placeholder_label": "Garnet"
+        "title": "Nature Inspired",
+        "text": "Garnet Spirits nasce dalla melagrana, frutto simbolo di energia ed eleganza"
+      }
+    },
+    "pietra_frutto_spirito": {
+      "type": "pietra-frutto-spirito",
+      "blocks": {
+        "pietra": { "type": "item", "settings": { "label": "La pietra" } },
+        "frutto": { "type": "item", "settings": { "label": "Il frutto" } },
+        "spirito": { "type": "item", "settings": { "label": "Lo spirito" } }
+      },
+      "block_order": ["pietra", "frutto", "spirito"],
+      "settings": {
+        "title": "La pietra, il frutto, lo spirito",
+        "text": "Granato e melagrana: stessa origine, stessa forza. da questo legame creiamo spiriti autentici e vibranti."
       }
     },
     "featured_products": {
       "type": "featured-products",
       "settings": {
-        "eyebrow": "Spiriti preziosi",
-        "title": "La nostra collezione",
-        "subtitle": "Ogni prodotto nasce da una varietà di granato: tonalità uniche che guidano aromi, carattere e identità.",
+        "eyebrow": "",
+        "title": "Spiriti preziosi",
+        "subtitle": "Un granato per ogni spirito: tonalità uniche che guidano aromi, carattere e identità di ogni bottiglia.",
         "products_to_show": 2,
         "show_cta": true,
-        "cta_label": "Vedi tutti i prodotti",
+        "cta_label": "Scopri i nostri prodotti",
         "cta_url": "/collections/all"
       }
     },
@@ -57,7 +64,8 @@
   },
   "order": [
     "hero",
-    "brand_story_1",
+    "nature_inspired",
+    "pietra_frutto_spirito",
     "featured_products",
     "brand_story_2",
     "footer"

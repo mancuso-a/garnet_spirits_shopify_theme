@@ -1,0 +1,17 @@
+<section class="nature-inspired">
+  <div class="container--narrow">
+    <h2>{{ section.settings.title }}</h2>
+    <p>{{ section.settings.text }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Nature Inspired",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Nature Inspired" },
+    { "type": "textarea", "id": "text", "label": "Testo", "default": "Garnet Spirits nasce dalla melagrana, frutto simbolo di energia ed eleganza" }
+  ],
+  "presets": [{ "name": "Nature Inspired" }]
+}
+{% endschema %}
