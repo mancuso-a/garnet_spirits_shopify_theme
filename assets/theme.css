@@ -2282,3 +2282,11 @@ body.has-announcement .site-header { top: 34px; }
   .reviews-section { padding: 3rem 1.5rem; }
   .sticky-atc__name { display: none; }
 }
+
+/* ── FOOTER CLAIM ────────────────────────────────────────── */
+.site-footer__claim {
+  margin-top: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--color-red-light);
+}

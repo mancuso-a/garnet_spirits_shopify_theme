@@ -1,149 +1,58 @@
 # Garnet Spirits — Shopify Theme
-## Istruzioni per l'installazione
 
----
+Tema Online Store 2.0 del brand Garnet Spirits (Cm2 Spirits Srls). Fonte di verità per tono, colori e dati prodotto: `GarnetSpiritsWiki/wiki/`.
 
-### 1. Font (OBBLIGATORIO prima di pubblicare)
+## Brand nel tema
 
-Il tema usa **Aliens & Cows** e **Korolev**. I file non sono inclusi per motivi di licenza.
-Carica i seguenti file nella cartella `assets/` del tema:
+- Palette: nero `#0a0a0a`, rosso granato `#8B1A1A` (Gin Almandino), ambra `#C47A1E` (Bitter Spessartina)
+- Font: Aliens & Cows (titoli) · Korolev (testo) — già inclusi in `assets/`
+- Claim: *One sip, one secret.* (announcement bar e footer) · *Incanta i sensi* (hero)
+- Il tema distingue Gin/Bitter dal **Tipo prodotto** (`Compound Gin` / `Bitter`) o dal titolo che contiene "Bitter"
 
-| File | Peso |
-|------|------|
-| `aliens-cows.woff2` | display/headings |
-| `aliens-cows.woff` | display/headings (fallback) |
-| `korolev-light.woff2` | body font-weight 300 |
-| `korolev-light.woff` | body font-weight 300 (fallback) |
-| `korolev-regular.woff2` | body font-weight 400 |
-| `korolev-regular.woff` | body font-weight 400 (fallback) |
-| `korolev-medium.woff2` | body font-weight 500 |
-| `korolev-medium.woff` | body font-weight 500 (fallback) |
-| `korolev-bold.woff2` | body font-weight 700 |
-| `korolev-bold.woff` | body font-weight 700 (fallback) |
+## Installazione
 
----
+Il repo è collegato a Shopify via GitHub (Online Store → Themes → Add theme → Connect from GitHub). Ogni push su `master` aggiorna il tema.
 
-### 2. Installazione tema
+## Menu (Online Store → Navigation)
 
-1. Vai su **Shopify Admin → Online Store → Themes**
-2. Clicca **"Add theme" → "Upload zip file"**
-3. Carica `garnet-theme.zip`
-4. Clicca **"Customize"** per aprire l'editor visuale
+`main-menu` e `footer`: Home `/` · Chi siamo `/pages/chi-siamo` · Prodotti `/collections/all` · Drink List `/pages/drink-list`
 
----
+## Pagine (Online Store → Pages)
 
-### 3. Menu di navigazione
+| Titolo | Handle | Template |
+|---|---|---|
+| Chi siamo | `chi-siamo` | `page.about` |
+| Drink List | `drink-list` | `page.drink-list` |
+| Wishlist | `wishlist` | `page.wishlist` |
+| Privacy Policy | `privacy-policy` | `page` (default) |
+| Termini e Condizioni | `termini-e-condizioni` | `page` (default) |
 
-Crea due menu in **Shopify Admin → Online Store → Navigation**:
+## Prodotti
 
-**Main Menu** (`main-menu`):
-- Home → `/`
-- Chi siamo → `/pages/chi-siamo`
-- Prodotti → `/collections/all`
-- Drink List → `/pages/drink-list`
+Metafield (namespace `custom`) da creare in Settings → Custom data → Products:
+`tipologia`, `gradazione`, `volume`, `residuo_zuccherino` (testo riga singola) · `botaniche` (testo, separato da virgole), `olfatto`, `gusto`, `finale` (testo multi-riga).
 
-**Footer** (`footer`):
-- Home → `/`
-- Chi siamo → `/pages/chi-siamo`
-- Prodotti → `/collections/all`
-- Drink List → `/pages/drink-list`
+| | Garnet Gin Almandino | Garnet Bitter Spessartina |
+|---|---|---|
+| Tipo prodotto | `Compound Gin` | `Bitter` |
+| tipologia | Compound Gin | Pomegranate Bitter |
+| gradazione | 40% Vol. | 25% Vol. |
+| volume | 700 ml | 700 ml |
+| residuo_zuccherino | 15 g/l | — |
+| botaniche | Melagrana, ginepro, arancia, limone, bergamotto, camomilla, rosa, ibisco, cardamomo, melissa | Melagrana, arancia amara, china, genziana, rabarbaro, cannella |
+| olfatto | Fresco, balsamico; melagrana prominente con sentori agrumati e floreali | Intenso e profumato; melagrana matura, agrumi, spezie dolci, radici amare |
+| gusto | Morbido, leggermente dolce; melagrana e agrumi vivaci, delicate note floreali | Deciso ma equilibrato; amaro classico armonizzato dalla freschezza della melagrana |
+| finale | Elegante, fruttato, floreale, con ritorno di melagrana | Persistente, secco, con chiusura agrumata e fruttata |
 
----
+Prezzi: da definire nel pannello Shopify.
 
-### 4. Pagine da creare
+## Drink List
 
-In **Shopify Admin → Online Store → Pages**:
+Contiene i 6 cocktail ufficiali della Drink List 2026. Per aggiungere foto: Pages → Drink List → Customize → blocco cocktail → Foto.
 
-| Titolo | Handle (URL) | Template |
-|--------|-------------|---------|
-| Chi siamo | `chi-siamo` | `about` |
-| Drink List | `drink-list` | `drink-list` |
-| Privacy Policy | `privacy-policy` | (default) |
-| Termini e Condizioni | `termini-e-condizioni` | (default) |
+## Altre note
 
----
-
-### 5. Prodotti — Metafields personalizzati
-
-Per ogni prodotto, aggiungi questi metafields in **Admin → Products → [prodotto] → Metafields**:
-
-| Namespace | Key | Tipo | Esempio |
-|-----------|-----|------|---------|
-| `custom` | `tipologia` | single_line_text | Compound Gin |
-| `custom` | `gradazione` | single_line_text | 40% Vol. |
-| `custom` | `volume` | single_line_text | 700 ml |
-| `custom` | `residuo_zuccherino` | single_line_text | 15 g/l |
-| `custom` | `botaniche` | multi_line_text | Melagrana, Ginepro, Arancia, ... |
-| `custom` | `olfatto` | multi_line_text | Note fresche e balsamiche... |
-| `custom` | `gusto` | multi_line_text | Fresco, morbido e leggermente dolce... |
-| `custom` | `finale` | multi_line_text | Elegante, fruttato e floreale... |
-
----
-
-### 6. Prodotti — Configurazione
-
-**Garnet Gin Almandino**
-- Tipo prodotto: `Compound Gin`
-- Prezzo: 32.00 €
-- Tag: `gin`, `almandino`
-
-**Garnet Bitter Spessartina**
-- Tipo prodotto: `Bitter`  ← importante! Il tema usa il tipo per scegliere colori
-- Prezzo: 28.00 €
-- Tag: `bitter`, `spessartina`
-
----
-
-### 7. Drink List — Aggiungere cocktail
-
-1. Vai su **Online Store → Pages → Drink List**
-2. Clicca **"Customize"**
-3. Nella sezione "Drink List" clicca **"Add block → Cocktail"**
-4. Compila: nome, descrizione, spirito base, foto, ingredienti, preparazione
-
----
-
-### 8. Age Gate
-
-L'age gate è abilitato di default. Usa un cookie di 365 giorni per ricordare la scelta.
-Per personalizzarlo: **Customize → Age Gate** (appare come sezione globale).
-
----
-
-### Struttura file del tema
-
-```
-shopify-theme/
-├── assets/
-│   ├── theme.css          ← tutti gli stili
-│   ├── theme.js           ← tutto il JavaScript
-│   └── [font files]       ← da caricare manualmente
-├── config/
-│   ├── settings_schema.json
-│   └── settings_data.json
-├── layout/
-│   └── theme.liquid       ← layout principale
-├── locales/
-│   └── it.default.json
-├── sections/
-│   ├── age-gate.liquid
-│   ├── header.liquid
-│   ├── footer.liquid
-│   ├── cart-drawer.liquid
-│   ├── hero.liquid
-│   ├── brand-story.liquid
-│   ├── featured-products.liquid
-│   ├── main-product.liquid
-│   ├── main-collection.liquid
-│   ├── about-content.liquid
-│   └── drink-list.liquid
-├── snippets/
-│   └── product-card.liquid
-└── templates/
-    ├── index.json
-    ├── product.json
-    ├── collection.json
-    ├── page.about.json
-    ├── page.drink-list.json
-    └── cart.liquid
-```
+- Age gate 18+ attivo di default (cookie 365 giorni)
+- Recensioni: non incluse; installare un'app (es. Judge.me) e inserire il suo blocco in `sections/main-product.liquid`
+- Footer: ragione sociale e sede preimpostate; **Partita IVA** da inserire in Customize → Footer
+- Favicon: Customize → Theme settings → Brand

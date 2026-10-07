@@ -1,0 +1,18 @@
+<div class="about-hero">
+  <p class="eyebrow">Errore 404</p>
+  <h1>{{ section.settings.title }}</h1>
+  <p>{{ section.settings.subtitle }}</p>
+  <div style="margin-top:2rem;">
+    <a href="/collections/all" class="btn btn--primary">Scopri i prodotti</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Pagina 404",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Questo segreto non esiste" },
+    { "type": "textarea", "id": "subtitle", "label": "Sottotitolo", "default": "La pagina che cerchi non è qui. Torna alla collezione e continua a scoprire." }
+  ]
+}
+{% endschema %}

@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Garnet Spirits",
+    "theme_author": "Cm2 Spirits Srls",
+    "theme_version": "1.1.0",
+    "theme_documentation_url": "https://garnetspirits.it",
+    "theme_support_url": "https://garnetspirits.it"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon (PNG quadrato, min 32×32)"
+      }
+    ]
+  }
+]

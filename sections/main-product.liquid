@@ -36,9 +36,7 @@
     <p class="eyebrow {% if is_bitter %}eyebrow--amber{% endif %}">{{ tag_label }}</p>
     <h1 class="product-hero__title">{{ product.title }}</h1>
     <p class="product-hero__sub">
-      {%- for variant in product.variants limit: 1 -%}
-        {{ variant.title }} ·
-      {%- endfor -%}
+      {%- unless product.has_only_default_variant -%}{{ product.selected_or_first_available_variant.title }} · {% endunless -%}
       {{ product.metafields.custom.volume | default: '700 ml' }}
     </p>
   </div>
@@ -229,48 +227,7 @@
   </div>
 </div>
 
-<!-- Reviews section -->
-<div class="reviews-section" id="reviews">
-  <div class="reviews-section__header">
-    <h3 class="reviews-section__title">Recensioni</h3>
-    <button class="reviews-section__toggle btn btn--outline"
-      onclick="document.getElementById('review-form-wrap').classList.toggle('open')"
-      aria-expanded="false">
-      Scrivi una recensione
-    </button>
-  </div>
-
-  <!-- Write review form (collapsible) -->
-  <div id="review-form-wrap" class="review-form-wrap">
-    <form id="review-form" class="review-form" data-product-id="{{ product.id }}">
-      <div class="review-form__field">
-        <label class="review-form__label" for="review-name">Nome</label>
-        <input type="text" id="review-name" name="name" class="review-form__input" placeholder="Il tuo nome" required>
-      </div>
-      <div class="review-form__field">
-        <label class="review-form__label">Valutazione</label>
-        <div class="review-form__stars" role="group" aria-label="Valutazione in stelle">
-          {%- for i in (1..5) -%}
-            <button type="button" class="review-form__star" data-star="{{ i }}" aria-label="{{ i }} stell{% if i == 1 %}a{% else %}e{% endif %}">★</button>
-          {%- endfor -%}
-        </div>
-        <input type="hidden" id="review-rating-input" name="rating" value="0">
-      </div>
-      <div class="review-form__field">
-        <label class="review-form__label" for="review-body">La tua recensione</label>
-        <textarea id="review-body" name="body" class="review-form__textarea" rows="4" placeholder="Raccontaci la tua esperienza con questo prodotto…" required></textarea>
-      </div>
-      <button type="submit" class="btn {{ btn_class }}">Invia recensione</button>
-    </form>
-  </div>
-
-  <!-- Reviews list (populated by Shopify Reviews app or custom metafields) -->
-  <div class="reviews-list" id="reviews-list">
-    <p class="reviews-empty" style="color:var(--color-gray);font-size:.85rem;padding:2rem 0;">
-      Ancora nessuna recensione. Sii il primo a condividere la tua esperienza!
-    </p>
-  </div>
-</div>
+{%- comment -%} Recensioni: installare un'app (es. Judge.me) e inserire qui il suo blocco. {%- endcomment -%}
 
 {% schema %}
 {

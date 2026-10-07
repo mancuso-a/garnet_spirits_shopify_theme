@@ -12,21 +12,69 @@
     "main": {
       "type": "drink-list",
       "blocks": {
-        "cocktail_qtimVi": {
+        "cocktail_tonic": {
           "type": "cocktail",
           "settings": {
             "spirit": "gin",
             "image": "shopify://shop_images/Garnet_tonic.jpg",
             "name": "Garnet Tonic",
-            "description": "Aromatico, morbido, frizzante",
-            "ingredients": "5 cl Garnet Gin Almandino\nTonica Indian Taste a colmare",
-            "method": "Bicchiere: Collins\nGhiaccio: Cube\nGarnish: Twist limone e chicchi di melagrana\nTecnica: Build and top"
+            "description": "Aromatico · Morbido · Frizzante",
+            "ingredients": "5 cl Garnet Gin Almandino\nTonica Indian Taste a colmare\nGhiaccio cube",
+            "method": "Bicchiere: Collins\nGarnish: twist di limone e chicchi di melagrana freschi\nTecnica: build and top"
+          }
+        },
+        "cocktail_almandino": {
+          "type": "cocktail",
+          "settings": {
+            "spirit": "gin",
+            "name": "Almandino",
+            "description": "Agrumato · Dolce · Fresco",
+            "ingredients": "5 cl Garnet Gin Almandino\n2 cl Triple Sec\n3 cl succo di lime fresco\n1 cl sciroppo di melagrana\n2 dash di foamer",
+            "method": "Bicchiere: coppetta\nTecnica: shake and double strain"
+          }
+        },
+        "cocktail_spritz": {
+          "type": "cocktail",
+          "settings": {
+            "spirit": "bitter",
+            "name": "Garnet Spritz",
+            "description": "Speziato · Aromatico · Frizzante",
+            "ingredients": "6 cl Garnet Bitter Spessartina\n10 cl Prosecco\nSoda a colmare\nGhiaccio cube",
+            "method": "Bicchiere: Collins\nGarnish: twist di limone e arancia\nTecnica: build and top"
+          }
+        },
+        "cocktail_rush": {
+          "type": "cocktail",
+          "settings": {
+            "spirit": "bitter",
+            "name": "Garnet Rush",
+            "description": "Fresco · Speziato · Rigenerante",
+            "ingredients": "5 cl Garnet Bitter Spessartina\nSoda al pompelmo a colmare\nGhiaccio cube",
+            "method": "Bicchiere: Collins\nGarnish: chicchi di melagrana freschi\nTecnica: build"
+          }
+        },
+        "cocktail_negroni": {
+          "type": "cocktail",
+          "settings": {
+            "spirit": "bitter",
+            "name": "Negroni Fashion",
+            "description": "Intenso · Amaro",
+            "ingredients": "3 cl Garnet Gin Almandino\n4 cl Garnet Bitter Spessartina\n2 cl Vermouth Punt e Mes\nGhiaccio cube",
+            "method": "Bicchiere: Old Fashioned\nGarnish: twist di limone e arancia\nTecnica: stir"
+          }
+        },
+        "cocktail_americano": {
+          "type": "cocktail",
+          "settings": {
+            "spirit": "bitter",
+            "name": "Americano Spessartina",
+            "description": "Aromatico · Morbido",
+            "ingredients": "4,5 cl Garnet Bitter Spessartina\n4,5 cl Vermouth Punt e Mes\nSoda a colmare\nGhiaccio cube",
+            "method": "Bicchiere: Old Fashioned\nGarnish: twist di limone e arancia\nTecnica: build and top"
           }
         }
       },
-      "block_order": [
-        "cocktail_qtimVi"
-      ],
+      "block_order": ["cocktail_tonic","cocktail_almandino","cocktail_spritz","cocktail_rush","cocktail_negroni","cocktail_americano"],
       "settings": {
         "title": "Drink List",
         "subtitle": "Ricette pensate per esaltare il carattere dei nostri spiriti. Dai classici alle creazioni più originali."
@@ -35,7 +83,7 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "tagline": "Distillati artigianali ispirati alla melagrana. Nati nel 2022 dal Sud Italia, con passione per il territorio e l'autenticità.",
+        "tagline": "Distillati artigianali ispirati alla melagrana e al granato. Nati a Bari nel 2022.",
         "nav_title": "Navigazione",
         "contact_title": "Contatti",
         "email": "info@garnetspirits.it",

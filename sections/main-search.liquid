@@ -1,0 +1,43 @@
+<div class="collection-header">
+  <p class="eyebrow">Ricerca</p>
+  <h1>{%- if search.performed -%}«{{ search.terms | escape }}»{%- else -%}Cerca{%- endif -%}</h1>
+  {%- if search.performed -%}
+    <p>{{ search.results_count }} risultat{% if search.results_count == 1 %}o{% else %}i{% endif %}</p>
+  {%- endif -%}
+</div>
+
+<div class="collection-results" style="padding:0 3rem 5rem;">
+  <form action="{{ routes.search_url }}" method="get" style="max-width:520px;margin:0 auto 3rem;display:flex;gap:.5rem;">
+    <input type="search" name="q" value="{{ search.terms | escape }}" class="search-overlay__input" placeholder="Gin, Bitter, melagrana…">
+    <button type="submit" class="btn btn--primary">Cerca</button>
+  </form>
+
+  {%- if search.performed -%}
+    <div class="product-grid">
+      {%- paginate search.results by 12 -%}
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {%- render 'product-card', product: item -%}
+          {%- else -%}
+            <a href="{{ item.url }}" class="btn btn--outline" style="grid-column:1/-1;justify-content:flex-start;">{{ item.title }}</a>
+          {%- endif -%}
+        {%- else -%}
+          <p style="color:var(--color-gray);grid-column:1/-1;text-align:center;padding:3rem;">Nessun risultato. Prova con un'altra parola.</p>
+        {%- endfor -%}
+        {%- if paginate.pages > 1 -%}
+          <div style="display:flex;justify-content:center;gap:.5rem;padding:2rem 0;grid-column:1/-1;">
+            {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="btn btn--outline">← Precedente</a>{%- endif -%}
+            {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="btn btn--outline">Successiva →</a>{%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endpaginate -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Ricerca",
+  "settings": []
+}
+{% endschema %}

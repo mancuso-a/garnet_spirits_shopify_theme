@@ -8,10 +8,10 @@
         alt="{{ shop.name }}"
         class="site-footer__logo-img"
         width="120"
-        height="auto"
         loading="lazy">
     </a>
     <p>{{ section.settings.tagline }}</p>
+    <p class="site-footer__claim">One sip, one secret.</p>
   </div>
 
   <!-- Nav column -->
@@ -28,16 +28,14 @@
     {%- if section.settings.email != blank -%}
       <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
     {%- endif -%}
-    {%- if section.settings.instagram != blank -%}
-      <a href="{{ section.settings.instagram }}" target="_blank" rel="noopener noreferrer">Instagram</a>
-    {%- endif -%}
+    <a href="{{ section.settings.instagram | default: 'https://www.instagram.com/garnetspirits/' }}" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a href="/pages/privacy-policy">Privacy Policy</a>
     <a href="/pages/termini-e-condizioni">Termini e Condizioni</a>
   </div>
 
   <!-- Bottom bar -->
   <div class="site-footer__bottom">
-    <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. Tutti i diritti riservati.</span>
+    <span>© {{ 'now' | date: '%Y' }} {{ section.settings.company_name }}{% if section.settings.company_address != blank %} · {{ section.settings.company_address }}{% endif %}{% if section.settings.vat != blank %} · P.IVA {{ section.settings.vat }}{% endif %}. Tutti i diritti riservati.</span>
     <span class="site-footer__warning">
       {{ section.settings.alcohol_warning }}
     </span>
@@ -53,7 +51,7 @@
       "type": "text",
       "id": "tagline",
       "label": "Tagline brand",
-      "default": "Distillati artigianali ispirati alla melagrana. Nati nel 2022 dal Sud Italia, con passione per il territorio e l'autenticità."
+      "default": "Distillati artigianali ispirati alla melagrana e al granato. Nati a Bari nel 2022."
     },
     {
       "type": "text",
@@ -77,6 +75,23 @@
       "type": "url",
       "id": "instagram",
       "label": "URL Instagram"
+    },
+    {
+      "type": "text",
+      "id": "company_name",
+      "label": "Ragione sociale",
+      "default": "Cm2 Spirits Srls"
+    },
+    {
+      "type": "text",
+      "id": "company_address",
+      "label": "Sede legale",
+      "default": "Via Martin Luther King 21, 70124 Bari (BA)"
+    },
+    {
+      "type": "text",
+      "id": "vat",
+      "label": "Partita IVA"
     },
     {
       "type": "text",
