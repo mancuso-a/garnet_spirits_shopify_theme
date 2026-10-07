@@ -49,6 +49,7 @@
           "type": "cocktail",
           "settings": {
             "spirit": "bitter",
+            "image": "shopify://shop_images/rush.png",
             "name": "Garnet Rush",
             "description": "Fresco · Speziato · Rigenerante",
             "ingredients": "5 cl Garnet Bitter Spessartina\nSoda al pompelmo a colmare\nGhiaccio cube",
@@ -59,6 +60,7 @@
           "type": "cocktail",
           "settings": {
             "spirit": "bitter",
+            "image": "shopify://shop_images/negroni.png",
             "name": "Negroni Fashion",
             "description": "Intenso · Amaro",
             "ingredients": "3 cl Garnet Gin Almandino\n4 cl Garnet Bitter Spessartina\n2 cl Vermouth Punt e Mes\nGhiaccio cube",
