@@ -37,7 +37,7 @@
     <h1 class="product-hero__title">{{ product.title }}</h1>
     <p class="product-hero__sub">
       {%- unless product.has_only_default_variant -%}{{ product.selected_or_first_available_variant.title }} · {% endunless -%}
-      {{ product.metafields.custom.volume | default: '700 ml' }}
+      {{ product.metafields.custom.formato | default: product.metafields.custom.volume | default: '700 ml' }}
     </p>
   </div>
 </div>
@@ -105,10 +105,10 @@
           <span class="spec__value">{{ product.metafields.custom.gradazione }}</span>
         </div>
       {%- endif -%}
-      {%- if product.metafields.custom.volume != blank -%}
+      {%- if product.metafields.custom.formato != blank -%}
         <div class="spec">
           <span class="spec__label">Formato</span>
-          <span class="spec__value">{{ product.metafields.custom.volume }}</span>
+          <span class="spec__value">{{ product.metafields.custom.formato }}</span>
         </div>
       {%- endif -%}
       {%- if product.metafields.custom.residuo_zuccherino != blank -%}

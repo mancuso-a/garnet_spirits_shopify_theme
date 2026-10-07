@@ -30,14 +30,14 @@ Il repo è collegato a Shopify via GitHub (Online Store → Themes → Add theme
 ## Prodotti
 
 Metafield (namespace `custom`) da creare in Settings → Custom data → Products:
-`tipologia`, `gradazione`, `volume`, `residuo_zuccherino` (testo riga singola) · `botaniche` (testo, separato da virgole), `olfatto`, `gusto`, `finale` (testo multi-riga).
+`tipologia`, `gradazione`, `formato`, `residuo_zuccherino` (testo riga singola) · `botaniche` (testo, separato da virgole), `olfatto`, `gusto`, `finale` (testo multi-riga).
 
 | | Garnet Gin Almandino | Garnet Bitter Spessartina |
 |---|---|---|
 | Tipo prodotto | `Compound Gin` | `Bitter` |
 | tipologia | Compound Gin | Pomegranate Bitter |
 | gradazione | 40% Vol. | 25% Vol. |
-| volume | 700 ml | 700 ml |
+| formato | 700 ml | 700 ml |
 | residuo_zuccherino | 15 g/l | — |
 | botaniche | Melagrana, ginepro, arancia, limone, bergamotto, camomilla, rosa, ibisco, cardamomo, melissa | Melagrana, arancia amara, china, genziana, rabarbaro, cannella |
 | olfatto | Fresco, balsamico; melagrana prominente con sentori agrumati e floreali | Intenso e profumato; melagrana matura, agrumi, spezie dolci, radici amare |

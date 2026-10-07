@@ -54,7 +54,7 @@
               {%- if block.settings.ingredients != blank -%}
                 <p class="recipe-section-title">Ingredienti</p>
                 <ul class="recipe-ingredients">
-                  {%- assign ingredients = block.settings.ingredients | split: newline -%}
+                  {%- assign ingredients = block.settings.ingredients | newline_to_br | split: "<br />" -%}
                   {%- for ingredient in ingredients -%}
                     {%- if ingredient != blank -%}
                       <li>{{ ingredient }}</li>
@@ -64,7 +64,7 @@
               {%- endif -%}
               {%- if block.settings.method != blank -%}
                 <p class="recipe-section-title">Preparazione</p>
-                <p class="recipe-method">{{ block.settings.method }}</p>
+                <p class="recipe-method">{{ block.settings.method | newline_to_br }}</p>
               {%- endif -%}
             </div>
           {%- endif -%}
