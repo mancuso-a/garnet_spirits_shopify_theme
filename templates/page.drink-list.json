@@ -15,7 +15,7 @@
         "cocktail_tonic": {
           "type": "cocktail",
           "settings": {
-            "spirit": "gin",
+            "spirit": "bitter",
             "image": "shopify://shop_images/Garnet_tonic_a544e9a8-7725-44e0-891c-2a059db8d462.png",
             "name": "Garnet Tonic",
             "description": "Aromatico · Morbido · Frizzante",
@@ -27,6 +27,7 @@
           "type": "cocktail",
           "settings": {
             "spirit": "gin",
+            "image": "shopify://shop_images/almandino_drink.png",
             "name": "Almandino",
             "description": "Agrumato · Dolce · Fresco",
             "ingredients": "5 cl Garnet Gin Almandino\n2 cl Triple Sec\n3 cl succo di lime fresco\n1 cl sciroppo di melagrana\n2 dash di foamer",
