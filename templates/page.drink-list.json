@@ -59,7 +59,7 @@
         "cocktail_negroni": {
           "type": "cocktail",
           "settings": {
-            "spirit": "bitter",
+            "spirit": "gin",
             "image": "shopify://shop_images/negroni.png",
             "name": "Negroni Fashion",
             "description": "Intenso · Amaro",
