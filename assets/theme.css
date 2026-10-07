@@ -49,6 +49,24 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('josefin-sans-400.woff2') format('woff2'),
+       url('josefin-sans-400.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('josefin-sans-600.woff2') format('woff2'),
+       url('josefin-sans-600.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ── CSS VARIABLES ───────────────────────────────────────── */
 :root {
   --color-bg:           #0a0a0a;
@@ -64,6 +82,7 @@
   --color-light:        #CCCCCC;
 
   --font-display:  'Aliens & Cows', serif;
+  --font-title:    'Josefin Sans', sans-serif;
   --font-body:     'Jost', sans-serif;
 
   --nav-height: 72px;
@@ -1000,7 +1019,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
 }
 .cocktail-card__spirit--gin { color: var(--color-red-light); }
 .cocktail-card__spirit--bitter { color: var(--color-amber-light); }
-.cocktail-card__name { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 0.5rem; }
+.cocktail-card__name { font-family: var(--font-title); font-weight: 600; font-size: 1.2rem; margin-bottom: 0.5rem; }
 .cocktail-card__desc { color: var(--color-gray); font-size: 0.82rem; line-height: 1.65; margin-bottom: 1rem; font-weight: 300; }
 
 .recipe-toggle {
@@ -1435,7 +1454,7 @@ body.has-announcement .site-header { top: 34px; }
 }
 .quick-add-modal.open .quick-add-sheet { transform: translateY(0); }
 .quick-add-sheet__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
-.quick-add-sheet__name { font-family: var(--font-display); font-size: 1.3rem; }
+.quick-add-sheet__name { font-family: var(--font-title); font-weight: 600; font-size: 1.3rem; }
 .quick-add-sheet__price { font-size: 1rem; font-weight: 500; color: var(--color-red-light); margin-top: 0.3rem; }
 .quick-add-sheet__close { background: none; border: none; color: var(--color-gray); font-size: 1.2rem; cursor: pointer; transition: color var(--transition); }
 .quick-add-sheet__close:hover { color: var(--color-white); }
@@ -1721,7 +1740,7 @@ body.has-announcement .site-header { top: 34px; }
 }
 .sticky-atc.visible { transform: translateY(0); }
 .sticky-atc__info { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
-.sticky-atc__name { font-family: var(--font-display); font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sticky-atc__name { font-family: var(--font-title); font-weight: 600; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sticky-atc__price { font-size: 0.82rem; color: var(--color-red-light); }
 .sticky-atc__price--bitter { color: var(--color-amber-light); }
 .sticky-atc__actions { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
@@ -2013,7 +2032,7 @@ body.has-announcement .site-header { top: 34px; }
 .newsletter-popup__img img { width: 100%; height: 100%; object-fit: cover; }
 .newsletter-popup__body { padding: 1.5rem; }
 .newsletter-popup__eyebrow { font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--color-red-light); margin-bottom: 0.5rem; }
-.newsletter-popup__title { font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 0.5rem; }
+.newsletter-popup__title { font-family: var(--font-title); font-weight: 600; font-size: 1.3rem; margin-bottom: 0.5rem; }
 .newsletter-popup__subtitle { font-size: 0.8rem; color: var(--color-gray); margin-bottom: 1.25rem; line-height: 1.6; }
 .newsletter-popup__form { display: flex; gap: 0; }
 .newsletter-popup__input {
@@ -2290,3 +2309,15 @@ body.has-announcement .site-header { top: 34px; }
   font-size: 0.95rem;
   color: var(--color-red-light);
 }
+
+/* ── TITOLI PICCOLI: Josefin Sans (più leggibile a corpo ridotto) ── */
+h3, h4, h5, h6,
+.product-card__name,
+.garnet-card__name,
+.cart-drawer__title,
+.site-footer__claim {
+  font-family: var(--font-title);
+  font-weight: 600;
+}
+.cocktail-card__name,
+.product-card__name { letter-spacing: 0.02em; }
