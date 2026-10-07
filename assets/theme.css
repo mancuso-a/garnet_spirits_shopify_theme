@@ -958,7 +958,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
 .cocktail-card:hover { border-color: #444; transform: translateY(-4px); }
 .cocktail-card[data-hidden="true"] { display: none; }
 .cocktail-card__image {
-  height: 220px;
+  aspect-ratio: 2 / 3;
   overflow: hidden;
   position: relative;
   background: var(--color-dark);

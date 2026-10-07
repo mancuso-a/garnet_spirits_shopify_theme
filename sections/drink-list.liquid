@@ -19,7 +19,7 @@
 
         <div class="cocktail-card__image">
           {%- if block.settings.image != blank -%}
-            {{ block.settings.image | image_url: width: 600 | image_tag:
+            {{ block.settings.image | image_url: width: 800 | image_tag:
               loading: 'lazy',
               alt: block.settings.name | escape
             }}
