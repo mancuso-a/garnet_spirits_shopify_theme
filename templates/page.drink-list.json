@@ -38,6 +38,7 @@
           "type": "cocktail",
           "settings": {
             "spirit": "bitter",
+            "image": "shopify://shop_images/Spritz_con_melagrana_e_arancia.png",
             "name": "Garnet Spritz",
             "description": "Speziato · Aromatico · Frizzante",
             "ingredients": "6 cl Garnet Bitter Spessartina\n10 cl Prosecco\nSoda a colmare\nGhiaccio cube",
