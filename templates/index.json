@@ -16,19 +16,15 @@
       "type": "nature-inspired",
       "settings": {
         "title": "Nature Inspired",
+        "image_side": "left",
         "text": "Garnet Spirits nasce dalla melagrana, frutto simbolo di energia ed eleganza"
       }
     },
     "pietra_frutto_spirito": {
       "type": "pietra-frutto-spirito",
-      "blocks": {
-        "pietra": { "type": "item", "settings": { "label": "La pietra" } },
-        "frutto": { "type": "item", "settings": { "label": "Il frutto" } },
-        "spirito": { "type": "item", "settings": { "label": "Lo spirito" } }
-      },
-      "block_order": ["pietra", "frutto", "spirito"],
       "settings": {
         "title": "La pietra, il frutto, lo spirito",
+        "image_side": "right",
         "text": "Granato e melagrana: stessa origine, stessa forza. da questo legame creiamo spiriti autentici e vibranti."
       }
     },
@@ -37,6 +33,7 @@
       "settings": {
         "eyebrow": "",
         "title": "Spiriti preziosi",
+        "image_side": "left",
         "subtitle": "Un granato per ogni spirito: tonalità uniche che guidano aromi, carattere e identità di ogni bottiglia.",
         "products_to_show": 2,
         "show_cta": true,

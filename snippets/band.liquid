@@ -1,0 +1,15 @@
+{%- comment -%}
+  Sezione con titolo sopra, sfondo a tutta larghezza, immagine sovrapposta su un lato e testo di fianco.
+  Parametri: title, text, bg (url), img (url), side ('left' | 'right' = lato dell'immagine), alt
+{%- endcomment -%}
+<div class="band band--img-{{ side | default: 'left' }}">
+  <div class="band__title container">
+    <h2>{{ title }}</h2>
+  </div>
+  <div class="band__bg" style="background-image:url('{{ bg }}');">
+    <div class="band__inner container">
+      <div class="band__img"><img src="{{ img }}" alt="{{ alt | escape }}" loading="lazy"></div>
+      <div class="band__text"><p>{{ text }}</p></div>
+    </div>
+  </div>
+</div>

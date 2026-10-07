@@ -2305,38 +2305,38 @@ h1, h2, h3, h4, h5, h6,
 h1, h2 { font-weight: 400; letter-spacing: 0.08em; line-height: 1.15; }
 h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 
-/* ── HOME: NATURE INSPIRED · PIETRA/FRUTTO/SPIRITO · SPIRITI PREZIOSI ── */
-.nature-inspired { padding: 5rem 0; text-align: center; border-bottom: 1px solid var(--color-border); }
-.nature-inspired h2 { margin-bottom: 1rem; color: var(--color-red-light); }
-.nature-inspired p { color: var(--color-light); font-size: 1.05rem; font-weight: 300; line-height: 1.8; }
-
-.pfs { padding: 7rem 0; }
-.pfs__header { text-align: center; max-width: 640px; margin: 0 auto 4rem; }
-.pfs__header h2 { margin-bottom: 1rem; }
-.pfs__header p { color: var(--color-gray); font-weight: 300; line-height: 1.8; }
-.pfs__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.pfs__item { margin: 0; }
-.pfs__img { aspect-ratio: 3 / 4; overflow: hidden; background: var(--color-card); }
-.pfs__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-.pfs__item:hover .pfs__img img { transform: scale(1.04); }
-.pfs__item figcaption {
-  margin-top: 1rem; text-align: center; font-weight: 500; font-size: 0.72rem;
-  letter-spacing: 0.3em; text-transform: uppercase; color: var(--color-light);
+/* ── BAND: titolo sopra, sfondo a tutta larghezza, immagine + testo alternati ── */
+.band-section { padding-top: 6rem; }
+.featured-products { padding: 0 0 7rem; }
+.featured-products .band { padding-top: 0; }
+.band__title { text-align: center; padding-bottom: 3rem; }
+.band__bg {
+  position: relative;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  padding: 5rem 0;
 }
-
-.featured-products__header--split {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; text-align: left;
+.band__bg::before { content: ''; position: absolute; inset: 0; background: rgba(10, 10, 10, 0.55); }
+.band__inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
 }
-.featured-products__header--split .featured-products__header-text p { margin: 0; }
-.featured-products__header-img { aspect-ratio: 4 / 3; overflow: hidden; position: relative; }
-.featured-products__header-img img { width: 100%; height: 100%; object-fit: cover; }
-.featured-products__header-img::after { content: ''; position: absolute; inset: 0; background: rgba(10, 10, 10, 0.35); }
+.band--img-right .band__inner { flex-direction: row-reverse; }
+.band__img { flex: 0 0 300px; aspect-ratio: 4 / 5; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); }
+.band__img img { width: 100%; height: 100%; object-fit: cover; }
+.band__text { flex: 1 1 0; max-width: 460px; }
+.band__text p { font-size: 1.15rem; font-weight: 300; line-height: 1.8; color: var(--color-white); }
+.featured-products__products { padding-top: 5rem; }
 
 .about-hero--image { background-size: cover; background-position: center; }
 
 @media (max-width: 768px) {
-  .pfs__grid { grid-template-columns: 1fr; }
-  .pfs__img { aspect-ratio: 4 / 3; }
-  .featured-products__header--split { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
-  .nature-inspired, .pfs { padding: 4rem 0; }
+  .band-section { padding-top: 4rem; }
+  .band__bg { padding: 3rem 0; }
+  .band__inner, .band--img-right .band__inner { flex-direction: column; gap: 2rem; text-align: center; }
+  .band__img { flex-basis: auto; width: 70%; max-width: 280px; }
 }

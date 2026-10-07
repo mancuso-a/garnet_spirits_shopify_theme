@@ -1,8 +1,7 @@
-<section class="nature-inspired">
-  <div class="container--narrow">
-    <h2>{{ section.settings.title }}</h2>
-    <p>{{ section.settings.text }}</p>
-  </div>
+<section class="band-section">
+  {%- if section.settings.bg_image != blank -%}{%- assign bg = section.settings.bg_image | image_url: width: 2000 -%}{%- else -%}{%- assign bg = 'bg-frutto.jpg' | asset_url -%}{%- endif -%}
+  {%- if section.settings.overlay_image != blank -%}{%- assign img = section.settings.overlay_image | image_url: width: 800 -%}{%- else -%}{%- assign img = 'overlay-effect.jpg' | asset_url -%}{%- endif -%}
+  {%- render 'band', title: section.settings.title, text: section.settings.text, bg: bg, img: img, side: section.settings.image_side, alt: section.settings.title -%}
 </section>
 
 {% schema %}
@@ -10,7 +9,11 @@
   "name": "Nature Inspired",
   "settings": [
     { "type": "text", "id": "title", "label": "Titolo", "default": "Nature Inspired" },
-    { "type": "textarea", "id": "text", "label": "Testo", "default": "Garnet Spirits nasce dalla melagrana, frutto simbolo di energia ed eleganza" }
+    { "type": "textarea", "id": "text", "label": "Testo", "default": "Garnet Spirits nasce dalla melagrana, frutto simbolo di energia ed eleganza" },
+    { "type": "image_picker", "id": "bg_image", "label": "Sfondo (se vuoto usa quello del tema)" },
+    { "type": "image_picker", "id": "overlay_image", "label": "Immagine sovrapposta (se vuota usa quella del tema)" },
+    { "type": "select", "id": "image_side", "label": "Lato dell'immagine", "default": "left",
+      "options": [ { "value": "left", "label": "Sinistra" }, { "value": "right", "label": "Destra" } ] }
   ],
   "presets": [{ "name": "Nature Inspired" }]
 }

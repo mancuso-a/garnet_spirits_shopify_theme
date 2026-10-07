@@ -1,24 +1,9 @@
 <section class="featured-products">
-  <div class="container">
+  {%- if section.settings.bg_image != blank -%}{%- assign bg = section.settings.bg_image | image_url: width: 2000 -%}{%- else -%}{%- assign bg = 'home-hero.jpg' | asset_url -%}{%- endif -%}
+  {%- if section.settings.image != blank -%}{%- assign img = section.settings.image | image_url: width: 800 -%}{%- else -%}{%- assign img = 'overlay-granati.jpg' | asset_url -%}{%- endif -%}
+  {%- render 'band', title: section.settings.title, text: section.settings.subtitle, bg: bg, img: img, side: section.settings.image_side, alt: section.settings.title -%}
 
-    <div class="featured-products__header featured-products__header--split">
-      <div class="featured-products__header-text">
-      {%- if section.settings.eyebrow != blank -%}
-        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
-      {%- endif -%}
-      <h2>{{ section.settings.title }}</h2>
-      {%- if section.settings.subtitle != blank -%}
-        <p>{{ section.settings.subtitle }}</p>
-      {%- endif -%}
-      </div>
-      <div class="featured-products__header-img">
-        {%- if section.settings.image != blank -%}
-          {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.title | escape }}
-        {%- else -%}
-          <img src="{{ 'home-spiriti-preziosi.jpg' | asset_url }}" alt="{{ section.settings.title | escape }}" loading="lazy">
-        {%- endif -%}
-      </div>
-    </div>
+  <div class="container featured-products__products">
 
     {%- assign collection = collections[section.settings.collection] -%}
     {%- if collection != blank and collection.products_count > 0 -%}
@@ -54,7 +39,19 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Immagine (se vuota usa quella del tema)"
+      "label": "Immagine sovrapposta (se vuota usa quella del tema)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Sfondo (se vuoto usa quello del tema)"
+    },
+    {
+      "type": "select",
+      "id": "image_side",
+      "label": "Lato dell'immagine",
+      "default": "left",
+      "options": [ { "value": "left", "label": "Sinistra" }, { "value": "right", "label": "Destra" } ]
     },
     {
       "type": "text",
