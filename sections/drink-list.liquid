@@ -4,18 +4,35 @@
   <p>{{ section.settings.subtitle }}</p>
 </div>
 
+{%- comment -%} I filtri nascono dai tag scritti nei cocktail: nuovo prodotto = nuovo tag, nessuna modifica al tema. {%- endcomment -%}
+{%- assign all_tags = '' -%}
+{%- for block in section.blocks -%}
+  {%- assign block_tags = block.settings.tags | split: ',' -%}
+  {%- for t in block_tags -%}
+    {%- assign tt = t | strip -%}
+    {%- if tt != blank -%}{%- assign all_tags = all_tags | append: tt | append: '|' -%}{%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- assign tag_list = all_tags | split: '|' | uniq -%}
+
 <!-- Filter tabs -->
 <div class="drinks-filter" role="tablist">
   <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Tutti</button>
-  <button class="filter-btn" data-filter="gin" role="tab" aria-selected="false">Garnet Gin</button>
-  <button class="filter-btn" data-filter="bitter" role="tab" aria-selected="false">Garnet Bitter</button>
+  {%- for tag in tag_list -%}
+    {%- if tag != blank -%}
+      <button class="filter-btn" data-filter="{{ tag | handleize }}" role="tab" aria-selected="false">{{ tag }}</button>
+    {%- endif -%}
+  {%- endfor -%}
 </div>
 
 <!-- Cocktail grid -->
 <div class="cocktail-grid">
   {%- for block in section.blocks -%}
     {%- if block.type == 'cocktail' -%}
-      <article class="cocktail-card" data-spirit="{% if block.settings.spirit == 'both' %}gin bitter{% else %}{{ block.settings.spirit }}{% endif %}">
+      {%- assign card_tags = block.settings.tags | split: ',' -%}
+      {%- capture card_slugs -%}{%- for t in card_tags -%}{{ t | strip | handleize }} {% endfor -%}{%- endcapture -%}
+      {%- capture card_label -%}{%- for t in card_tags -%}{{ t | strip }}{%- unless forloop.last %} + {% endunless -%}{%- endfor -%}{%- endcapture -%}
+      <article class="cocktail-card" data-spirit="{{ card_slugs | strip }}">
 
         <div class="cocktail-card__image">
           {%- if block.settings.image != blank -%}
@@ -34,9 +51,7 @@
         </div>
 
         <div class="cocktail-card__body">
-          <p class="cocktail-card__spirit cocktail-card__spirit--{{ block.settings.spirit }}">
-            {%- if block.settings.spirit == 'gin' -%}Garnet Gin{%- elsif block.settings.spirit == 'both' -%}Garnet Gin + Garnet Bitter{%- else -%}Garnet Bitter{%- endif -%}
-          </p>
+          <p class="cocktail-card__spirit cocktail-card__spirit--{% if card_tags.size == 1 %}{{ card_tags[0] | strip | handleize }}{% else %}multi{% endif %}">{{ card_label }}</p>
           <h3 class="cocktail-card__name">{{ block.settings.name }}</h3>
           {%- if block.settings.description != blank -%}
             <p class="cocktail-card__desc">{{ block.settings.description }}</p>
@@ -98,15 +113,11 @@
       "name": "Cocktail",
       "settings": [
         {
-          "type": "select",
-          "id": "spirit",
-          "label": "Spirito base",
-          "options": [
-            { "value": "gin", "label": "Garnet Gin" },
-            { "value": "bitter", "label": "Garnet Bitter" },
-            { "value": "both", "label": "Garnet Gin + Garnet Bitter" }
-          ],
-          "default": "gin"
+          "type": "text",
+          "id": "tags",
+          "label": "Prodotti usati (tag, separati da virgola)",
+          "info": "Es. Garnet Gin, Garnet Bitter. Ogni tag diventa un filtro nella pagina.",
+          "default": "Garnet Gin"
         },
         {
           "type": "image_picker",
@@ -143,7 +154,7 @@
         {
           "type": "cocktail",
           "settings": {
-            "spirit": "gin",
+            "tags": "Garnet Gin",
             "name": "Garnet Tonic",
             "description": "Aromatico · Morbido · Frizzante",
             "ingredients": "5 cl Garnet Gin Almandino\nTonica Indian Taste a colmare\nGhiaccio cube",
@@ -153,7 +164,7 @@
         {
           "type": "cocktail",
           "settings": {
-            "spirit": "gin",
+            "tags": "Garnet Gin",
             "name": "Almandino",
             "description": "Agrumato · Dolce · Fresco",
             "ingredients": "5 cl Garnet Gin Almandino\n2 cl Triple Sec\n3 cl succo di lime fresco\n1 cl sciroppo di melagrana\n2 dash di foamer",
@@ -163,7 +174,7 @@
         {
           "type": "cocktail",
           "settings": {
-            "spirit": "bitter",
+            "tags": "Garnet Bitter",
             "name": "Garnet Spritz",
             "description": "Speziato · Aromatico · Frizzante",
             "ingredients": "6 cl Garnet Bitter Spessartina\n10 cl Prosecco\nSoda a colmare\nGhiaccio cube",
@@ -173,7 +184,7 @@
         {
           "type": "cocktail",
           "settings": {
-            "spirit": "bitter",
+            "tags": "Garnet Bitter",
             "name": "Garnet Rush",
             "description": "Fresco · Speziato · Rigenerante",
             "ingredients": "5 cl Garnet Bitter Spessartina\nSoda al pompelmo a colmare\nGhiaccio cube",
@@ -183,7 +194,7 @@
         {
           "type": "cocktail",
           "settings": {
-            "spirit": "both",
+            "tags": "Garnet Gin, Garnet Bitter",
             "name": "Negroni Fashion",
             "description": "Intenso · Amaro",
             "ingredients": "3 cl Garnet Gin Almandino\n4 cl Garnet Bitter Spessartina\n2 cl Vermouth Punt e Mes\nGhiaccio cube",
@@ -193,7 +204,7 @@
         {
           "type": "cocktail",
           "settings": {
-            "spirit": "bitter",
+            "tags": "Garnet Bitter",
             "name": "Americano Spessartina",
             "description": "Aromatico · Morbido",
             "ingredients": "4,5 cl Garnet Bitter Spessartina\n4,5 cl Vermouth Punt e Mes\nSoda a colmare\nGhiaccio cube",

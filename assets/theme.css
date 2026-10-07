@@ -994,9 +994,9 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   margin-bottom: 0.4rem;
   font-weight: 500;
 }
-.cocktail-card__spirit--gin { color: var(--color-red-light); }
-.cocktail-card__spirit--bitter { color: var(--color-amber-light); }
-.cocktail-card__spirit--both { color: var(--color-light); }
+.cocktail-card__spirit--garnet-gin { color: var(--color-red-light); }
+.cocktail-card__spirit--garnet-bitter { color: var(--color-amber-light); }
+.cocktail-card__spirit--multi { color: var(--color-light); }
 .cocktail-card__name { font-family: var(--font-title); font-weight: 600; font-size: 1.2rem; margin-bottom: 0.5rem; }
 .cocktail-card__desc { color: var(--color-gray); font-size: 0.82rem; line-height: 1.65; margin-bottom: 1rem; font-weight: 300; }
 

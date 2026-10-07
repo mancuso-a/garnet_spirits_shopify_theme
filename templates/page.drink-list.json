@@ -15,7 +15,7 @@
         "cocktail_tonic": {
           "type": "cocktail",
           "settings": {
-            "spirit": "gin",
+            "tags": "Garnet Gin",
             "image": "shopify://shop_images/Garnet_tonic_a544e9a8-7725-44e0-891c-2a059db8d462.png",
             "name": "Garnet Tonic",
             "description": "Aromatico · Morbido · Frizzante",
@@ -26,7 +26,7 @@
         "cocktail_almandino": {
           "type": "cocktail",
           "settings": {
-            "spirit": "gin",
+            "tags": "Garnet Gin",
             "image": "shopify://shop_images/almandino_drink.png",
             "name": "Almandino",
             "description": "Agrumato · Dolce · Fresco",
@@ -37,7 +37,7 @@
         "cocktail_spritz": {
           "type": "cocktail",
           "settings": {
-            "spirit": "bitter",
+            "tags": "Garnet Bitter",
             "image": "shopify://shop_images/Spritz_con_melagrana_e_arancia.png",
             "name": "Garnet Spritz",
             "description": "Speziato · Aromatico · Frizzante",
@@ -48,7 +48,7 @@
         "cocktail_rush": {
           "type": "cocktail",
           "settings": {
-            "spirit": "bitter",
+            "tags": "Garnet Bitter",
             "image": "shopify://shop_images/rush.png",
             "name": "Garnet Rush",
             "description": "Fresco · Speziato · Rigenerante",
@@ -59,7 +59,7 @@
         "cocktail_negroni": {
           "type": "cocktail",
           "settings": {
-            "spirit": "both",
+            "tags": "Garnet Gin, Garnet Bitter",
             "image": "shopify://shop_images/negroni.png",
             "name": "Negroni Fashion",
             "description": "Intenso · Amaro",
@@ -70,7 +70,7 @@
         "cocktail_americano": {
           "type": "cocktail",
           "settings": {
-            "spirit": "bitter",
+            "tags": "Garnet Bitter",
             "image": "shopify://shop_images/americano.png",
             "name": "Americano Spessartina",
             "description": "Aromatico · Morbido",
