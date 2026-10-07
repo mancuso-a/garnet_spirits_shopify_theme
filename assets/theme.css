@@ -1,17 +1,9 @@
 /* ═══════════════════════════════════════════════════════════
    GARNET SPIRITS — SHOPIFY THEME
-   Fonts: Aliens & Cows (display) · Jost (body)
+   Fonts: Josefin Sans (titoli) · Jost (testo)
    ═══════════════════════════════════════════════════════════ */
 
 /* ── FONT FACES ──────────────────────────────────────────── */
-@font-face {
-  font-family: 'Aliens & Cows';
-  src: url('aliens-cows.woff2') format('woff2'),
-       url('aliens-cows.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
 
 @font-face {
   font-family: 'Jost';
@@ -67,6 +59,15 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('josefin-sans-400-italic.woff2') format('woff2'),
+       url('josefin-sans-400-italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* ── CSS VARIABLES ───────────────────────────────────────── */
 :root {
   --color-bg:           #0a0a0a;
@@ -81,7 +82,7 @@
   --color-gray:         #999999;
   --color-light:        #CCCCCC;
 
-  --font-display:  'Aliens & Cows', serif;
+  --font-display:  'Josefin Sans', sans-serif;
   --font-title:    'Josefin Sans', sans-serif;
   --font-body:     'Jost', sans-serif;
 
