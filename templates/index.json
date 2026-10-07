@@ -46,6 +46,7 @@
       "settings": {
         "reverse": true,
         "accent_amber": true,
+        "image": "shopify://shop_images/Garnet_tonic.jpg",
         "eyebrow": "Drink list",
         "title": "Crea qualcosa di straordinario",
         "body": "Dalla miscelazione classica alle creazioni più audaci: scopri come i nostri spiriti prendono vita in ogni cocktail.",
