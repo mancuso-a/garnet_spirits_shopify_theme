@@ -41,8 +41,9 @@
       {%- endfor -%}
     {%- endcapture -%}
     {%- assign spirit_color = '#CCCCCC' -%}
-    {%- if prods.size == 1 -%}
-      {%- capture info -%}{%- render 'product-spirit', product: prods[0] -%}{%- endcapture -%}
+    {%- assign prod_count = prods | size -%}
+    {%- if prod_count == 1 -%}
+      {%- capture info -%}{%- render 'product-spirit', product: prods.first -%}{%- endcapture -%}
       {%- assign parts = info | split: '::' -%}
       {%- assign spirit_color = parts[1] -%}
     {%- endif -%}
