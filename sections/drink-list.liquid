@@ -33,21 +33,15 @@
   {%- for c in cocktails -%}
     {%- assign prods = c.prodotti_usati.value -%}
     {%- capture slugs -%}{%- for p in prods -%}{{ p.handle }} {% endfor -%}{%- endcapture -%}
+    {%- assign spirit_color = '#CCCCCC' -%}
     {%- capture labels -%}
       {%- for p in prods -%}
         {%- capture info -%}{%- render 'product-spirit', product: p -%}{%- endcapture -%}
         {%- assign parts = info | split: '::' -%}
+        {%- if forloop.length == 1 -%}{%- assign spirit_color = parts[1] -%}{%- endif -%}
         {{- parts[0] -}}{%- unless forloop.last %} + {% endunless -%}
       {%- endfor -%}
     {%- endcapture -%}
-    {%- assign spirit_color = '#CCCCCC' -%}
-    {%- assign prod_count = prods | size -%}
-    {%- if prod_count == 1 -%}
-      {%- capture info -%}{%- render 'product-spirit', product: prods.first -%}{%- endcapture -%}
-      {%- assign parts = info | split: '::' -%}
-      {%- assign spirit_color = parts[1] -%}
-    {%- endif -%}
-
     <article class="cocktail-card" data-spirit="{{ slugs | strip }}">
 
       <div class="cocktail-card__image">
