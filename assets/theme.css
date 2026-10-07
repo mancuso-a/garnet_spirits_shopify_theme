@@ -550,7 +550,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   margin-bottom: 2rem;
 }
 .brand-story__visual {
-  aspect-ratio: 4/5;
+  aspect-ratio: 2/3;
   position: relative;
   overflow: hidden;
 }
