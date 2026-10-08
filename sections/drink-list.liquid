@@ -63,6 +63,10 @@
       <div class="cocktail-card__body">
         <p class="cocktail-card__spirit" style="color: {{ spirit_color }};">{{ labels }}</p>
         <h3 class="cocktail-card__name">{{ c.nome.value }}</h3>
+        {%- assign descriptors = c.descrittori.value -%}
+        {%- if descriptors != blank -%}
+          <p class="cocktail-card__descriptors">{{ descriptors | join: ' · ' }}</p>
+        {%- endif -%}
         {%- if c.descrizione_breve.value != blank -%}
           <p class="cocktail-card__desc">{{ c.descrizione_breve.value }}</p>
         {%- endif -%}

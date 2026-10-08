@@ -2387,3 +2387,12 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
   background: var(--spirit-color); margin-right: 0.6rem; vertical-align: middle;
 }
 .cocktail-card__plus { color: var(--color-gray); }
+
+.cocktail-card__descriptors {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-light);
+  margin-bottom: 0.6rem;
+}
