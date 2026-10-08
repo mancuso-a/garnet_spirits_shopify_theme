@@ -1,7 +1,7 @@
 {%- comment -%}
   Recently Viewed Products section.
   Products are stored in localStorage by the RecentlyViewed JS module
-  and rendered client-side. This section provides the HTML shell.
+  and used to show/sort the real product cards rendered here by the theme.
 {%- endcomment -%}
 
 <section class="recently-viewed page-wrap" id="recently-viewed-section" aria-labelledby="recently-viewed-heading" style="display:none;">
@@ -9,8 +9,14 @@
     <p class="eyebrow" style="text-align:center;margin-bottom:.25rem;">{{ section.settings.eyebrow }}</p>
     <h2 class="recently-viewed__title" id="recently-viewed-heading" style="text-align:center;margin-bottom:2.5rem;">{{ section.settings.title }}</h2>
 
-    <!-- JS renders product cards here -->
-    <div class="recently-viewed__grid product-grid" id="recently-viewed-grid"></div>
+    <!-- Card reali generate dal tema; il JS mostra solo quelle già viste -->
+    <div class="recently-viewed__grid product-grid" id="recently-viewed-grid">
+      {%- for product in collections.all.products limit: 50 -%}
+        <div class="recently-viewed__item" data-rv-card="{{ product.id }}" hidden>
+          {%- render 'product-card', product: product -%}
+        </div>
+      {%- endfor -%}
+    </div>
   </div>
 </section>
 

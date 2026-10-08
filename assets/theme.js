@@ -824,29 +824,23 @@ const RecentlyViewed = {
   render() {
     const container = document.getElementById('recently-viewed-grid');
     if (!container) return;
-    const list = this.get();
-    if (!list.length) {
-      document.getElementById('recently-viewed-section')?.remove();
+    const section = document.getElementById('recently-viewed-section');
+    const trackEl = document.getElementById('product-tracking-data');
+    const currentId = trackEl ? String(trackEl.dataset.productId) : null;
+    // Più recente prima; il prodotto che stai guardando non viene ripetuto
+    const ids = this.get().map(p => String(p.id)).filter(id => id !== currentId);
+    let shown = 0;
+    container.querySelectorAll('[data-rv-card]').forEach(card => {
+      const idx = ids.indexOf(card.getAttribute('data-rv-card'));
+      card.hidden = idx === -1;
+      card.style.order = idx === -1 ? '' : String(idx);
+      if (idx !== -1) shown++;
+    });
+    if (!shown) {
+      section?.remove();
       return;
     }
-    // Show the section (hidden by default to avoid flash)
-    const section = document.getElementById('recently-viewed-section');
     if (section) section.style.display = '';
-    container.innerHTML = list.map(p => `
-      <article class="product-card">
-        <a href="${p.url}">
-          <div class="product-card__image product-card__image--placeholder">
-            ${p.image ? `<img src="${p.image}&width=400" alt="${p.title}" loading="lazy">` : ''}
-          </div>
-        </a>
-        <div class="product-card__body">
-          <h3 class="product-card__name"><a href="${p.url}">${p.title}</a></h3>
-          <div class="product-card__footer">
-            <span class="product-card__price product-card__price--gin">${p.price}</span>
-            <a href="${p.url}" class="btn btn--outline" style="padding:.6rem 1rem;font-size:.72rem;">Vedi</a>
-          </div>
-        </div>
-      </article>`).join('');
   },
 
   init() {
