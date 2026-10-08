@@ -35,7 +35,7 @@
 
   <!-- Bottom bar -->
   <div class="site-footer__bottom">
-    <span>© {{ 'now' | date: '%Y' }} {{ section.settings.company_name }}{% if section.settings.company_address != blank %} · {{ section.settings.company_address }}{% endif %}{% if section.settings.vat != blank %} · P.IVA {{ section.settings.vat }}{% endif %}. Tutti i diritti riservati.</span>
+    <span>© {{ 'now' | date: '%Y' }} {{ section.settings.company_name }}{% if section.settings.company_address != blank %} · {{ section.settings.company_address }}{% endif %}{% if section.settings.vat != blank %} · P.IVA e C.F. {{ section.settings.vat }}{% endif %}. Tutti i diritti riservati.</span>
     <span class="site-footer__warning">
       {{ section.settings.alcohol_warning }}
     </span>
@@ -91,7 +91,8 @@
     {
       "type": "text",
       "id": "vat",
-      "label": "Partita IVA"
+      "label": "Partita IVA",
+      "default": "08743730726"
     },
     {
       "type": "text",
