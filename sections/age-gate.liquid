@@ -2,7 +2,11 @@
   <div class="age-gate__divider"></div>
 
   <div class="age-gate__logo">
-    {{ shop.name | upcase }}<span>®</span>
+    {%- if section.settings.logo != blank -%}
+      {{ section.settings.logo | image_url: width: 480 | image_tag: class: 'age-gate__logo-img', alt: shop.name, loading: 'eager' }}
+    {%- else -%}
+      <img class="age-gate__logo-img" src="{{ 'garnet-logo.png' | asset_url }}" alt="{{ shop.name }}" width="240">
+    {%- endif -%}
   </div>
 
   <div class="age-gate__title">{{ section.settings.title }}</div>
@@ -27,6 +31,11 @@
 {
   "name": "Age Gate",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo (se vuoto usa quello del tema)"
+    },
     {
       "type": "text",
       "id": "title",
