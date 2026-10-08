@@ -12,9 +12,11 @@
     "hero": {
       "type": "hero",
       "settings": {
+        "background_image": "shopify://shop_images/Bottiglie_di_Garnet_Spirits_in_scena.png",
+        "image_opacity": 35,
         "eyebrow": "",
-        "title": "<p>Incanta<br><em>i sensi</em></p>",
-        "subtitle": "Spiriti artigianali nati dalla melagrana, frutto simbolo di energia ed eleganza. Una collezione che racconta passione, territorio e identità.",
+        "title": "<p>Incanta<br/><em>i sensi</em></p>",
+        "subtitle": "Spiriti artigianali nati dalla melagrana.\nUna collezione che racconta passione, territorio e identità.",
         "btn_primary_label": "Scopri i nostri prodotti",
         "btn_primary_url": "/collections/all",
         "btn_secondary_label": "",
@@ -25,25 +27,26 @@
       "type": "nature-inspired",
       "settings": {
         "title": "Nature Inspired",
-        "image_side": "left",
-        "text": "Garnet Spirits nasce dalla melagrana, frutto simbolo di energia ed eleganza"
+        "text": "Garnet Spirits nasce dalla melagrana, frutto simbolo di energia ed eleganza",
+        "image_side": "left"
       }
     },
     "pietra_frutto_spirito": {
       "type": "pietra-frutto-spirito",
       "settings": {
         "title": "La pietra, il frutto, lo spirito",
-        "image_side": "right",
-        "text": "Granato e melagrana: stessa origine, stessa forza. da questo legame creiamo spiriti autentici e vibranti."
+        "text": "Granato e melagrana: stessa origine, stessa forza. da questo legame creiamo spiriti autentici e vibranti.",
+        "image_side": "right"
       }
     },
     "featured_products": {
       "type": "featured-products",
       "settings": {
+        "image_side": "left",
         "eyebrow": "",
         "title": "Spiriti preziosi",
-        "image_side": "left",
         "subtitle": "Un granato per ogni spirito: tonalità uniche che guidano aromi, carattere e identità di ogni bottiglia.",
+        "collection": "",
         "products_to_show": 2,
         "show_cta": true,
         "cta_label": "Vedi tutti i prodotti",
@@ -55,18 +58,28 @@
       "settings": {
         "reverse": true,
         "accent_amber": true,
-        "image": "shopify://shop_images/Garnet_tonic_a544e9a8-7725-44e0-891c-2a059db8d462.png",
         "eyebrow": "Drink list",
         "title": "Crea qualcosa di straordinario",
         "body": "Dalla miscelazione classica alle creazioni più audaci: scopri come i nostri spiriti prendono vita in ogni cocktail.",
         "btn_label": "Esplora le ricette",
         "btn_url": "/pages/drink-list",
+        "image": "shopify://shop_images/Garnet_tonic_a544e9a8-7725-44e0-891c-2a059db8d462.png",
         "placeholder_label": "Recipes"
       }
     },
     "footer": {
       "type": "footer",
-      "settings": {}
+      "settings": {
+        "tagline": "Distillati artigianali ispirati alla melagrana e al granato. Nati a Bari nel 2022.",
+        "nav_title": "Navigazione",
+        "contact_title": "Contatti",
+        "email": "info@garnetspirits.it",
+        "instagram": "",
+        "company_name": "Cm2 Spirits Srls",
+        "company_address": "Via Martin Luther King 21, 70124 Bari (BA)",
+        "vat": "",
+        "alcohol_warning": "Bevi responsabilmente. Vietato ai minori di 18 anni. L'abuso di alcol è dannoso per la salute."
+      }
     }
   },
   "order": [
@@ -78,4 +91,3 @@
     "footer"
   ]
 }
-
