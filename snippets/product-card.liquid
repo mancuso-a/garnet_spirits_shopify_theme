@@ -12,13 +12,19 @@
 {%- assign price_class = 'product-card__price--gin' -%}
 {%- assign img_class = 'product-card__image--gin' -%}
 {%- assign btn_class = 'btn--primary' -%}
-{%- assign tag_label = 'Almandino · Compound Gin' -%}
 {%- if is_bitter -%}
   {%- assign tag_class = 'product-card__tag--amber' -%}
   {%- assign price_class = 'product-card__price--amber' -%}
   {%- assign img_class = 'product-card__image--bitter' -%}
   {%- assign btn_class = 'btn--amber' -%}
-  {%- assign tag_label = 'Spessartina · Bitter artigianale' -%}
+{%- endif -%}
+
+{%- assign tipologia = product.metafields.custom.tipologia.value | default: product.type -%}
+{%- assign varieta = product.metafields.custom.varieta.value -%}
+{%- if varieta != blank -%}
+  {%- assign tag_label = varieta | append: ' · ' | append: tipologia -%}
+{%- else -%}
+  {%- assign tag_label = tipologia -%}
 {%- endif -%}
 
 <article class="product-card">

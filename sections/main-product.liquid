@@ -3,19 +3,23 @@
   {%- assign is_bitter = true -%}
 {%- endif -%}
 
-{%- assign hero_class = 'product-hero--gin' -%}
-{%- assign tag_label = 'Almandino · Compound Gin' -%}
 {%- assign tag_class = 'product-tag' -%}
 {%- assign price_class = 'product-form__price--gin' -%}
 {%- assign label_class = 'org-label--gin' -%}
 {%- assign btn_class = 'btn--primary' -%}
 {%- if is_bitter -%}
-  {%- assign hero_class = 'product-hero--bitter' -%}
-  {%- assign tag_label = 'Spessartina · Bitter artigianale' -%}
   {%- assign tag_class = 'product-tag eyebrow--amber' -%}
   {%- assign price_class = 'product-form__price--bitter' -%}
   {%- assign label_class = 'org-label--bitter' -%}
   {%- assign btn_class = 'btn--amber' -%}
+{%- endif -%}
+
+{%- assign tipologia = product.metafields.custom.tipologia.value | default: product.type -%}
+{%- assign varieta = product.metafields.custom.varieta.value -%}
+{%- if varieta != blank -%}
+  {%- assign tag_label = varieta | append: ' · ' | append: tipologia -%}
+{%- else -%}
+  {%- assign tag_label = tipologia -%}
 {%- endif -%}
 
 <!-- Breadcrumbs -->
