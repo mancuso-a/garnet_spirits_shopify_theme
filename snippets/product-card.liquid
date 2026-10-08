@@ -20,9 +20,9 @@
 {%- endif -%}
 
 {%- assign tipologia = product.metafields.custom.tipologia.value | default: product.type -%}
-{%- assign varieta = product.metafields.custom.varieta.value -%}
-{%- if varieta != blank -%}
-  {%- assign tag_label = varieta | append: ' · ' | append: tipologia -%}
+{%- assign granato = product.metafields.custom.granato.value -%}
+{%- if granato != blank -%}
+  {%- assign tag_label = granato | append: ' · ' | append: tipologia -%}
 {%- else -%}
   {%- assign tag_label = tipologia -%}
 {%- endif -%}
