@@ -2440,3 +2440,12 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .garnet-card--gin .garnet-card__name,
 .garnet-card--bitter .garnet-card__name { color: var(--product-color); }
 .product-form__row .product-card__heart { width: 44px; height: 44px; flex-shrink: 0; }
+
+/* ── DICHIARAZIONE MAGGIORE ETÀ (carrello) ───────────────── */
+.age-confirm { margin-bottom: 1rem; }
+.age-confirm__label { display: flex; gap: 0.7rem; align-items: flex-start; font-size: 0.78rem; line-height: 1.5; color: var(--color-light); cursor: pointer; }
+.age-confirm__input { margin-top: 0.2rem; width: 16px; height: 16px; flex-shrink: 0; accent-color: var(--color-white); }
+.age-confirm__label a { text-decoration: underline; }
+.age-confirm__error { margin-top: 0.5rem; font-size: 0.72rem; color: var(--color-red-light); }
+.age-confirm--error .age-confirm__label { color: var(--color-white); }
+[data-age-checkout].is-loading { opacity: 0.6; pointer-events: none; }

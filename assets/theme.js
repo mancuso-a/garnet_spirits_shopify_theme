@@ -859,6 +859,46 @@ const RecentlyViewed = {
   }
 };
 
+/* ── AGE CONFIRM (dichiarazione maggiore età prima del checkout) ── */
+const AgeConfirm = {
+  init() {
+    document.querySelectorAll('[data-age-checkout]').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const box = btn.parentElement.querySelector('[data-age-confirm]');
+        const input = box && box.querySelector('[data-age-confirm-input]');
+        const error = box && box.querySelector('[data-age-confirm-error]');
+        if (input && !input.checked) {
+          if (error) error.hidden = false;
+          box.classList.add('age-confirm--error');
+          input.focus();
+          return;
+        }
+        if (error) error.hidden = true;
+        btn.classList.add('is-loading');
+        try {
+          await fetch('/cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ attributes: { 'Maggiore età': 'Dichiarata il ' + new Date().toLocaleString('it-IT') } })
+          });
+        } catch (err) { /* in ogni caso si prosegue al checkout */ }
+        window.location.href = btn.getAttribute('href') || '/checkout';
+      });
+    });
+    document.querySelectorAll('[data-age-confirm-input]').forEach(input => {
+      input.addEventListener('change', () => {
+        const box = input.closest('[data-age-confirm]');
+        if (input.checked) {
+          box.classList.remove('age-confirm--error');
+          const error = box.querySelector('[data-age-confirm-error]');
+          if (error) error.hidden = true;
+        }
+      });
+    });
+  }
+};
+
 /* ── REVIEWS ──────────────────────────────────────────────── */
 const Reviews = {
   init() {
@@ -957,6 +997,7 @@ document.addEventListener('DOMContentLoaded', () => {
   CookieConsent.init();
   AnnouncementBar.init();
   RecentlyViewed.init();
+  AgeConfirm.init();
   Reviews.init();
   SocialShare.init();
   PageLoader.init();

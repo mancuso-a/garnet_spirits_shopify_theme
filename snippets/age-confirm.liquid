@@ -1,0 +1,14 @@
+{%- comment -%}
+  Dichiarazione di maggiore età prima del checkout.
+  Il JS (AgeConfirm) blocca il pulsante con [data-age-checkout] finché la casella non è spuntata
+  e salva la dichiarazione negli attributi del carrello (visibile nell'ordine).
+{%- endcomment -%}
+<div class="age-confirm" data-age-confirm>
+  <label class="age-confirm__label">
+    <input type="checkbox" class="age-confirm__input" data-age-confirm-input>
+    <span>Dichiaro di avere almeno 18 anni e di accettare i
+      <a href="{{ shop.terms_of_service.url | default: '/policies/terms-of-service' }}" target="_blank" rel="noopener">termini e condizioni</a>.
+    </span>
+  </label>
+  <p class="age-confirm__error" data-age-confirm-error role="alert" hidden>Per continuare devi confermare di essere maggiorenne.</p>
+</div>

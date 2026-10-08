@@ -81,7 +81,8 @@
           <p style="font-size:.7rem;color:var(--color-gray);margin:.75rem 0 1.25rem;line-height:1.5;">
             Spedizione gratuita per ordini superiori a €60.
           </p>
-          <a href="/checkout" class="btn btn--primary btn--full">
+          {%- render 'age-confirm' -%}
+          <a href="/checkout" class="btn btn--primary btn--full" data-age-checkout>
             Procedi al checkout →
           </a>
           <a href="/collections/all" class="btn btn--outline btn--full mt-1">

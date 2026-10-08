@@ -43,7 +43,8 @@
     <p class="cart-drawer__note">
       {{ section.settings.shipping_note }}
     </p>
-    <a href="/checkout" class="btn btn--primary btn--full">
+    {%- render 'age-confirm' -%}
+    <a href="/checkout" class="btn btn--primary btn--full" data-age-checkout>
       Procedi al checkout →
     </a>
   </div>
