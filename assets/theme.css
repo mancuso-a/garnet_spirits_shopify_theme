@@ -2439,3 +2439,4 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .sticky-atc__price.product-form__price--color { color: var(--product-color, var(--color-red-light)); }
 .garnet-card--gin .garnet-card__name,
 .garnet-card--bitter .garnet-card__name { color: var(--product-color); }
+.product-form__row .product-card__heart { width: 44px; height: 44px; flex-shrink: 0; }
