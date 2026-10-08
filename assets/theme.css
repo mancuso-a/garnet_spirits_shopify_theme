@@ -693,7 +693,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   display: grid;
   grid-template-columns: 1fr 1.7fr;
   gap: 5rem;
-  padding: 5rem 3rem;
+  padding: 3rem 3rem 5rem;
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -715,7 +715,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   object-fit: contain;
 }
 
-.product-detail__info h2 {
+.product-detail__info h1 {
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   margin-bottom: 0.5rem;
 }

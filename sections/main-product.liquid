@@ -30,18 +30,6 @@
   data-product-price="{{ product.price | money }}"
   hidden></div>
 
-<!-- Product Hero -->
-<div class="product-hero {{ hero_class }}">
-  <div>
-    <p class="eyebrow {% if is_bitter %}eyebrow--amber{% endif %}">{{ tag_label }}</p>
-    <h1 class="product-hero__title">{{ product.title }}</h1>
-    <p class="product-hero__sub">
-      {%- unless product.has_only_default_variant -%}{{ product.selected_or_first_available_variant.title }} · {% endunless -%}
-      {{ product.metafields.custom.formato | default: product.metafields.custom.volume | default: '700 ml' }}
-    </p>
-  </div>
-</div>
-
 <!-- Product Detail -->
 <div class="product-detail">
 
@@ -83,7 +71,7 @@
   <!-- Info -->
   <div class="product-detail__info">
     <p class="eyebrow {% if is_bitter %}eyebrow--amber{% endif %}" style="margin-bottom:.4rem;">{{ tag_label }}</p>
-    <h2>{{ product.title }}</h2>
+    <h1>{{ product.title }}</h1>
 
     {%- if product.description != blank -%}
       <div class="product-detail__tagline">
