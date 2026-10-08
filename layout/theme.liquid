@@ -128,6 +128,11 @@
     {{ content_for_layout }}
   </main>
 
+  {%- comment -%} Le pagine /policies non hanno un modello JSON, quindi il footer va aggiunto qui. {%- endcomment -%}
+  {%- if request.page_type == 'policy' -%}
+    {% section 'footer' %}
+  {%- endif -%}
+
   <!-- Back to top -->
   <button id="back-to-top" class="back-to-top" aria-label="Torna su">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
