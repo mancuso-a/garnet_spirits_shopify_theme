@@ -29,8 +29,9 @@
       <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
     {%- endif -%}
     <a href="{{ section.settings.instagram | default: 'https://www.instagram.com/garnetspirits/' }}" target="_blank" rel="noopener noreferrer">Instagram</a>
-    <a href="/pages/privacy-policy">Privacy Policy</a>
-    <a href="/pages/termini-e-condizioni">Termini e Condizioni</a>
+    {%- for policy in shop.policies -%}
+      <a href="{{ policy.url }}">{{ policy.title }}</a>
+    {%- endfor -%}
   </div>
 
   <!-- Bottom bar -->

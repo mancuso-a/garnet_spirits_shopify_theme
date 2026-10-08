@@ -7,7 +7,7 @@
 <div id="cookie-consent" class="cookie-banner" role="dialog" aria-modal="false" aria-label="Consenso cookie" style="display:none;">
   <p class="cookie-banner__text">
     Utilizziamo i cookie per migliorare la tua esperienza di navigazione e analizzare il traffico del sito.
-    <a href="/pages/privacy-policy">Leggi la nostra Privacy Policy</a>.
+    <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}">Leggi la nostra Privacy Policy</a>.
   </p>
   <div class="cookie-banner__actions">
     <button class="btn btn--outline" onclick="CookieConsent.decline()" style="padding:.55rem 1.2rem;font-size:.72rem;">
