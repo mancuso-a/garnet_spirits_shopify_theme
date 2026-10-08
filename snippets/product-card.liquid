@@ -36,17 +36,6 @@
 
     <!-- Overlay: wishlist + quick add -->
     <div class="product-card__overlay">
-      <button
-        class="product-card__wishlist{% if is_bitter %} product-card__wishlist--amber{% endif %}"
-        data-wishlist-id="{{ product.id }}"
-        data-wishlist-title="{{ product.title | escape }}"
-        aria-label="Aggiungi alla wishlist"
-        title="Aggiungi alla wishlist">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-      </button>
-
       {%- if product.available -%}
         <button
           class="product-card__quickadd btn {{ btn_class }}"
@@ -76,9 +65,22 @@
       <span class="product-card__price {{ price_class }}">
         {{ product.price | money }}
       </span>
-      <a href="{{ product.url }}" class="btn btn--outline" style="padding:.55rem 1rem;font-size:.72rem;">
-        Scopri →
-      </a>
+      <div class="product-card__actions">
+        <button
+          type="button"
+          class="product-card__heart{% if is_bitter %} product-card__heart--amber{% endif %}"
+          data-wishlist-id="{{ product.id }}"
+          data-wishlist-title="{{ product.title | escape }}"
+          aria-label="Aggiungi alla wishlist"
+          title="Aggiungi alla wishlist">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+        <a href="{{ product.url }}" class="btn btn--outline" style="padding:.55rem 1rem;font-size:.72rem;">
+          Scopri →
+        </a>
+      </div>
     </div>
   </div>
 </article>

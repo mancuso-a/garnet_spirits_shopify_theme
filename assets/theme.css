@@ -2410,3 +2410,18 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 @media (hover: none) {
   .product-card__overlay { opacity: 1; }
 }
+
+/* ── CUORE WISHLIST NELLA CARD (accanto al prezzo) ───────── */
+.product-card__actions { display: flex; align-items: center; gap: 0.5rem; }
+.product-card__heart {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; padding: 0;
+  background: transparent; border: 1px solid var(--color-border);
+  color: var(--color-light); cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+}
+.product-card__heart svg path { fill: none; transition: fill var(--transition); }
+.product-card__heart:hover, .product-card__heart.active { color: var(--color-red-light); border-color: var(--color-red-light); }
+.product-card__heart.active svg path { fill: var(--color-red-light); stroke: var(--color-red-light); }
+.product-card__heart--amber:hover, .product-card__heart--amber.active { color: var(--color-amber-light); border-color: var(--color-amber-light); }
+.product-card__heart--amber.active svg path { fill: var(--color-amber-light); stroke: var(--color-amber-light); }
