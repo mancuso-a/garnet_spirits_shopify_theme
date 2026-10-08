@@ -2449,3 +2449,44 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .age-confirm__error { margin-top: 0.5rem; font-size: 0.72rem; color: var(--color-red-light); }
 .age-confirm--error .age-confirm__label { color: var(--color-white); }
 [data-age-checkout].is-loading { opacity: 0.6; pointer-events: none; }
+
+/* ── PAGINE INFORMATIVE DI SHOPIFY (/policies/…) ─────────── */
+.shopify-policy__container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+}
+.shopify-policy__title { text-align: center; margin-bottom: 3rem; }
+.shopify-policy__title h1 {
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  letter-spacing: 0.3em;
+  line-height: 1.4;
+}
+.shopify-policy__body { color: var(--color-light); font-size: 0.95rem; line-height: 1.85; font-weight: 300; }
+.shopify-policy__body h2,
+.shopify-policy__body h3,
+.shopify-policy__body h4 {
+  color: var(--color-white);
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  line-height: 1.5;
+  margin: 2.5rem 0 1rem;
+}
+.shopify-policy__body h2:first-child,
+.shopify-policy__body h3:first-child { margin-top: 0; }
+.shopify-policy__body p { margin: 0 0 1.1rem; }
+.shopify-policy__body ul,
+.shopify-policy__body ol { margin: 0 0 1.25rem; padding-left: 1.4rem; }
+.shopify-policy__body ul { list-style: disc; }
+.shopify-policy__body ol { list-style: decimal; }
+.shopify-policy__body li { margin-bottom: 0.5rem; padding-left: 0.2rem; }
+.shopify-policy__body strong { color: var(--color-white); font-weight: 500; }
+.shopify-policy__body a { text-decoration: underline; text-underline-offset: 3px; }
+.shopify-policy__body a:hover { color: var(--color-white); }
+
+/* Stesso stile per le pagine normali (page.json) */
+.about-body h2 { font-size: 1rem; letter-spacing: 0.2em; margin: 2.5rem 0 1rem; }
+.about-body ul, .about-body ol { margin: 0 0 1.25rem; padding-left: 1.4rem; }
+.about-body ul { list-style: disc; }
+.about-body ol { list-style: decimal; }
+.about-body li { margin-bottom: 0.5rem; }
