@@ -688,42 +688,6 @@ const BackToTop = {
   }
 };
 
-/* ── FREE SHIPPING BAR ────────────────────────────────────── */
-const FreeShippingBar = {
-  THRESHOLD_CENTS: 6000, // €60
-
-  init() {
-    this.update();
-  },
-
-  update() {
-    const bar    = document.querySelector('.free-shipping-bar__fill');
-    const text   = document.querySelector('.free-shipping-bar__text');
-    const achieved = document.querySelector('.free-shipping-bar__achieved');
-    if (!bar) return;
-
-    fetch('/cart.js').then(r => r.json()).then(cart => {
-      const total    = cart.total_price;
-      const pct      = Math.min(100, (total / this.THRESHOLD_CENTS) * 100);
-      const remaining = Math.max(0, this.THRESHOLD_CENTS - total);
-
-      bar.style.width = `${pct}%`;
-      bar.classList.toggle('complete', pct >= 100);
-
-      if (text) {
-        if (pct >= 100) {
-          text.innerHTML = '<strong>🎉 Spedizione gratuita applicata!</strong>';
-          if (achieved) achieved.style.display = 'block';
-        } else {
-          const rem = '€ ' + (remaining / 100).toFixed(2).replace('.', ',');
-          text.innerHTML = `Ancora <strong>${rem}</strong> per la spedizione gratuita`;
-          if (achieved) achieved.style.display = 'none';
-        }
-      }
-    }).catch(() => {});
-  }
-};
-
 /* ── NEWSLETTER POPUP ─────────────────────────────────────── */
 const NewsletterPopup = {
   KEY: 'garnet_newsletter_shown',
@@ -992,7 +956,6 @@ document.addEventListener('DOMContentLoaded', () => {
   StickyATC.init();
   Lightbox.init();
   BackToTop.init();
-  FreeShippingBar.init();
   NewsletterPopup.init();
   CookieConsent.init();
   AnnouncementBar.init();

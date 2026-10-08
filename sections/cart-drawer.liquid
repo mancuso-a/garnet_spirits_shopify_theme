@@ -5,16 +5,6 @@
     <button class="cart-drawer__close" onclick="CartDrawer.close()" aria-label="Chiudi carrello">✕</button>
   </div>
 
-  <!-- Free shipping progress bar -->
-  <div class="free-shipping-bar" id="free-shipping-bar" aria-live="polite">
-    <p class="free-shipping-bar__text" id="free-shipping-msg">
-      Aggiungi prodotti per la spedizione gratuita
-    </p>
-    <div class="free-shipping-bar__track">
-      <div class="free-shipping-bar__fill" id="free-shipping-fill" style="width:0%"></div>
-    </div>
-  </div>
-
   <div class="cart-drawer__items" id="cart-drawer-items">
     <div class="cart-drawer__empty">
       <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
@@ -40,9 +30,6 @@
         <span>Calcolata al checkout</span>
       </div>
     </div>
-    <p class="cart-drawer__note">
-      {{ section.settings.shipping_note }}
-    </p>
     {%- render 'age-confirm' -%}
     <a href="/checkout" class="btn btn--primary btn--full" data-age-checkout>
       Procedi al checkout →
@@ -54,13 +41,6 @@
 {% schema %}
 {
   "name": "Cart Drawer",
-  "settings": [
-    {
-      "type": "text",
-      "id": "shipping_note",
-      "label": "Nota spedizione",
-      "default": "Spedizione gratuita per ordini superiori a €60. Consegna in 2–4 giorni lavorativi."
-    }
-  ]
+  "settings": []
 }
 {% endschema %}
