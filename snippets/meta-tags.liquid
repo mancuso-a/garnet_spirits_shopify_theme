@@ -1,0 +1,59 @@
+{%- comment -%}
+  SEO e condivisione social: description, canonical, Open Graph, Twitter Card, dati strutturati.
+  Descrizione e immagine di default si impostano in Impostazioni tema → Brand.
+{%- endcomment -%}
+{%- assign meta_description = page_description | default: settings.seo_description | strip_html | strip_newlines | truncate: 160 -%}
+{%- if request.page_type == 'index' -%}
+  {%- assign meta_title = shop.name | append: ' — One sip, one secret.' -%}
+{%- else -%}
+  {%- assign meta_title = page_title -%}
+  {%- unless page_title contains shop.name -%}{%- assign meta_title = page_title | append: ' — ' | append: shop.name -%}{%- endunless -%}
+{%- endif -%}
+
+<title>{{ meta_title | escape }}</title>
+<meta name="description" content="{{ meta_description | escape }}">
+<link rel="canonical" href="{{ canonical_url }}">
+
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:locale" content="it_IT">
+<meta property="og:type" content="{% if request.page_type == 'product' %}product{% else %}website{% endif %}">
+<meta property="og:title" content="{{ meta_title | escape }}">
+<meta property="og:description" content="{{ meta_description | escape }}">
+<meta property="og:url" content="{{ canonical_url }}">
+{%- if page_image -%}
+  <meta property="og:image" content="https:{{ page_image | image_url: width: 1200 }}">
+{%- elsif settings.share_image != blank -%}
+  <meta property="og:image" content="https:{{ settings.share_image | image_url: width: 1200 }}">
+{%- else -%}
+  <meta property="og:image" content="https:{{ 'home-hero.jpg' | asset_url }}">
+{%- endif -%}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ meta_title | escape }}">
+<meta name="twitter:description" content="{{ meta_description | escape }}">
+
+{%- if request.page_type == 'product' -%}
+  <script type="application/ld+json">{{ product | structured_data }}</script>
+{%- endif -%}
+{%- if request.page_type == 'index' -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "legalName": "Cm2 Spirits Srls",
+    "url": {{ shop.url | json }},
+    "logo": "https:{{ 'garnet-logo.png' | asset_url }}",
+    "vatID": "IT08743730726",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Via Martin Luther King 21",
+      "postalCode": "70124",
+      "addressLocality": "Bari",
+      "addressRegion": "BA",
+      "addressCountry": "IT"
+    },
+    "email": "info@garnetspirits.it",
+    "sameAs": ["https://www.instagram.com/garnetspirits/"]
+  }
+  </script>
+{%- endif -%}
