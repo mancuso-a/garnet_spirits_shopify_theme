@@ -2396,3 +2396,17 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 }
 
 .age-gate__logo-img { width: 240px; max-width: 70vw; height: auto; margin: 0 auto; }
+
+/* ── CARD PRODOTTO: cuore sempre visibile, carrello su hover (sempre su touch), esaurito ── */
+.product-card__overlay { pointer-events: none; }
+.product-card__overlay > * { pointer-events: auto; }
+.product-card__wishlist { opacity: 1; transform: none; }
+.product-card__soldout { cursor: default; opacity: 1; background: rgba(10, 10, 10, 0.75); color: var(--color-light); pointer-events: none; }
+@media (hover: hover) {
+  .product-card__overlay { opacity: 1; }
+  .product-card__quickadd:not(.product-card__soldout) { opacity: 0; transition: opacity var(--transition); }
+  .product-card:hover .product-card__quickadd { opacity: 1; }
+}
+@media (hover: none) {
+  .product-card__overlay { opacity: 1; }
+}
