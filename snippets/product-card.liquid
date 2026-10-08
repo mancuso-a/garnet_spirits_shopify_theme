@@ -19,13 +19,7 @@
   {%- assign btn_class = 'btn--amber' -%}
 {%- endif -%}
 
-{%- assign tipologia = product.metafields.custom.tipologia.value | default: product.type -%}
-{%- assign granato = product.metafields.custom.granato.value -%}
-{%- if granato != blank -%}
-  {%- assign tag_label = granato | append: ' · ' | append: tipologia -%}
-{%- else -%}
-  {%- assign tag_label = tipologia -%}
-{%- endif -%}
+{%- assign tag_label = product.metafields.custom.granato.value -%}
 
 <article class="product-card">
 
@@ -63,7 +57,9 @@
   </div>
 
   <div class="product-card__body">
-    <p class="product-card__tag {{ tag_class }}">{{ tag_label }}</p>
+    {%- if tag_label != blank -%}
+      <p class="product-card__tag {{ tag_class }}">{{ tag_label }}</p>
+    {%- endif -%}
     <h3 class="product-card__name">
       <a href="{{ product.url }}">{{ product.title }}</a>
     </h3>

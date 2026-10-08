@@ -14,13 +14,7 @@
   {%- assign btn_class = 'btn--amber' -%}
 {%- endif -%}
 
-{%- assign tipologia = product.metafields.custom.tipologia.value | default: product.type -%}
-{%- assign granato = product.metafields.custom.granato.value -%}
-{%- if granato != blank -%}
-  {%- assign tag_label = granato | append: ' · ' | append: tipologia -%}
-{%- else -%}
-  {%- assign tag_label = tipologia -%}
-{%- endif -%}
+{%- assign tag_label = product.metafields.custom.granato.value -%}
 
 <!-- Breadcrumbs -->
 {%- render 'breadcrumbs' -%}
@@ -74,7 +68,9 @@
 
   <!-- Info -->
   <div class="product-detail__info">
-    <p class="eyebrow {% if is_bitter %}eyebrow--amber{% endif %}" style="margin-bottom:.4rem;">{{ tag_label }}</p>
+    {%- if tag_label != blank -%}
+      <p class="eyebrow {% if is_bitter %}eyebrow--amber{% endif %}" style="margin-bottom:.4rem;">{{ tag_label }}</p>
+    {%- endif -%}
     <h1>{{ product.title }}</h1>
 
     {%- if product.description != blank -%}
