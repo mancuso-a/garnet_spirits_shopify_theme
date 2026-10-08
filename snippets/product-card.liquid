@@ -3,30 +3,18 @@
   Usage: {% render 'product-card', product: product %}
 {%- endcomment -%}
 
-{%- assign is_bitter = false -%}
-{%- if product.type contains 'Bitter' or product.title contains 'Bitter' -%}
-  {%- assign is_bitter = true -%}
-{%- endif -%}
-
-{%- assign tag_class = 'product-card__tag--gin' -%}
-{%- assign price_class = 'product-card__price--gin' -%}
-{%- assign img_class = 'product-card__image--gin' -%}
-{%- assign btn_class = 'btn--primary' -%}
-{%- if is_bitter -%}
-  {%- assign tag_class = 'product-card__tag--amber' -%}
-  {%- assign price_class = 'product-card__price--amber' -%}
-  {%- assign img_class = 'product-card__image--bitter' -%}
-  {%- assign btn_class = 'btn--amber' -%}
-{%- endif -%}
+{%- capture product_color -%}{%- render 'product-color', product: product -%}{%- endcapture -%}
+{%- assign product_color = product_color | strip -%}
+{%- assign btn_class = 'btn--product' -%}
 
 {%- assign tag_label = product.metafields.custom.granato.value -%}
 
-<article class="product-card">
+<article class="product-card" style="--product-color: {{ product_color }};">
 
   <!-- Image with overlay actions -->
   <div class="product-card__img-wrap">
     <a href="{{ product.url }}" aria-label="{{ product.title }}">
-      <div class="product-card__image product-card__image--placeholder {{ img_class }}">
+      <div class="product-card__image product-card__image--placeholder">
         {%- if product.featured_image != blank -%}
           {%- assign card_img_alt = product.featured_image.alt | escape -%}
           {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: card_img_alt }}
@@ -51,7 +39,7 @@
 
   <div class="product-card__body">
     {%- if tag_label != blank -%}
-      <p class="product-card__tag {{ tag_class }}">{{ tag_label }}</p>
+      <p class="product-card__tag">{{ tag_label }}</p>
     {%- endif -%}
     <h3 class="product-card__name">
       <a href="{{ product.url }}">{{ product.title }}</a>
@@ -62,7 +50,7 @@
       </p>
     {%- endif -%}
     <div class="product-card__footer">
-      <span class="product-card__price {{ price_class }}">
+      <span class="product-card__price">
         {{ product.price | money }}
       </span>
       <div class="product-card__actions">

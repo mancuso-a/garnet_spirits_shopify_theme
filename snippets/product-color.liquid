@@ -1,0 +1,12 @@
+{%- comment -%}
+  Restituisce il colore esadecimale del prodotto: metafield custom.colore (tipo Colore).
+  Se vuoto: Bitter arancione, tutti gli altri rosso.
+  Uso: {%- capture product_color -%}{%- render 'product-color', product: product -%}{%- endcapture -%}
+{%- endcomment -%}
+{%- if product.metafields.custom.colore.value != blank -%}
+  {{- product.metafields.custom.colore.value | color_to_hex -}}
+{%- elsif product.type contains 'Bitter' or product.title contains 'Bitter' -%}
+  #E8963A
+{%- else -%}
+  #C0392B
+{%- endif -%}

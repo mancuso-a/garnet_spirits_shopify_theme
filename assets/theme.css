@@ -2424,3 +2424,18 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .product-card__heart:hover { color: var(--color-white); }
 .product-card__heart.active { color: var(--color-white); }
 .product-card__heart.active svg path { fill: var(--color-white); stroke: var(--color-white); }
+
+/* ── COLORE PRODOTTO: arriva dal metafield custom.colore (--product-color) ── */
+.product-card__tag,
+.product-card__price { color: var(--product-color, var(--color-red-light)); }
+.product-card__image--placeholder {
+  background: linear-gradient(160deg, color-mix(in srgb, var(--product-color, #C0392B) 22%, #0a0a0a) 0%, #0a0a0a 60%);
+}
+.btn--product { background: var(--product-color, var(--color-red)); color: var(--color-white); }
+.btn--product:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.eyebrow--product { color: var(--product-color, var(--color-red-light)); }
+.org-label--color { color: var(--product-color, var(--color-red-light)); }
+.product-form__price--color,
+.sticky-atc__price.product-form__price--color { color: var(--product-color, var(--color-red-light)); }
+.garnet-card--gin .garnet-card__name,
+.garnet-card--bitter .garnet-card__name { color: var(--product-color); }

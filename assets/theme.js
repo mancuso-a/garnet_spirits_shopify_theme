@@ -131,8 +131,8 @@ const CartDrawer = {
           if (footerEl) footerEl.style.display = 'none';
         } else {
           itemsEl.innerHTML = cart.items.map(item => {
-            const isAmber = item.product_type && item.product_type.toLowerCase().includes('bitter');
-            const priceClass = isAmber ? 'cart-item__price--amber' : '';
+            const itemColor = (window.GARNET_COLORS && window.GARNET_COLORS[item.handle]) || '';
+            const priceStyle = itemColor ? ('style="color:' + itemColor + '"') : '';
             return `
               <div class="cart-item" data-key="${item.key}">
                 <div class="cart-item__image">
@@ -143,7 +143,7 @@ const CartDrawer = {
                 <div class="cart-item__info">
                   <div class="cart-item__name">${item.product_title}</div>
                   <div class="cart-item__meta">700 ml · Qtà: ${item.quantity}</div>
-                  <span class="cart-item__price ${priceClass}">
+                  <span class="cart-item__price" ${priceStyle}>
                     ${this.formatMoney(item.final_line_price)}
                   </span>
                   <button class="cart-item__remove" onclick="CartDrawer.removeItem('${item.key}')">

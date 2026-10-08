@@ -14,13 +14,18 @@
   <h3>Il significato dei nomi</h3>
   <p>{{ section.settings.names_intro }}</p>
 
+  {%- assign gin_product = all_products["garnet-gin-almandino"] -%}
+  {%- assign bitter_product = all_products["garnet-bitter-spessartina"] -%}
+  {%- capture gin_color -%}{%- if gin_product != blank -%}{%- render "product-color", product: gin_product -%}{%- else -%}#C0392B{%- endif -%}{%- endcapture -%}
+  {%- capture bitter_color -%}{%- if bitter_product != blank -%}{%- render "product-color", product: bitter_product -%}{%- else -%}#E8963A{%- endif -%}{%- endcapture -%}
+
   <div class="garnet-variants">
-    <div class="garnet-card garnet-card--gin">
+    <div class="garnet-card garnet-card--gin" style="--product-color: {{ gin_color | strip }};">
       <div class="garnet-card__name">Almandino</div>
       <div class="garnet-card__sub">Garnet Gin</div>
       <p>{{ section.settings.almandino_text }}</p>
     </div>
-    <div class="garnet-card garnet-card--bitter">
+    <div class="garnet-card garnet-card--bitter" style="--product-color: {{ bitter_color | strip }};">
       <div class="garnet-card__name">Spessartina</div>
       <div class="garnet-card__sub">Garnet Bitter</div>
       <p>{{ section.settings.spessartina_text }}</p>

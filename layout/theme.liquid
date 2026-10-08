@@ -24,6 +24,14 @@
   <link rel="preload" href="{{ 'jost-400.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
 
   {{ content_for_header }}
+  <script>
+    window.GARNET_COLORS = {
+      {%- for p in collections.all.products limit: 50 -%}
+        {%- capture pc -%}{%- render 'product-color', product: p -%}{%- endcapture -%}
+        "{{ p.handle }}": "{{ pc | strip }}"{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    };
+  </script>
   {{ 'theme.css' | asset_url | stylesheet_tag }}
 </head>
 

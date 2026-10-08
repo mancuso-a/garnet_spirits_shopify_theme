@@ -15,10 +15,8 @@
         <!-- Items -->
         <div class="cart-page__items">
           {%- for item in cart.items -%}
-            {%- assign is_bitter = false -%}
-            {%- if item.product.type contains 'Bitter' or item.product.title contains 'Bitter' -%}
-              {%- assign is_bitter = true -%}
-            {%- endif -%}
+            {%- capture item_color -%}{%- render 'product-color', product: item.product -%}{%- endcapture -%}
+            {%- assign item_color = item_color | strip -%}
             <div class="cart-page__item">
               <div class="cart-page__item-img">
                 {%- if item.image != blank -%}
@@ -42,7 +40,7 @@
                   <button type="button" class="qty-selector__btn"
                     onclick="this.previousElementSibling.value=parseInt(this.previousElementSibling.value)+1;this.closest('form').submit()">+</button>
                 </div>
-                <span style="font-size:.9rem;font-weight:500;color:{% if is_bitter %}var(--color-amber-light){% else %}var(--color-red-light){% endif %};">
+                <span style="font-size:.9rem;font-weight:500;color:{{ item_color }};">
                   {{ item.final_line_price | money }}
                 </span>
               </div>
