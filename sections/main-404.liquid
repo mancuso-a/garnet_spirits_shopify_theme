@@ -7,6 +7,18 @@
   </div>
 </div>
 
+{%- comment -%}
+  Rete di sicurezza: i QR dei biglietti da visita puntano a /c/<nome> sul dominio principale,
+  ma le pagine vere sono sul sottodominio c.garnetspirits.it. Se Shopify non ha un reindirizzamento
+  per quell'indirizzo, qui il browser viene mandato alla pagina giusta.
+{%- endcomment -%}
+<script>
+  (function () {
+    var m = window.location.pathname.match(/^\/c\/([a-z0-9-]+)\/?$/i);
+    if (m) window.location.replace('https://c.garnetspirits.it/c/' + m[1] + window.location.search);
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Pagina 404",
