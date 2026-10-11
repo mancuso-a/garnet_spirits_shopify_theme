@@ -2492,3 +2492,23 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .about-body ul { list-style: disc; }
 .about-body ol { list-style: decimal; }
 .about-body li { margin-bottom: 0.5rem; }
+
+/* ── PAGINA PRODOTTO — MOBILE: il pulsante non deve sforare ─── */
+@media (max-width: 768px) {
+  .product-form__row { gap: 0.75rem; }
+  .product-form__row .btn-add-cart {
+    order: 3;
+    flex: 1 1 100%;
+    min-width: 0;
+    padding: 0.9rem 1rem;
+    letter-spacing: 0.12em;
+  }
+  .sticky-atc__inner { gap: 0.75rem; }
+  .sticky-atc__name { display: none; }
+  .sticky-atc__btn {
+    flex: 1;
+    min-width: 0;
+    padding: 0.8rem 1rem;
+    letter-spacing: 0.1em;
+  }
+}
