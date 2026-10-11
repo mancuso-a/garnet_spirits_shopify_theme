@@ -2305,12 +2305,12 @@ h1, h2 { font-weight: 400; letter-spacing: 0.08em; line-height: 1.15; }
 h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 
 /* ── BAND: titolo sopra, sfondo a tutta larghezza, immagine + testo alternati ── */
-.band-section { padding: 6rem 0 5rem; background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%); }
-.featured-products { padding: 6rem 0 7rem; background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%); }
+.band-section { padding: 4rem 0 3rem; background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%); }
+.featured-products { padding: 4rem 0 5rem; background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%); }
 .featured-products .band { padding-top: 0; }
 .featured-products .band-title-wrap { padding-top: 6rem; }
 
-.band__title { text-align: center; padding-bottom: 18vw; }
+.band__title { text-align: center; padding-bottom: 15vw; }
 .band__title h2 {
   font-size: clamp(0.95rem, 2vw, 1.6rem);
   font-weight: 400;
@@ -2365,9 +2365,11 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .about-hero--image { background-size: cover; background-position: center; }
 
 @media (max-width: 768px) {
-  .band-section { padding-top: 4rem; }
-  .band__title { padding-bottom: 3rem; }
-  .band__inner { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 0; }
+  .band-section { padding: 2.5rem 0 1.5rem; }
+  .featured-products { padding: 2.5rem 0 3.5rem; }
+  .band__title { padding-bottom: 1.5rem; }
+  .band__inner { grid-template-columns: 1fr; gap: 1.25rem; padding: 1.5rem 0; }
+  .featured-products__products { padding-top: 2.5rem; }
   .band--img-left .band__img, .band--img-right .band__img {
     grid-column: 1; grid-row: 1; margin: 0 auto; width: 70%; max-width: 280px; transform: none;
   }
