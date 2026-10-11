@@ -22,7 +22,10 @@
           {{ section.settings.button_label }}
         </button>
       </div>
-<label class="newsletter-popup__consent">        <input type="checkbox" name="newsletter_consent" required>        <span>{{ section.settings.consent_text }}          <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}" target="_blank" rel="noopener">Leggi l'informativa privacy</a>.</span>      </label>
+      <label class="newsletter-popup__consent">
+        <input type="checkbox" name="newsletter_consent" required>
+        <span>{{ section.settings.consent_text }}          <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}" target="_blank" rel="noopener">Leggi l'informativa privacy</a>.</span>
+      </label>
       {%- if form.errors -%}
         <p class="newsletter-popup__error">{{ form.errors | default_errors }}</p>
       {%- endif -%}
