@@ -22,6 +22,7 @@
           {{ section.settings.button_label }}
         </button>
       </div>
+<label class="newsletter-popup__consent">        <input type="checkbox" name="newsletter_consent" required>        <span>{{ section.settings.consent_text }}          <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}" target="_blank" rel="noopener">Leggi l'informativa privacy</a>.</span>      </label>
       {%- if form.errors -%}
         <p class="newsletter-popup__error">{{ form.errors | default_errors }}</p>
       {%- endif -%}
@@ -34,11 +35,6 @@
       No grazie, continua senza iscriverti
     </button>
   </div>
-      <label class="newsletter-popup__consent">
-        <input type="checkbox" name="newsletter_consent" required>
-        <span>{{ section.settings.consent_text }}
-          <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}" target="_blank" rel="noopener">Informativa privacy</a>.</span>
-      </label>
 </div>
 
 {% schema %}
@@ -49,7 +45,7 @@
       "type": "textarea",
       "id": "consent_text",
       "label": "Testo del consenso (mostrato accanto alla casella)",
-      "default": "Ho almeno 18 anni e acconsento a ricevere comunicazioni e offerte via email da Cm2 Spirits Srls. Puoi annullare l'iscrizione in qualsiasi momento. Leggi l'"
+      "default": "Ho almeno 18 anni e acconsento a ricevere comunicazioni e offerte via email da Cm2 Spirits Srls. Puoi annullare l'iscrizione in qualsiasi momento."
     },
     {
       "type": "text",
