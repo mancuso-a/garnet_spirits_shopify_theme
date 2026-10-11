@@ -30,7 +30,7 @@
         <p class="newsletter-popup__error">{{ form.errors | default_errors }}</p>
       {%- endif -%}
       {%- if form.posted_successfully? -%}
-        <p style="color:#2ecc71;font-size:.78rem;margin-top:.75rem;">Benvenuto nel mondo Garnet.</p>
+        <p style="color:#2ecc71;font-size:.78rem;margin-top:.75rem;">Benvenuto nel mondo Garnet. Ti abbiamo inviato il codice di benvenuto: controlla la tua posta.</p>
       {%- endif -%}
     {%- endform -%}
 
@@ -60,13 +60,13 @@
       "type": "text",
       "id": "title",
       "label": "Titolo",
-      "default": "Il mondo Garnet inizia qui"
+      "default": "10% sul tuo primo ordine"
     },
     {
       "type": "text",
       "id": "subtitle",
       "label": "Sottotitolo",
-      "default": "Iscriviti alla newsletter: ricette esclusive, anteprime e piccoli segreti dal mondo Garnet."
+      "default": "Iscriviti alla newsletter e ricevi il codice di benvenuto, ricette esclusive e anteprime dal mondo Garnet."
     },
     {
       "type": "text",
