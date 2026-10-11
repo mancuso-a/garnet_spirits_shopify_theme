@@ -2305,8 +2305,8 @@ h1, h2 { font-weight: 400; letter-spacing: 0.08em; line-height: 1.15; }
 h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 
 /* ── BAND: titolo sopra, sfondo a tutta larghezza, immagine + testo alternati ── */
-.band-section { padding: 4rem 0 3rem; background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%); }
-.featured-products { padding: 4rem 0 5rem; background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%); }
+.band-section { padding: 4rem 0 3rem; background: var(--color-bg); }
+.featured-products { padding: 4rem 0 5rem; background: var(--color-bg); }
 .featured-products .band { padding-top: 0; }
 .featured-products .band-title-wrap { padding-top: 6rem; }
 
