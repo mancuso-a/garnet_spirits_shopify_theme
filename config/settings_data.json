@@ -11,6 +11,7 @@
   "current": {
     "favicon": "shopify://shop_images/Garnet_Spirits_Logo__badge.png",
     "share_image": "shopify://shop_images/Atmosfera_Garnet__gin_bitter_e_cocktail.png",
+    "free_shipping_threshold": 50,
     "color_background": "#0a0a0a",
     "color_dark": "#111111",
     "color_card": "#1a1a1a",
