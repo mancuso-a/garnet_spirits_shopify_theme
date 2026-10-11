@@ -4,11 +4,7 @@
 {%- endcomment -%}
 {%- assign meta_description = page_description | default: settings.seo_description | strip_html | strip_newlines | truncate: 160 -%}
 {%- if request.page_type == 'index' -%}
-  {%- if page_title == shop.name or page_title == blank -%}
-    {%- assign meta_title = shop.name | append: ' — One sip, one secret.' -%}
-  {%- else -%}
-    {%- assign meta_title = page_title -%}
-  {%- endif -%}
+  {%- assign meta_title = shop.name | append: ' — One sip, one secret.' -%}
 {%- else -%}
   {%- assign meta_title = page_title -%}
   {%- unless page_title contains shop.name -%}{%- assign meta_title = page_title | append: ' — ' | append: shop.name -%}{%- endunless -%}

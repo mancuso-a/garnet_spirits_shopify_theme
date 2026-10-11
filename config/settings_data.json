@@ -1,5 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
+    "favicon": "shopify://shop_images/Garnet_Spirits_Logo__badge.png",
+    "share_image": "shopify://shop_images/Atmosfera_Garnet__gin_bitter_e_cocktail.png",
     "color_background": "#0a0a0a",
     "color_dark": "#111111",
     "color_card": "#1a1a1a",
@@ -9,6 +20,45 @@
     "color_amber": "#C47A1E",
     "color_amber_light": "#E8963A",
     "color_text": "#FFFFFF",
-    "color_text_muted": "#999999"
+    "color_text_muted": "#999999",
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "text": "One sip, one secret.",
+          "link": ""
+        }
+      },
+      "age-gate": {
+        "type": "age-gate",
+        "settings": {
+          "title": "Benvenuto",
+          "message": "Questo sito contiene contenuti relativi a bevande alcoliche. Devi avere almeno 18 anni per accedere.",
+          "accept_label": "Ho 18+ anni",
+          "deny_label": "Sono minorenne",
+          "legal_text": "Bevi responsabilmente. Non condividere con minori di 18 anni."
+        }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
+      },
+      "header": {
+        "type": "header",
+        "settings": {}
+      },
+      "newsletter-popup": {
+        "type": "newsletter-popup",
+        "settings": {
+          "consent_text": "Ho almeno 18 anni e acconsento a ricevere comunicazioni e offerte via email da Cm2 Spirits Srls. Puoi annullare l'iscrizione in qualsiasi momento.",
+          "eyebrow": "Unisciti alla community",
+          "title": "10% sul tuo primo ordine",
+          "subtitle": "Iscriviti alla newsletter e ricevi il codice di benvenuto, ricette esclusive e anteprime dal mondo Garnet.",
+          "placeholder": "La tua email",
+          "button_label": "Iscriviti"
+        }
+      }
+    },
+    "content_for_index": []
   }
 }
