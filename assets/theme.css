@@ -2521,3 +2521,12 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
   .featured-products { padding-bottom: 2rem; }
   .shopify-section + .shopify-section .brand-story { padding-top: 2rem; padding-bottom: 3rem; }
 }
+
+/* Spazio sotto "Vedi tutti i prodotti" = spazio sopra (3 rem) */
+.featured-products { padding-bottom: 1.5rem; }
+.featured-products + .shopify-section .brand-story,
+.shopify-section + .shopify-section .brand-story { padding-top: 1.5rem; }
+@media (max-width: 768px) {
+  .featured-products { padding-bottom: 1.5rem; }
+  .shopify-section + .shopify-section .brand-story { padding-top: 1.5rem; }
+}
