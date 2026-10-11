@@ -157,6 +157,15 @@ const CartDrawer = {
             footerEl.style.display = 'block';
             const subtotalEl = document.getElementById('cart-drawer-subtotal');
             if (subtotalEl) subtotalEl.textContent = this.formatMoney(cart.total_price);
+            const bar = document.getElementById('free-shipping-bar');
+            if (bar) {
+              const threshold = parseInt(bar.dataset.threshold, 10) || 0;
+              const pct = threshold ? Math.min(100, (cart.total_price / threshold) * 100) : 0;
+              const fill = document.getElementById('free-shipping-fill');
+              const msg = document.getElementById('free-shipping-msg');
+              if (fill) { fill.style.width = pct + '%'; fill.classList.toggle('complete', pct >= 100); }
+              if (msg) msg.innerHTML = pct >= 100 ? '<strong>Spedizione gratuita applicata.</strong>' : 'Ancora <strong>' + this.formatMoney(threshold - cart.total_price) + '</strong> per la spedizione gratuita';
+            }
           }
         }
       })

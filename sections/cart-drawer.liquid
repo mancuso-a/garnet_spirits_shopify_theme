@@ -20,6 +20,12 @@
   </div>
 
   <div class="cart-drawer__footer" id="cart-drawer-footer" style="display:none;">
+    {%- if settings.free_shipping_threshold != blank and settings.free_shipping_threshold > 0 -%}
+      <div class="free-shipping-bar" id="free-shipping-bar" data-threshold="{{ settings.free_shipping_threshold | times: 100 }}" aria-live="polite">
+        <p class="free-shipping-bar__text" id="free-shipping-msg"></p>
+        <div class="free-shipping-bar__track"><div class="free-shipping-bar__fill" id="free-shipping-fill" style="width:0%"></div></div>
+      </div>
+    {%- endif -%}
     <div class="cart-drawer__totals">
       <div class="cart-drawer__total-row">
         <span>Subtotale</span>

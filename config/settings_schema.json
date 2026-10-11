@@ -3,7 +3,7 @@
     "name": "theme_info",
     "theme_name": "Garnet Spirits",
     "theme_author": "Cm2 Spirits Srls",
-    "theme_version": "1.2.0",
+    "theme_version": "1.3.0",
     "theme_documentation_url": "https://garnetspirits.it",
     "theme_support_url": "https://garnetspirits.it"
   },
@@ -25,6 +25,18 @@
         "id": "seo_description",
         "label": "Descrizione di default per i motori di ricerca",
         "default": "Garnet Spirits: distillati artigianali ispirati alla melagrana e al granato. Garnet Gin Almandino e Garnet Bitter Spessartina, nati a Bari nel 2022. One sip, one secret."
+      }
+    ]
+  },
+  {
+    "name": "Carrello",
+    "settings": [
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Soglia spedizione gratuita (€)",
+        "info": "Importo in euro oltre il quale la spedizione è gratuita. Deve coincidere con la tariffa gratuita impostata in Shopify (Impostazioni → Spedizione). Lascia vuoto per nascondere la barra.",
+        "placeholder": "es. 60"
       }
     ]
   }
