@@ -2542,3 +2542,9 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
   .band__title { padding-top: 1.75rem; padding-bottom: 1.75rem; }
   .band--img-left .band__img, .band--img-right .band__img { transform: none; }
 }
+
+/* Consenso newsletter */
+.newsletter-popup__consent { display: flex; gap: 0.6rem; align-items: flex-start; margin-top: 0.9rem; font-size: 0.7rem; line-height: 1.5; color: var(--color-gray); cursor: pointer; }
+.newsletter-popup__consent input { margin-top: 0.2rem; width: 15px; height: 15px; flex-shrink: 0; accent-color: var(--color-white); }
+.newsletter-popup__consent a { text-decoration: underline; color: var(--color-light); }
+.newsletter-popup__error { color: var(--color-red-light); font-size: 0.75rem; margin-top: 0.6rem; }
