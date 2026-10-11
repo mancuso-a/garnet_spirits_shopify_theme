@@ -2512,3 +2512,12 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
     letter-spacing: 0.1em;
   }
 }
+
+/* ── HOME: meno spazio tra "Vedi tutti i prodotti" e la sezione Drink list ── */
+.featured-products { padding-bottom: 3rem; }
+.featured-products + .shopify-section .brand-story,
+.shopify-section + .shopify-section .brand-story { padding-top: 3rem; }
+@media (max-width: 768px) {
+  .featured-products { padding-bottom: 2rem; }
+  .shopify-section + .shopify-section .brand-story { padding-top: 2rem; padding-bottom: 3rem; }
+}
