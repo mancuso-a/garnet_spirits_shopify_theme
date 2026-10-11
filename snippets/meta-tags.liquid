@@ -25,7 +25,7 @@
 {%- elsif settings.share_image != blank -%}
   <meta property="og:image" content="https:{{ settings.share_image | image_url: width: 1200 }}">
 {%- else -%}
-  <meta property="og:image" content="https:{{ 'home-hero.jpg' | asset_url }}">
+  <meta property="og:image" content="https:{{ 'share-image.jpg' | asset_url }}">
 {%- endif -%}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ meta_title | escape }}">
