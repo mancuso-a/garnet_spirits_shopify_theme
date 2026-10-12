@@ -20,7 +20,7 @@
             <div class="cart-page__item">
               <div class="cart-page__item-img">
                 {%- if item.image != blank -%}
-                  {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: item.title }}
+                  {{ item.image | image_url: width: 330 | image_tag: loading: 'lazy', widths: '110, 220, 330', sizes: '110px', alt: item.title }}
                 {%- endif -%}
               </div>
               <div class="cart-page__item-info">

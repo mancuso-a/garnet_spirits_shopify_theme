@@ -137,7 +137,7 @@ const CartDrawer = {
               <div class="cart-item" data-key="${item.key}">
                 <div class="cart-item__image">
                   ${item.image
-                    ? `<img src="${item.image}" alt="${item.title}" loading="lazy">`
+                    ? `<img src="${this.imageUrl(item.image, 240)}" srcset="${this.imageUrl(item.image, 160)} 160w, ${this.imageUrl(item.image, 240)} 240w, ${this.imageUrl(item.image, 320)} 320w" sizes="80px" width="80" height="110" alt="${item.title}" loading="lazy">`
                     : '<div style="width:100%;height:100%;background:var(--color-card);"></div>'}
                 </div>
                 <div class="cart-item__info">
@@ -212,6 +212,16 @@ const CartDrawer = {
         this.updateCount();
         this.render();
       });
+  },
+
+  imageUrl(src, width) {
+    try {
+      const url = new URL(src, window.location.origin);
+      url.searchParams.set('width', width);
+      return url.toString();
+    } catch (e) {
+      return src;
+    }
   },
 
   formatMoney(cents) {
