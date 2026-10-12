@@ -810,6 +810,30 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   transition: background var(--transition);
 }
 .qty-selector__btn:hover { background: var(--color-border); }
+.qty-selector--sm {
+  display: flex;
+  width: max-content;
+  margin: 0.15rem 0 0.5rem;
+}
+.qty-selector--sm .qty-selector__btn {
+  width: 26px;
+  height: 26px;
+  font-size: 0.9rem;
+  line-height: 1;
+  padding: 0;
+}
+.qty-selector--sm .qty-selector__val {
+  width: 28px;
+  padding: 0;
+  font-size: 0.8rem;
+  text-align: center;
+  background: none;
+  border: none;
+  color: var(--color-white);
+  -moz-appearance: textfield;
+}
+.qty-selector--sm .qty-selector__val::-webkit-outer-spin-button,
+.qty-selector--sm .qty-selector__val::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .qty-selector__val {
   width: 44px;
   text-align: center;

@@ -26,8 +26,8 @@
               <div class="cart-page__item-info">
                 <div class="cart-page__item-name">{{ item.product_title }}</div>
                 <div class="cart-page__item-meta">{%- if item.product.has_only_default_variant -%}{{ item.product.metafields.custom.formato | default: item.product.metafields.custom.volume | default: '700 ml' }}{%- else -%}{{ item.variant.title }}{%- endif -%}</div>
-                <div class="qty-selector" style="margin:.75rem 0;" aria-label="Quantità">
-                  <button type="button" class="qty-selector__btn"
+                <div class="qty-selector qty-selector--sm" aria-label="Quantità">
+                  <button type="button" class="qty-selector__btn" aria-label="Riduci quantità"
                     onclick="this.nextElementSibling.value=Math.max(0,parseInt(this.nextElementSibling.value)-1);this.closest('form').submit()">−</button>
                   <input
                     type="number"
@@ -35,14 +35,15 @@
                     value="{{ item.quantity }}"
                     min="0"
                     class="qty-selector__val"
-                    style="width:44px;text-align:center;background:none;border:none;color:var(--color-white);"
+                    onchange="this.closest('form').submit()"
                   >
-                  <button type="button" class="qty-selector__btn"
+                  <button type="button" class="qty-selector__btn" aria-label="Aumenta quantità"
                     onclick="this.previousElementSibling.value=parseInt(this.previousElementSibling.value)+1;this.closest('form').submit()">+</button>
                 </div>
-                <span style="font-size:.9rem;font-weight:500;color:{{ item_color }};">
+                <span class="cart-item__price" style="color:{{ item_color }};">
                   {{ item.final_line_price | money }}
                 </span>
+                <a href="{{ item.url_to_remove }}" class="cart-item__remove">Rimuovi</a>
               </div>
             </div>
           {%- endfor -%}
