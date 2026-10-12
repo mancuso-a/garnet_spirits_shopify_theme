@@ -142,7 +142,12 @@ const CartDrawer = {
                 </div>
                 <div class="cart-item__info">
                   <div class="cart-item__name">${item.product_title}</div>
-                  <div class="cart-item__meta">700 ml · Qtà: ${item.quantity}</div>
+                  <div class="cart-item__meta">${item.variant_title || '700 ml'}</div>
+                  <div class="qty-selector qty-selector--sm" aria-label="Quantità">
+                    <button type="button" class="qty-selector__btn" onclick="CartDrawer.changeQty('${item.key}', ${item.quantity - 1})" aria-label="Riduci quantità">−</button>
+                    <span class="qty-selector__val">${item.quantity}</span>
+                    <button type="button" class="qty-selector__btn" onclick="CartDrawer.changeQty('${item.key}', ${item.quantity + 1})" aria-label="Aumenta quantità">+</button>
+                  </div>
                   <span class="cart-item__price" ${priceStyle}>
                     ${this.formatMoney(item.final_line_price)}
                   </span>
@@ -194,10 +199,14 @@ const CartDrawer = {
   },
 
   removeItem(key) {
+    this.changeQty(key, 0);
+  },
+
+  changeQty(key, quantity) {
     fetch('/cart/change.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: key, quantity: 0 })
+      body: JSON.stringify({ id: key, quantity: Math.max(0, quantity) })
     })
       .then(() => {
         this.updateCount();
