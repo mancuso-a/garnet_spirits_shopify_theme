@@ -25,9 +25,30 @@
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
+        "blocks": {
+          "offer_biDPh3": {
+            "type": "offer",
+            "settings": {
+              "text": "Spedizione gratuita sopra 50 €",
+              "link": ""
+            }
+          },
+          "offer_UyKAmc": {
+            "type": "offer",
+            "settings": {
+              "text": "Iscriviti alla newsletter e ricevi il 10% di sconto sul tuo primo ordine",
+              "link": ""
+            }
+          }
+        },
+        "block_order": [
+          "offer_biDPh3",
+          "offer_UyKAmc"
+        ],
         "settings": {
           "text": "One sip, one secret.",
-          "link": ""
+          "link": "",
+          "interval": 5
         }
       },
       "age-gate": {
