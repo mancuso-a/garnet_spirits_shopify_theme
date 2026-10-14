@@ -284,6 +284,7 @@ function toggleRecipe(btn) {
   const isOpen = body.classList.contains('open');
   body.classList.toggle('open');
   btn.classList.toggle('open');
+  btn.closest('.cocktail-card')?.classList.toggle('recipe-open', !isOpen);
   btn.querySelector('.toggle-label').textContent = isOpen ? 'Vedi ricetta' : 'Chiudi ricetta';
 }
 

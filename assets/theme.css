@@ -2590,4 +2590,19 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
     scroll-margin-top: calc(var(--nav-height) + 1rem);
   }
   html:has(.cocktail-grid) .site-footer { scroll-snap-align: end; }
+
+  /* Scheda chiusa alta quanto lo schermo: la foto si adatta, testi e "Vedi ricetta" restano visibili */
+  .cocktail-card {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--nav-height) - 2rem);
+    height: calc(100svh - var(--nav-height) - 2rem);
+  }
+  .cocktail-card__image { flex: 1 1 0; min-height: 0; aspect-ratio: auto; }
+  .cocktail-card__body { flex: none; }
+
+  /* Ricetta aperta: scheda libera in altezza e scatto sospeso finché non la richiudi */
+  .cocktail-card.recipe-open { height: auto; }
+  .cocktail-card.recipe-open .cocktail-card__image { flex: none; height: 40vh; height: 40svh; }
+  html:has(.cocktail-card.recipe-open) { scroll-snap-type: none; }
 }
