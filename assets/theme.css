@@ -1050,6 +1050,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
 }
 .recipe-body.open { display: block; }
 .cocktail-card { scroll-margin-bottom: 1rem; }
+.cocktail-card:has(.recipe-toggle) { cursor: pointer; }
 .recipe-section-title {
   font-size: 0.6rem;
   letter-spacing: 0.32em;

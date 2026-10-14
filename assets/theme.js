@@ -293,6 +293,15 @@ function toggleRecipe(btn) {
   }
 }
 
+// Tap o clic su tutta la scheda del drink: apre/chiude la ricetta
+document.addEventListener('click', (e) => {
+  const card = e.target.closest('.cocktail-card');
+  if (!card || e.target.closest('a, button, input, select, textarea')) return;
+  if (window.getSelection && String(window.getSelection()).length) return;
+  const btn = card.querySelector('.recipe-toggle');
+  if (btn) toggleRecipe(btn);
+});
+
 /* ── TOAST ────────────────────────────────────────────────── */
 const Toast = {
   el: null,
