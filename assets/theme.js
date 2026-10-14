@@ -284,8 +284,13 @@ function toggleRecipe(btn) {
   const isOpen = body.classList.contains('open');
   body.classList.toggle('open');
   btn.classList.toggle('open');
-  btn.closest('.cocktail-card')?.classList.toggle('recipe-open', !isOpen);
+  const card = btn.closest('.cocktail-card');
+  card?.classList.toggle('recipe-open', !isOpen);
   btn.querySelector('.toggle-label').textContent = isOpen ? 'Vedi ricetta' : 'Chiudi ricetta';
+  // Aprendo la ricetta, porta la fine della scheda in fondo allo schermo
+  if (!isOpen && card) {
+    requestAnimationFrame(() => card.scrollIntoView({ behavior: 'smooth', block: 'end' }));
+  }
 }
 
 /* ── TOAST ────────────────────────────────────────────────── */
