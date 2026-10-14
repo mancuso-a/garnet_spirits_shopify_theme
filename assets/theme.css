@@ -2542,15 +2542,6 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .age-confirm__error { margin-top: 0.5rem; font-size: 0.72rem; color: var(--color-red-light); }
 .age-confirm--error .age-confirm__label { color: var(--color-white); }
 [data-age-checkout].is-loading { opacity: 0.6; pointer-events: none; }
-.invoice-request { margin-bottom: 1rem; }
-.invoice-request__fields { display: grid; gap: 0.6rem; margin-top: 0.8rem; }
-.invoice-request__row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-.invoice-request__field { display: grid; gap: 0.25rem; font-size: 0.7rem; letter-spacing: 0.04em; color: var(--color-light); }
-.invoice-request__field input { width: 100%; padding: 0.55rem 0.7rem; font: inherit; font-size: 0.82rem; letter-spacing: normal; color: var(--color-white); background: transparent; border: 1px solid rgba(255,255,255,0.25); border-radius: 0; }
-.invoice-request__field input:focus { outline: none; border-color: var(--color-white); }
-.invoice-request__field input.is-invalid { border-color: var(--color-red-light); }
-.invoice-request__hint { font-size: 0.68rem; line-height: 1.5; color: var(--color-gray); }
-@media (max-width: 400px) { .invoice-request__row { grid-template-columns: 1fr; } }
 
 /* ── PAGINE INFORMATIVE DI SHOPIFY (/policies/…) ─────────── */
 .shopify-policy__container {
