@@ -1,0 +1,36 @@
+{%- comment -%}
+  Richiesta fattura elettronica (clienti business) prima del checkout.
+  Il checkout Shopify (non Plus) non ha campi SDI/PEC: il JS (InvoiceRequest) valida questi campi
+  quando si clicca [data-age-checkout] e li salva negli attributi del carrello (visibili nell'ordine).
+  Se la casella non è spuntata gli attributi vengono svuotati, quindi i clienti privati non vedono nulla.
+{%- endcomment -%}
+{%- assign inv_active = false -%}
+{%- if cart.attributes['Partita IVA'] != blank -%}{%- assign inv_active = true -%}{%- endif -%}
+<div class="invoice-request{% if inv_active %} is-open{% endif %}" data-invoice-request>
+  <label class="age-confirm__label invoice-request__toggle">
+    <input type="checkbox" class="age-confirm__input" data-invoice-toggle{% if inv_active %} checked{% endif %}>
+    <span>Sono un'azienda e voglio la fattura elettronica</span>
+  </label>
+  <div class="invoice-request__fields" data-invoice-fields{% unless inv_active %} hidden{% endunless %}>
+    <label class="invoice-request__field">
+      <span>Ragione sociale *</span>
+      <input type="text" data-invoice-attr="Ragione sociale" value="{{ cart.attributes['Ragione sociale'] | escape }}" autocomplete="organization" maxlength="120">
+    </label>
+    <label class="invoice-request__field">
+      <span>Partita IVA *</span>
+      <input type="text" data-invoice-attr="Partita IVA" value="{{ cart.attributes['Partita IVA'] | escape }}" inputmode="text" maxlength="16" placeholder="es. 01234567890">
+    </label>
+    <div class="invoice-request__row">
+      <label class="invoice-request__field">
+        <span>Codice SDI</span>
+        <input type="text" data-invoice-attr="Codice SDI" value="{{ cart.attributes['Codice SDI'] | escape }}" maxlength="7" placeholder="7 caratteri">
+      </label>
+      <label class="invoice-request__field">
+        <span>oppure PEC</span>
+        <input type="email" data-invoice-attr="PEC" value="{{ cart.attributes['PEC'] | escape }}" maxlength="120" placeholder="nome@pec.it">
+      </label>
+    </div>
+    <p class="invoice-request__hint">Indica il codice SDI o la PEC. L'indirizzo di fatturazione lo inserisci al checkout.</p>
+  </div>
+  <p class="age-confirm__error" data-invoice-error role="alert" hidden></p>
+</div>

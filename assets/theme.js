@@ -895,6 +895,65 @@ const RecentlyViewed = {
   }
 };
 
+/* ── RICHIESTA FATTURA (P.IVA + SDI/PEC per clienti business) ── */
+const InvoiceRequest = {
+  init() {
+    document.querySelectorAll('[data-invoice-request]').forEach(box => {
+      const toggle = box.querySelector('[data-invoice-toggle]');
+      const fields = box.querySelector('[data-invoice-fields]');
+      toggle.addEventListener('change', () => {
+        fields.hidden = !toggle.checked;
+        box.classList.toggle('is-open', toggle.checked);
+        this.showError(box, '');
+      });
+      box.querySelectorAll('[data-invoice-attr]').forEach(input => {
+        input.addEventListener('input', () => input.classList.remove('is-invalid'));
+      });
+    });
+  },
+  /* P.IVA italiana: 11 cifre con cifra di controllo; estera UE: prefisso paese + 2-13 caratteri */
+  validVat(v) {
+    if (/^IT\d{11}$/.test(v)) v = v.slice(2);
+    if (/^\d{11}$/.test(v)) {
+      let sum = 0;
+      for (let i = 0; i < 10; i++) {
+        let n = +v[i];
+        if (i % 2 === 1) { n *= 2; if (n > 9) n -= 9; }
+        sum += n;
+      }
+      return (10 - (sum % 10)) % 10 === +v[10];
+    }
+    return /^(?!IT)[A-Z]{2}[A-Z0-9]{2,13}$/.test(v);
+  },
+  showError(box, msg, input) {
+    const error = box.querySelector('[data-invoice-error]');
+    error.textContent = msg;
+    error.hidden = !msg;
+    box.classList.toggle('age-confirm--error', !!msg);
+    if (input) { input.classList.add('is-invalid'); input.focus(); }
+  },
+  /* Ritorna gli attributi da salvare nel carrello, oppure null se i dati non sono validi */
+  collect(scope) {
+    const box = scope.querySelector('[data-invoice-request]');
+    const empty = { 'Ragione sociale': '', 'Partita IVA': '', 'Codice SDI': '', 'PEC': '' };
+    if (!box) return {};
+    const toggle = box.querySelector('[data-invoice-toggle]');
+    if (!toggle.checked) return empty;
+    const get = name => box.querySelector(`[data-invoice-attr="${name}"]`);
+    const company = get('Ragione sociale'), vat = get('Partita IVA'), sdi = get('Codice SDI'), pec = get('PEC');
+    const vatVal = vat.value.replace(/[\s.\-]/g, '').toUpperCase();
+    const sdiVal = sdi.value.trim().toUpperCase();
+    const pecVal = pec.value.trim();
+    if (!company.value.trim()) { this.showError(box, 'Inserisci la ragione sociale.', company); return null; }
+    if (!this.validVat(vatVal)) { this.showError(box, 'La partita IVA non è valida.', vat); return null; }
+    if (!sdiVal && !pecVal) { this.showError(box, 'Inserisci il codice SDI oppure la PEC.', sdi); return null; }
+    if (sdiVal && !/^[A-Z0-9]{7}$/.test(sdiVal)) { this.showError(box, 'Il codice SDI deve avere 7 caratteri.', sdi); return null; }
+    if (pecVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(pecVal)) { this.showError(box, "L'indirizzo PEC non è valido.", pec); return null; }
+    this.showError(box, '');
+    return { 'Ragione sociale': company.value.trim(), 'Partita IVA': vatVal, 'Codice SDI': sdiVal, 'PEC': pecVal };
+  }
+};
+
 /* ── AGE CONFIRM (dichiarazione maggiore età prima del checkout) ── */
 const AgeConfirm = {
   init() {
@@ -911,12 +970,14 @@ const AgeConfirm = {
           return;
         }
         if (error) error.hidden = true;
+        const invoiceAttrs = InvoiceRequest.collect(btn.parentElement);
+        if (!invoiceAttrs) return;
         btn.classList.add('is-loading');
         try {
           await fetch('/cart/update.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ attributes: { 'Maggiore età': 'Dichiarata il ' + new Date().toLocaleString('it-IT') } })
+            body: JSON.stringify({ attributes: Object.assign({ 'Maggiore età': 'Dichiarata il ' + new Date().toLocaleString('it-IT') }, invoiceAttrs) })
           });
         } catch (err) { /* in ogni caso si prosegue al checkout */ }
         window.location.href = btn.getAttribute('href') || '/checkout';
@@ -1032,6 +1093,7 @@ document.addEventListener('DOMContentLoaded', () => {
   CookieConsent.init();
   AnnouncementBar.init();
   RecentlyViewed.init();
+  InvoiceRequest.init();
   AgeConfirm.init();
   Reviews.init();
   SocialShare.init();
