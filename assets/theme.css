@@ -2579,3 +2579,15 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .newsletter-popup__consent input { margin-top: 0.2rem; width: 15px; height: 15px; flex-shrink: 0; accent-color: var(--color-white); }
 .newsletter-popup__consent a { text-decoration: underline; color: var(--color-light); }
 .newsletter-popup__error { color: var(--color-red-light); font-size: 0.75rem; margin-top: 0.6rem; }
+
+/* ── DRINK LIST MOBILE: scorrimento a scatti, un drink alla volta ──
+   Per annullare l'esperimento basta eliminare questo blocco. */
+@media (max-width: 768px) {
+  html:has(.cocktail-grid) { scroll-snap-type: y mandatory; }
+  .drinks-hero { scroll-snap-align: start; }
+  .cocktail-card {
+    scroll-snap-align: start;
+    scroll-margin-top: calc(var(--nav-height) + 1rem);
+  }
+  html:has(.cocktail-grid) .site-footer { scroll-snap-align: end; }
+}
