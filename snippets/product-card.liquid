@@ -13,14 +13,19 @@
 {%- endif -%}
 
 {%- assign tag_label = product.metafields.custom.granato.value -%}
+{%- capture status -%}{%- render 'product-status', product: product -%}{%- endcapture -%}
+{%- assign status = status | strip -%}
 
 <article class="product-card" style="--product-color: {{ product_color }};">
 
   <!-- Image with overlay actions -->
   <div class="product-card__img-wrap">
-    {%- if product.compare_at_price > product.price -%}
-      <span class="sale-badge">Offerta</span>
-    {%- endif -%}
+    {%- case status -%}
+      {%- when 'coming' -%}<span class="sale-badge sale-badge--coming">In arrivo</span>
+      {%- when 'soldout' -%}<span class="sale-badge sale-badge--soldout">Esaurito</span>
+      {%- when 'sale' -%}<span class="sale-badge">Offerta</span>
+      {%- when 'new' -%}<span class="sale-badge sale-badge--new">Novità</span>
+    {%- endcase -%}
     <a href="{{ product.url }}" aria-label="{{ product.title }}">
       <div class="product-card__image product-card__image--placeholder">
         {%- if product.featured_image != blank -%}
@@ -32,7 +37,12 @@
 
     <!-- Overlay: wishlist + quick add -->
     <div class="product-card__overlay">
-      {%- if product.available -%}
+      {%- if status == 'coming' -%}
+        <a href="/#newsletter" class="product-card__quickadd btn {{ btn_class }}" style="--product-color: {{ cart_color }};"
+           aria-label="Avvisami quando {{ product.title | escape }} è disponibile">
+          Avvisami
+        </a>
+      {%- elsif product.available -%}
         <button
           class="product-card__quickadd btn {{ btn_class }}"
           style="--product-color: {{ cart_color }};"

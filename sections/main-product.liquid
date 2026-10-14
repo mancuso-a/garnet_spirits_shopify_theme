@@ -157,6 +157,12 @@
             <s class="price-compare">{{ main_variant.compare_at_price | money }}</s>
             <span class="sale-badge sale-badge--inline">Offerta</span>
           {%- endif -%}
+          {%- capture page_status -%}{%- render 'product-status', product: product -%}{%- endcapture -%}
+          {%- assign page_status = page_status | strip -%}
+          {%- case page_status -%}
+            {%- when 'coming' -%}<span class="sale-badge sale-badge--inline sale-badge--coming">In arrivo</span>
+            {%- when 'new' -%}<span class="sale-badge sale-badge--inline sale-badge--new">Novità</span>
+          {%- endcase -%}
         </div>
 
         <div class="product-form__row">
@@ -166,7 +172,13 @@
             <button type="button" class="qty-selector__btn" onclick="changeQty('product-qty', 1)" aria-label="Aumenta quantità">+</button>
           </div>
 
-          {%- if product.available -%}
+          {%- capture status -%}{%- render 'product-status', product: product -%}{%- endcapture -%}
+          {%- assign status = status | strip -%}
+          {%- if status == 'coming' -%}
+            <a href="/#newsletter" class="btn {{ btn_class }} btn-add-cart">
+              In arrivo · Avvisami
+            </a>
+          {%- elsif product.available -%}
             <button type="submit" class="btn {{ btn_class }} btn-add-cart" data-add-cart>
               Aggiungi al carrello
             </button>
@@ -203,11 +215,15 @@
   <div class="sticky-atc__inner">
     <span class="sticky-atc__name">{{ product.title }}</span>
     <span class="sticky-atc__price {{ price_class }}">{{ product.selected_or_first_available_variant.price | money }}{%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%} <s class="price-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</s>{%- endif -%}</span>
+    {%- if page_status == 'coming' -%}
+    <a href="/#newsletter" class="btn {{ btn_class }} sticky-atc__btn">Avvisami</a>
+    {%- else -%}
     <button class="btn {{ btn_class }} sticky-atc__btn"
       onclick="document.querySelector('[data-add-cart]')?.click()"
       aria-label="Aggiungi al carrello">
       Aggiungi al carrello
     </button>
+    {%- endif -%}
   </div>
 </div>
 

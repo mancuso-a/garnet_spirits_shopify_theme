@@ -1,0 +1,15 @@
+{%- comment -%}
+  Restituisce lo stato del prodotto per badge e pulsanti: coming | soldout | sale | new | (vuoto).
+  Tag Shopify riconosciuti: "in-arrivo" (o "in arrivo") per i prodotti in arrivo, "novita" (o "novità") per le novità.
+  Uso: {%- capture status -%}{%- render 'product-status', product: product -%}{%- endcapture -%}
+{%- endcomment -%}
+{%- assign tags = product.tags | join: ',' | downcase | prepend: ',' | append: ',' -%}
+{%- if tags contains ',in-arrivo,' or tags contains ',in arrivo,' -%}
+  coming
+{%- elsif product.available == false -%}
+  soldout
+{%- elsif product.compare_at_price > product.price -%}
+  sale
+{%- elsif tags contains ',novita,' or tags contains ',novità,' -%}
+  new
+{%- endif -%}
