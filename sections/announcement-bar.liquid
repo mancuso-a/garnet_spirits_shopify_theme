@@ -4,9 +4,12 @@
 {%- endcomment -%}
 {%- assign has_claim = false -%}
 {%- if section.settings.text != blank -%}{%- assign has_claim = true -%}{%- endif -%}
+{%- capture ann_signature -%}{{ section.settings.text }}{% for block in section.blocks %}|{{ block.settings.text }}{% endfor %}{%- endcapture -%}
+{%- assign ann_hash = ann_signature | md5 | slice: 0, 8 -%}
+{%- assign ann_key = 'garnet_ann_dismissed_' | append: ann_hash -%}
 {%- if has_claim or section.blocks.size > 0 -%}
   <div id="announcement-bar" class="announcement-bar" role="region" aria-label="Annuncio"
-       data-interval="{{ section.settings.interval | default: 5 }}">
+       data-interval="{{ section.settings.interval | default: 5 }}" data-key="{{ ann_key }}">
     {%- assign msg_index = 0 -%}
     {%- if has_claim -%}
       <p class="announcement-bar__msg is-active">
@@ -33,7 +36,7 @@
   </div>
   <script>
     try {
-      if (localStorage.getItem('garnet_ann_dismissed')) {
+      if (localStorage.getItem('{{ ann_key }}')) {
         document.getElementById('announcement-bar').classList.add('hidden');
       } else {
         document.documentElement.classList.add('has-announcement');

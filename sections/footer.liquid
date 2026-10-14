@@ -35,15 +35,18 @@
   </div>
 
   <!-- Newsletter column -->
-  <div class="site-footer__col site-footer__newsletter">
-    <h4>{{ section.settings.newsletter_title | default: 'Newsletter' }}</h4>
+  <div class="site-footer__col site-footer__newsletter" id="newsletter">
+    <h4>{{ section.settings.newsletter_eyebrow | default: 'Newsletter' }}</h4>
+    {%- if section.settings.newsletter_title != blank -%}
+      <p class="site-footer__newsletter-title">{{ section.settings.newsletter_title }}</p>
+    {%- endif -%}
     {%- if section.settings.newsletter_text != blank -%}
       <p class="site-footer__newsletter-text">{{ section.settings.newsletter_text }}</p>
     {%- endif -%}
     {%- form 'customer', id: 'footer-newsletter-form' -%}
       <input type="hidden" name="contact[tags]" value="newsletter,footer">
       {%- if form.posted_successfully? -%}
-        <p class="site-footer__newsletter-ok">Grazie, sei iscritto. Controlla la tua email.</p>
+        <p class="site-footer__newsletter-ok">Benvenuto nel mondo Garnet. Ti abbiamo inviato il codice di benvenuto: controlla la tua posta.</p>
       {%- else -%}
         <div class="newsletter-popup__form">
           <input type="email" name="contact[email]" class="newsletter-popup__input"
@@ -52,7 +55,7 @@
         </div>
         <label class="newsletter-popup__consent">
           <input type="checkbox" name="newsletter_consent" required>
-          <span>Ho almeno 18 anni e acconsento a ricevere email da {{ section.settings.company_name | default: shop.name }}. <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}" target="_blank" rel="noopener">Privacy</a>.</span>
+          <span>{{ section.settings.newsletter_consent }} <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}" target="_blank" rel="noopener">Leggi l'informativa privacy</a>.</span>
         </label>
         {%- if form.errors -%}
           <p class="newsletter-popup__error">{{ form.errors | default_errors }}</p>
@@ -77,15 +80,27 @@
   "settings": [
     {
       "type": "text",
+      "id": "newsletter_eyebrow",
+      "label": "Newsletter: intestazione",
+      "default": "Unisciti alla community"
+    },
+    {
+      "type": "text",
       "id": "newsletter_title",
-      "label": "Titolo newsletter",
-      "default": "Newsletter"
+      "label": "Newsletter: titolo",
+      "default": "10% sul tuo primo ordine"
     },
     {
       "type": "textarea",
       "id": "newsletter_text",
-      "label": "Testo newsletter",
-      "default": "Offerte, ricette e anteprime dal mondo Garnet."
+      "label": "Newsletter: testo",
+      "default": "Iscriviti alla newsletter e ricevi il codice di benvenuto, ricette esclusive e anteprime dal mondo Garnet."
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_consent",
+      "label": "Newsletter: testo consenso",
+      "default": "Ho almeno 18 anni e acconsento a ricevere comunicazioni e offerte via email da Cm2 Spirits Srls. Puoi annullare l'iscrizione in qualsiasi momento."
     },
     {
       "type": "text",

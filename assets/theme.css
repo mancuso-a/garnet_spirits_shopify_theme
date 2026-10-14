@@ -1210,6 +1210,8 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
 }
 .site-footer__warning { opacity: 0.55; font-size: 0.65rem; }
 .site-footer__newsletter-text { color: var(--color-gray); font-size: 0.8rem; line-height: 1.6; font-weight: 300; margin-bottom: 1rem; }
+.site-footer__newsletter-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-white); margin-bottom: 0.5rem; }
+.site-footer__newsletter { scroll-margin-top: calc(var(--header-offset) + 1.5rem); }
 .site-footer__newsletter-ok { color: var(--color-light); font-size: 0.8rem; }
 .site-footer__newsletter .newsletter-popup__consent a { display: inline; margin: 0; font-size: inherit; color: var(--color-light); text-decoration: underline; }
 

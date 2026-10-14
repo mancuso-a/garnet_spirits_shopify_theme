@@ -302,6 +302,16 @@ document.addEventListener('click', (e) => {
   if (btn) toggleRecipe(btn);
 });
 
+// Link che finiscono con #newsletter (es. "/#newsletter" nella barra annunci): scorre all'iscrizione nel footer della pagina corrente
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('a[href$="#newsletter"]');
+  const target = document.getElementById('newsletter');
+  if (!link || !target) return;
+  e.preventDefault();
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => target.querySelector('input[type="email"]')?.focus({ preventScroll: true }), 700);
+});
+
 // Freccia hero: scorre alla sezione successiva, tenendo conto del menu fisso
 function scrollPastSection(el) {
   const section = el.closest('.shopify-section') || el.closest('section');
@@ -812,7 +822,7 @@ const AnnouncementBar = {
       bar.classList.add('hidden');
       document.documentElement.classList.remove('has-announcement');
       clearInterval(this.timer);
-      try { localStorage.setItem(this.KEY, '1'); } catch (e) {}
+      try { localStorage.setItem(bar.dataset.key || this.KEY, '1'); } catch (e) {}
     });
 
     // Alterna claim e messaggi di offerta
