@@ -37,7 +37,7 @@
 
     <!-- Overlay: wishlist + quick add -->
     <div class="product-card__overlay">
-      {%- if status == 'coming' -%}
+      {%- if status == 'coming' or status == 'soldout' -%}
         <a href="/#newsletter" class="product-card__quickadd btn {{ btn_class }}" style="--product-color: {{ cart_color }};"
            aria-label="Avvisami quando {{ product.title | escape }} è disponibile">
           Avvisami

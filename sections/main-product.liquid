@@ -183,9 +183,9 @@
               Aggiungi al carrello
             </button>
           {%- else -%}
-            <button type="button" class="btn btn--outline btn-add-cart" disabled>
-              Non disponibile
-            </button>
+            <a href="/#newsletter" class="btn {{ btn_class }} btn-add-cart">
+              Esaurito · Avvisami
+            </a>
           {%- endif -%}
 
           <!-- Wishlist button -->
@@ -215,7 +215,7 @@
   <div class="sticky-atc__inner">
     <span class="sticky-atc__name">{{ product.title }}</span>
     <span class="sticky-atc__price {{ price_class }}">{{ product.selected_or_first_available_variant.price | money }}{%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%} <s class="price-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</s>{%- endif -%}</span>
-    {%- if page_status == 'coming' -%}
+    {%- if page_status == 'coming' or product.available == false -%}
     <a href="/#newsletter" class="btn {{ btn_class }} sticky-atc__btn">Avvisami</a>
     {%- else -%}
     <button class="btn {{ btn_class }} sticky-atc__btn"
