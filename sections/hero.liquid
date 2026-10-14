@@ -38,6 +38,13 @@
       {%- endif -%}
     </div>
   </div>
+
+  <a href="#hero-next" class="hero__scroll-cue" aria-label="Scorri per scoprire di più"
+     onclick="event.preventDefault(); this.closest('.hero').nextElementSibling?.scrollIntoView({ behavior: 'smooth' });">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M6 9l6 6 6-6"/>
+    </svg>
+  </a>
 </section>
 
 {% schema %}

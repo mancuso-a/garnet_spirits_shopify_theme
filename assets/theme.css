@@ -531,6 +531,26 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
 }
 .hero__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
+/* Segnale discreto che sotto c'è altro: la sezione successiva si intravede e una freccia respira in basso */
+.hero { min-height: calc(100vh - var(--nav-height) - 3.5rem); min-height: calc(100svh - var(--nav-height) - 3.5rem); }
+.hero__scroll-cue {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  color: var(--color-gray);
+  opacity: 0.6;
+  padding: 0.5rem;
+  animation: hero-cue 2.4s ease-in-out infinite;
+}
+.hero__scroll-cue:hover { opacity: 1; }
+@keyframes hero-cue {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 6px); }
+}
+@media (prefers-reduced-motion: reduce) { .hero__scroll-cue { animation: none; } }
+
 /* ── BRAND STORY SECTION ─────────────────────────────────── */
 .brand-story { padding: 7rem 0; }
 .brand-story__grid {
