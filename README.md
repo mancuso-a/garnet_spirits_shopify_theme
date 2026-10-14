@@ -46,9 +46,40 @@ Metafield (namespace `custom`) da creare in Settings → Custom data → Product
 
 Prezzi: da definire nel pannello Shopify.
 
+## Badge prodotto (tag)
+
+Si impostano dal prodotto su Shopify, campo **Tag**. Su ogni prodotto si vede un solo badge, in quest'ordine di priorità:
+
+| Badge | Come si attiva | Cosa succede |
+|---|---|---|
+| **In arrivo** | tag `in-arrivo` (va bene anche `in arrivo`) | Badge sulla foto; al posto di "+ Carrello" c'è **Avvisami**, che porta all'iscrizione newsletter. Il prodotto deve essere pubblicato; le scorte possono restare a zero |
+| **Esaurito** | automatico, scorte a zero | Badge sulla foto e tasto **Avvisami** verso la newsletter |
+| **Offerta** | automatico, se il **Prezzo di confronto** della variante è più alto del prezzo | Prezzo vecchio barrato accanto a quello nuovo, badge nel colore del prodotto |
+| **Novità** | tag `novita` (va bene anche `novità`) | Badge bianco; il prodotto resta acquistabile. Ricordarsi di togliere il tag dopo qualche settimana |
+
+## Colore prodotto
+
+Metafield `custom.colore` (tipo Colore). Lo usano il tasto "+ Carrello" e il suo popup, prezzi, etichette e badge. Se vuoto, il tasto "+ Carrello" e il popup usano il rosso.
+
+## Barra annunci
+
+Personalizza → Announcement Bar. Fissa in alto, anche su mobile. Il **Testo annuncio** ("One sip, one secret.") si alterna con i blocchi **Messaggio offerta** (Aggiungi blocco), ognuno con testo e link facoltativo. "Secondi per messaggio" regola la velocità.
+
+- Link per portare all'iscrizione newsletter in fondo alla pagina: `/#newsletter`
+- Se un visitatore chiude la barra, riappare quando i messaggi cambiano
+
+## Newsletter
+
+- Popup all'ingresso (Personalizza → Newsletter Popup), mostrato una sola volta
+- Modulo fisso nel footer di ogni pagina (Personalizza → Footer, campi "Newsletter"), con gli stessi testi del popup
+- I contatti arrivano in Clienti con tag `newsletter,popup` o `newsletter,footer`
+- Qualsiasi link a `/#newsletter` porta al modulo del footer
+
 ## Drink List
 
 Contiene i 6 cocktail ufficiali della Drink List 2026. Per aggiungere foto: Pages → Drink List → Customize → blocco cocktail → Foto.
+
+Su telefono lo scorrimento si ferma a ogni drink e ogni scheda chiusa è alta uno schermo. Tap su tutta la scheda apre/chiude la ricetta; aprendola la pagina scorre fino alla fine della scheda. Per togliere lo scorrimento a scatti: blocco "DRINK LIST MOBILE" in fondo a `assets/theme.css`.
 
 ## Altre note
 
