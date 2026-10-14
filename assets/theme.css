@@ -2666,3 +2666,33 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
   .cocktail-card.recipe-open .cocktail-card__image { flex: none; height: 40vh; height: 40svh; }
   html:has(.cocktail-card.recipe-open) { scroll-snap-type: none; }
 }
+
+/* ── OFFERTE: prezzo di confronto barrato + etichetta ──────── */
+.price-compare {
+  color: var(--color-gray);
+  font-size: 0.8em;
+  font-weight: 300;
+  margin-left: 0.5em;
+  text-decoration-thickness: 1px;
+}
+.sale-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  background: var(--product-color, var(--color-red-light));
+  color: var(--color-white);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.6rem;
+  pointer-events: none;
+}
+.sale-badge--inline {
+  position: static;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.75rem;
+  font-size: 0.55rem;
+}

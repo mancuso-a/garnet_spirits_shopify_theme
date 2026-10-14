@@ -150,8 +150,13 @@
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
       <div class="product-form" id="product-form-anchor">
+        {%- assign main_variant = product.selected_or_first_available_variant -%}
         <div class="product-form__price {{ price_class }}" id="product-main-price">
-          {{ product.selected_or_first_available_variant.price | money }}
+          {{ main_variant.price | money }}
+          {%- if main_variant.compare_at_price > main_variant.price -%}
+            <s class="price-compare">{{ main_variant.compare_at_price | money }}</s>
+            <span class="sale-badge sale-badge--inline">Offerta</span>
+          {%- endif -%}
         </div>
 
         <div class="product-form__row">
@@ -197,7 +202,7 @@
 <div id="sticky-atc" class="sticky-atc" aria-hidden="true" style="--product-color: {{ product_color }};">
   <div class="sticky-atc__inner">
     <span class="sticky-atc__name">{{ product.title }}</span>
-    <span class="sticky-atc__price {{ price_class }}">{{ product.selected_or_first_available_variant.price | money }}</span>
+    <span class="sticky-atc__price {{ price_class }}">{{ product.selected_or_first_available_variant.price | money }}{%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%} <s class="price-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</s>{%- endif -%}</span>
     <button class="btn {{ btn_class }} sticky-atc__btn"
       onclick="document.querySelector('[data-add-cart]')?.click()"
       aria-label="Aggiungi al carrello">
