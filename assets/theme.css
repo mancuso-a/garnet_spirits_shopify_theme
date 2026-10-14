@@ -531,8 +531,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
 }
 .hero__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-/* Segnale discreto che sotto c'è altro: la sezione successiva si intravede e una freccia respira in basso */
-.hero { min-height: calc(100vh - var(--nav-height) - 3.5rem); min-height: calc(100svh - var(--nav-height) - 3.5rem); }
+/* Freccia discreta in basso: segnala che sotto c'è altro */
 .hero__scroll-cue {
   position: absolute;
   bottom: 1.25rem;

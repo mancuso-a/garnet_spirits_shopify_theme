@@ -302,6 +302,16 @@ document.addEventListener('click', (e) => {
   if (btn) toggleRecipe(btn);
 });
 
+// Freccia hero: scorre alla sezione successiva, tenendo conto del menu fisso
+function scrollPastSection(el) {
+  const section = el.closest('.shopify-section') || el.closest('section');
+  const next = section && section.nextElementSibling;
+  if (!next) return;
+  const header = document.querySelector('.site-header');
+  const offset = header ? header.offsetHeight : 0;
+  window.scrollTo({ top: next.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+}
+
 /* ── TOAST ────────────────────────────────────────────────── */
 const Toast = {
   el: null,
