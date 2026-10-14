@@ -6,6 +6,11 @@
 {%- capture product_color -%}{%- render 'product-color', product: product -%}{%- endcapture -%}
 {%- assign product_color = product_color | strip -%}
 {%- assign btn_class = 'btn--product' -%}
+{%- comment -%} + Carrello e popup: colore dal metafield custom.colore, altrimenti rosso {%- endcomment -%}
+{%- assign cart_color = '#C0392B' -%}
+{%- if product.metafields.custom.colore.value != blank -%}
+  {%- assign cart_color = product.metafields.custom.colore.value | color_to_hex -%}
+{%- endif -%}
 
 {%- assign tag_label = product.metafields.custom.granato.value -%}
 
@@ -27,7 +32,8 @@
       {%- if product.available -%}
         <button
           class="product-card__quickadd btn {{ btn_class }}"
-          onclick="QuickAdd.open('{{ product.first_available_variant.id }}', '{{ product.title | escape }}', '{{ product.price | money | escape }}')"
+          style="--product-color: {{ cart_color }};"
+          onclick="QuickAdd.open('{{ product.first_available_variant.id }}', '{{ product.title | escape }}', '{{ product.price | money | escape }}', '{{ cart_color }}')"
           aria-label="Aggiungi rapidamente {{ product.title }} al carrello">
           + Carrello
         </button>

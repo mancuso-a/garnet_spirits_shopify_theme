@@ -474,8 +474,9 @@ const QuickAdd = {
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') this.close(); });
   },
 
-  open(variantId, productTitle, productPrice) {
+  open(variantId, productTitle, productPrice, color) {
     if (!this.modal) return;
+    this.modal.style.setProperty('--product-color', color || '#C0392B');
     document.getElementById('qa-product-name').textContent = productTitle || '';
     document.getElementById('qa-product-price').textContent = productPrice || '';
     document.getElementById('qa-variant-id').value = variantId || '';

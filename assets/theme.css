@@ -848,7 +848,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
 
 /* ── COLLECTION PAGE ─────────────────────────────────────── */
 .collection-header {
-  padding: 5rem 3rem 3rem;
+  padding: 1.5rem 3rem 1rem;
   text-align: center;
   background: radial-gradient(ellipse at 50% 0%, rgba(139, 26, 26, 0.14) 0%, transparent 60%);
 }
@@ -926,7 +926,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
 
 /* ── DRINK LIST PAGE ─────────────────────────────────────── */
 .drinks-hero {
-  padding: 6rem 3rem 3rem;
+  padding: 1.5rem 3rem 1rem;
   text-align: center;
   background: radial-gradient(ellipse at 50% 0%, rgba(139, 26, 26, 0.12) 0%, transparent 60%);
 }
@@ -1462,7 +1462,9 @@ body.has-announcement .site-header { top: 34px; }
 .quick-add-modal.open .quick-add-sheet { transform: translateY(0); }
 .quick-add-sheet__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
 .quick-add-sheet__name { font-family: var(--font-title); font-weight: 600; font-size: 1.3rem; }
-.quick-add-sheet__price { font-size: 1rem; font-weight: 500; color: var(--color-red-light); margin-top: 0.3rem; }
+.quick-add-sheet__price { font-size: 1rem; font-weight: 500; color: var(--product-color, var(--color-red-light)); margin-top: 0.3rem; }
+.quick-add-sheet { border-top: 2px solid var(--product-color, var(--color-red-light)); }
+.quick-add-sheet .qty-selector { border-color: var(--product-color, var(--color-border)); }
 .quick-add-sheet__close { background: none; border: none; color: var(--color-gray); font-size: 1.2rem; cursor: pointer; transition: color var(--transition); }
 .quick-add-sheet__close:hover { color: var(--color-white); }
 .quick-add-sheet__actions { display: flex; gap: 1rem; margin-top: 1rem; }
