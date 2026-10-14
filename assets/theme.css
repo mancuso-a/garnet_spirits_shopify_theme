@@ -535,6 +535,8 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
 .hero__scroll-cue {
   position: absolute;
   bottom: 1.25rem;
+  /* Su telefono la barra del browser copre il fondo: alza la freccia di quanto è alta la barra */
+  bottom: calc(100vh - 100svh + 1.25rem);
   left: 50%;
   z-index: 2;
   transform: translateX(-50%);
