@@ -308,7 +308,7 @@ function scrollPastSection(el) {
   const next = section && section.nextElementSibling;
   if (!next) return;
   const header = document.querySelector('.site-header');
-  const offset = header ? header.offsetHeight : 0;
+  const offset = header ? header.getBoundingClientRect().bottom : 0;
   window.scrollTo({ top: next.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
 }
 
@@ -803,20 +803,28 @@ const CookieConsent = {
 /* ── ANNOUNCEMENT BAR ─────────────────────────────────────── */
 const AnnouncementBar = {
   KEY: 'garnet_ann_dismissed',
+  timer: null,
 
   init() {
     const bar = document.getElementById('announcement-bar');
-    if (!bar) return;
-    if (localStorage.getItem(this.KEY)) {
-      bar.classList.add('hidden');
-      return;
-    }
-    document.body.classList.add('has-announcement');
+    if (!bar || bar.classList.contains('hidden')) return;
     document.getElementById('ann-close')?.addEventListener('click', () => {
       bar.classList.add('hidden');
-      document.body.classList.remove('has-announcement');
-      localStorage.setItem(this.KEY, '1');
+      document.documentElement.classList.remove('has-announcement');
+      clearInterval(this.timer);
+      try { localStorage.setItem(this.KEY, '1'); } catch (e) {}
     });
+
+    // Alterna claim e messaggi di offerta
+    const msgs = bar.querySelectorAll('.announcement-bar__msg');
+    if (msgs.length < 2) return;
+    const seconds = parseInt(bar.dataset.interval, 10) || 5;
+    let i = 0;
+    this.timer = setInterval(() => {
+      msgs[i].classList.remove('is-active');
+      i = (i + 1) % msgs.length;
+      msgs[i].classList.add('is-active');
+    }, seconds * 1000);
   }
 };
 

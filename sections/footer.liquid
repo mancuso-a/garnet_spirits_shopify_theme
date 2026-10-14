@@ -34,6 +34,33 @@
     {%- endfor -%}
   </div>
 
+  <!-- Newsletter column -->
+  <div class="site-footer__col site-footer__newsletter">
+    <h4>{{ section.settings.newsletter_title | default: 'Newsletter' }}</h4>
+    {%- if section.settings.newsletter_text != blank -%}
+      <p class="site-footer__newsletter-text">{{ section.settings.newsletter_text }}</p>
+    {%- endif -%}
+    {%- form 'customer', id: 'footer-newsletter-form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter,footer">
+      {%- if form.posted_successfully? -%}
+        <p class="site-footer__newsletter-ok">Grazie, sei iscritto. Controlla la tua email.</p>
+      {%- else -%}
+        <div class="newsletter-popup__form">
+          <input type="email" name="contact[email]" class="newsletter-popup__input"
+                 placeholder="La tua email" required autocomplete="email" aria-label="La tua email">
+          <button type="submit" class="btn btn--primary" style="padding:.7rem 1.1rem;font-size:.72rem;white-space:nowrap;">Iscriviti</button>
+        </div>
+        <label class="newsletter-popup__consent">
+          <input type="checkbox" name="newsletter_consent" required>
+          <span>Ho almeno 18 anni e acconsento a ricevere email da {{ section.settings.company_name | default: shop.name }}. <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}" target="_blank" rel="noopener">Privacy</a>.</span>
+        </label>
+        {%- if form.errors -%}
+          <p class="newsletter-popup__error">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+
   <!-- Bottom bar -->
   <div class="site-footer__bottom">
     <span>© {{ 'now' | date: '%Y' }} {{ section.settings.company_name }}{% if section.settings.company_address != blank %} · {{ section.settings.company_address }}{% endif %}{% if section.settings.vat != blank %} · P.IVA e C.F. {{ section.settings.vat }}{% endif %}. Tutti i diritti riservati.</span>
@@ -48,6 +75,18 @@
 {
   "name": "Footer",
   "settings": [
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Titolo newsletter",
+      "default": "Newsletter"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "Testo newsletter",
+      "default": "Offerte, ricette e anteprime dal mondo Garnet."
+    },
     {
       "type": "text",
       "id": "tagline",

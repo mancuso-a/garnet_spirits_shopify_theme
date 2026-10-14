@@ -1,19 +1,45 @@
-{%- if section.settings.text != blank -%}
-  <div id="announcement-bar" class="announcement-bar" role="region" aria-label="Annuncio">
-    <p class="announcement-bar__text">
-      {%- if section.settings.link != blank -%}
-        <a href="{{ section.settings.link }}" class="announcement-bar__link">{{ section.settings.text }}</a>
-      {%- else -%}
-        {{ section.settings.text }}
+{%- comment -%}
+  Barra annunci fissa in alto. Il claim (Testo annuncio) si alterna con i messaggi
+  di offerta aggiunti come blocchi in Personalizza → Announcement Bar.
+{%- endcomment -%}
+{%- assign has_claim = false -%}
+{%- if section.settings.text != blank -%}{%- assign has_claim = true -%}{%- endif -%}
+{%- if has_claim or section.blocks.size > 0 -%}
+  <div id="announcement-bar" class="announcement-bar" role="region" aria-label="Annuncio"
+       data-interval="{{ section.settings.interval | default: 5 }}">
+    {%- assign msg_index = 0 -%}
+    {%- if has_claim -%}
+      <p class="announcement-bar__msg is-active">
+        {%- if section.settings.link != blank -%}
+          <a href="{{ section.settings.link }}">{{ section.settings.text }}</a>
+        {%- else -%}
+          <span>{{ section.settings.text }}</span>
+        {%- endif -%}
+      </p>
+      {%- assign msg_index = 1 -%}
+    {%- endif -%}
+    {%- for block in section.blocks -%}
+      {%- if block.settings.text != blank -%}
+        <p class="announcement-bar__msg{% if msg_index == 0 and forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+          {%- else -%}
+            <span>{{ block.settings.text }}</span>
+          {%- endif -%}
+        </p>
       {%- endif -%}
-    </p>
-    <button
-      id="ann-close"
-      class="announcement-bar__close"
-      aria-label="Chiudi annuncio">
-      ✕
-    </button>
+    {%- endfor -%}
+    <button id="ann-close" class="announcement-bar__close" aria-label="Chiudi annuncio">✕</button>
   </div>
+  <script>
+    try {
+      if (localStorage.getItem('garnet_ann_dismissed')) {
+        document.getElementById('announcement-bar').classList.add('hidden');
+      } else {
+        document.documentElement.classList.add('has-announcement');
+      }
+    } catch (e) { document.documentElement.classList.add('has-announcement'); }
+  </script>
 {%- endif -%}
 
 {% schema %}
@@ -30,7 +56,36 @@
       "type": "url",
       "id": "link",
       "label": "Link (opzionale)"
+    },
+    {
+      "type": "range",
+      "id": "interval",
+      "label": "Secondi per messaggio",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 5
     }
-  ]
+  ],
+  "blocks": [
+    {
+      "type": "offer",
+      "name": "Messaggio offerta",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Testo",
+          "default": "Spedizione gratuita sopra 50 €"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (opzionale)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6
 }
 {% endschema %}
