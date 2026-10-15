@@ -27,7 +27,8 @@
       {%- when 'new' -%}<span class="sale-badge sale-badge--new">Novità</span>
     {%- endcase -%}
     <a href="{{ product.url }}" aria-label="{{ product.title }}">
-      <div class="product-card__image product-card__image--placeholder">
+      {%- comment -%} Immagini orizzontali: intere nella card (contain) invece di ritagliate {%- endcomment -%}
+      <div class="product-card__image product-card__image--placeholder{% if product.featured_image.aspect_ratio > 1 %} product-card__image--landscape{% endif %}">
         {%- if product.featured_image != blank -%}
           {%- assign card_img_alt = product.featured_image.alt | escape -%}
           {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: card_img_alt }}
