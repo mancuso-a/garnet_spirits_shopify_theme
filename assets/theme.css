@@ -2702,3 +2702,8 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .sale-badge--coming { background: transparent; border: 1px solid var(--product-color, var(--color-red-light)); color: var(--color-white); backdrop-filter: blur(6px); background: rgba(10, 10, 10, 0.55); }
 .sale-badge--soldout { background: rgba(10, 10, 10, 0.75); color: var(--color-light); }
 .sale-badge--new { background: var(--color-white); color: #0a0a0a; }
+
+/* ── HOME: su mobile il blocco testo di Brand Story (es. "Esplora le ricette") è centrato come gli altri pulsanti ── */
+@media (max-width: 768px) {
+  .brand-story__text { text-align: center; }
+}
