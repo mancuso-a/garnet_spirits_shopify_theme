@@ -642,7 +642,8 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   transition: transform 0.5s ease;
 }
 .product-card:hover .product-card__image img { transform: scale(1.04); }
-.product-card__image--landscape img { object-fit: contain; }
+.product-card__image--landscape img { object-fit: contain; transform: scale(1.25); }
+.product-card:hover .product-card__image--landscape img { transform: scale(1.3); }
 .product-card__image.product-card__image--landscape { background: var(--color-dark); }
 .product-card__image--placeholder {
   display: flex;
