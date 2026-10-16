@@ -52,7 +52,7 @@ Si impostano dal prodotto su Shopify, campo **Tag**. Su ogni prodotto si vede un
 
 | Badge | Come si attiva | Cosa succede |
 |---|---|---|
-| **In arrivo** | tag `in-arrivo` (va bene anche `in arrivo`) | Badge sulla foto; al posto di "+ Carrello" c'è **Avvisami**, che porta all'iscrizione newsletter. Il prodotto deve essere pubblicato; le scorte possono restare a zero |
+| **In arrivo** | tag `in-arrivo` (va bene anche `in arrivo`) | Badge sulla foto; il prezzo è nascosto e al suo posto compare "Prezzo svelato al lancio"; al posto di "+ Carrello" c'è **Avvisami**, che porta all'iscrizione newsletter. Il prodotto deve essere pubblicato; le scorte possono restare a zero |
 | **Esaurito** | automatico, scorte a zero | Badge sulla foto e tasto **Avvisami** verso la newsletter |
 | **Offerta** | automatico, se il **Prezzo di confronto** della variante è più alto del prezzo | Prezzo vecchio barrato accanto a quello nuovo, badge nel colore del prodotto |
 | **Novità** | tag `novita` (va bene anche `novità`) | Badge bianco; il prodotto resta acquistabile. Ricordarsi di togliere il tag dopo qualche settimana |

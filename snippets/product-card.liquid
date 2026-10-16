@@ -90,9 +90,13 @@
     {%- endif -%}
     <div class="product-card__footer">
       <span class="product-card__price">
-        {{ product.price | money }}
-        {%- if product.compare_at_price > product.price -%}
-          <s class="price-compare">{{ product.compare_at_price | money }}</s>
+        {%- if status == 'coming' -%}
+          <span class="price-hidden">Prezzo svelato al lancio</span>
+        {%- else -%}
+          {{ product.price | money }}
+          {%- if product.compare_at_price > product.price -%}
+            <s class="price-compare">{{ product.compare_at_price | money }}</s>
+          {%- endif -%}
         {%- endif -%}
       </span>
       <div class="product-card__actions">

@@ -5,6 +5,8 @@
 {%- assign btn_class = 'btn--product' -%}
 
 {%- assign tag_label = product.metafields.custom.granato.value -%}
+{%- capture page_status -%}{%- render 'product-status', product: product -%}{%- endcapture -%}
+{%- assign page_status = page_status | strip -%}
 
 <!-- Breadcrumbs -->
 {%- render 'breadcrumbs' -%}
@@ -15,7 +17,7 @@
   data-product-title="{{ product.title | escape }}"
   data-product-url="{{ product.url }}"
   data-product-image="{{ product.featured_image | image_url: width: 400 }}"
-  data-product-price="{{ product.price | money }}"
+  data-product-price="{% if page_status == 'coming' %}Prezzo svelato al lancio{% else %}{{ product.price | money }}{% endif %}"
   hidden></div>
 
 <!-- Product Detail -->
@@ -158,13 +160,15 @@
       <div class="product-form" id="product-form-anchor">
         {%- assign main_variant = product.selected_or_first_available_variant -%}
         <div class="product-form__price {{ price_class }}" id="product-main-price">
-          {{ main_variant.price | money }}
-          {%- if main_variant.compare_at_price > main_variant.price -%}
-            <s class="price-compare">{{ main_variant.compare_at_price | money }}</s>
-            <span class="sale-badge sale-badge--inline">Offerta</span>
+          {%- if page_status == 'coming' -%}
+            <span class="price-hidden">Prezzo svelato al lancio</span>
+          {%- else -%}
+            {{ main_variant.price | money }}
+            {%- if main_variant.compare_at_price > main_variant.price -%}
+              <s class="price-compare">{{ main_variant.compare_at_price | money }}</s>
+              <span class="sale-badge sale-badge--inline">Offerta</span>
+            {%- endif -%}
           {%- endif -%}
-          {%- capture page_status -%}{%- render 'product-status', product: product -%}{%- endcapture -%}
-          {%- assign page_status = page_status | strip -%}
           {%- case page_status -%}
             {%- when 'coming' -%}<span class="sale-badge sale-badge--inline sale-badge--coming">In arrivo</span>
             {%- when 'new' -%}<span class="sale-badge sale-badge--inline sale-badge--new">Novità</span>
@@ -220,7 +224,7 @@
 <div id="sticky-atc" class="sticky-atc" aria-hidden="true" style="--product-color: {{ product_color }};">
   <div class="sticky-atc__inner">
     <span class="sticky-atc__name">{{ product.title }}</span>
-    <span class="sticky-atc__price {{ price_class }}">{{ product.selected_or_first_available_variant.price | money }}{%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%} <s class="price-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</s>{%- endif -%}</span>
+    <span class="sticky-atc__price {{ price_class }}">{%- if page_status == 'coming' -%}<span class="price-hidden">Prezzo svelato al lancio</span>{%- else -%}{{ product.selected_or_first_available_variant.price | money }}{%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%} <s class="price-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</s>{%- endif -%}{%- endif -%}</span>
     {%- if page_status == 'coming' or product.available == false -%}
     <a href="/#newsletter" class="btn {{ btn_class }} sticky-atc__btn">Avvisami</a>
     {%- else -%}
