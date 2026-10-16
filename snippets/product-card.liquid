@@ -91,7 +91,7 @@
     <div class="product-card__footer">
       <span class="product-card__price">
         {%- if status == 'coming' -%}
-          <span class="price-hidden">Prezzo svelato al lancio</span>
+          <span class="price-hidden">Presto disponibile</span>
         {%- else -%}
           {{ product.price | money }}
           {%- if product.compare_at_price > product.price -%}
