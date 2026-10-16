@@ -83,6 +83,7 @@
         <div class="filter-group__body">
           <label class="filter-option"><input type="checkbox" data-filter-name="p.product_type" value="Compound Gin"><span class="filter-option__label">Gin</span></label>
           <label class="filter-option"><input type="checkbox" data-filter-name="p.product_type" value="Bitter"><span class="filter-option__label">Bitter</span></label>
+          <label class="filter-option"><input type="checkbox" data-filter-name="p.product_type" value="Merchandise"><span class="filter-option__label">Merchandise</span></label>
         </div>
       </div>
       <div class="filter-group">
@@ -106,6 +107,44 @@
   <!-- RESULTS -->
   <div id="collection-results" class="collection-results">
     <div id="product-grid-inner" class="collection-results__grid">
+      {%- comment -%}
+        In "Tutti i prodotti" senza filtri attivi i prodotti sono divisi in due blocchi:
+        prima gli spirits, poi il merch.
+      {%- endcomment -%}
+      {%- assign filters_active = false -%}
+      {%- for filter in collection.filters -%}
+        {%- if filter.active_values.size > 0 or filter.min_value.value != blank or filter.max_value.value != blank -%}
+          {%- assign filters_active = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if collection.handle == 'all' and filters_active == false and section.settings.group_all -%}
+        {%- paginate collection.products by 100 -%}
+          {%- capture spirits_cards -%}{%- endcapture -%}
+          {%- capture merch_cards -%}{%- endcapture -%}
+          {%- for product in collection.products -%}
+            {%- capture p_kind -%}{%- render 'product-kind', product: product -%}{%- endcapture -%}
+            {%- capture card -%}{%- render 'product-card', product: product -%}{%- endcapture -%}
+            {%- if p_kind == 'spirit' -%}
+              {%- assign spirits_cards = spirits_cards | append: card -%}
+            {%- else -%}
+              {%- assign merch_cards = merch_cards | append: card -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if spirits_cards != blank -%}
+            <div class="collection-group">
+              <h2 class="collection-group__title">{{ section.settings.spirits_title }}</h2>
+              <div class="product-grid">{{ spirits_cards }}</div>
+            </div>
+          {%- endif -%}
+          {%- if merch_cards != blank -%}
+            <div class="collection-group">
+              <h2 class="collection-group__title">{{ section.settings.merch_title }}</h2>
+              {%- if section.settings.merch_text != blank -%}<p class="collection-group__text">{{ section.settings.merch_text }}</p>{%- endif -%}
+              <div class="product-grid">{{ merch_cards }}</div>
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      {%- else -%}
       <div class="product-grid">
         {%- paginate collection.products by 12 -%}
           {%- for product in collection.products -%}
@@ -129,6 +168,7 @@
           {%- endif -%}
         {%- endpaginate -%}
       </div>
+      {%- endif -%}
     </div>
   </div>
 
@@ -137,6 +177,31 @@
 {% schema %}
 {
   "name": "Main Collection",
-  "settings": []
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "group_all",
+      "label": "In \"Tutti i prodotti\" dividi spirits e merchandise",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "spirits_title",
+      "label": "Titolo blocco spirits",
+      "default": "I nostri spirits"
+    },
+    {
+      "type": "text",
+      "id": "merch_title",
+      "label": "Titolo blocco merchandise",
+      "default": "Il Mondo Garnet"
+    },
+    {
+      "type": "text",
+      "id": "merch_text",
+      "label": "Sottotitolo blocco merchandise",
+      "default": "Accessori e oggetti firmati Garnet"
+    }
+  ]
 }
 {% endschema %}

@@ -1,0 +1,10 @@
+{%- comment -%}
+  Restituisce "spirit" o "merch" per un prodotto.
+  Spirit: tipo o titolo contengono "Gin" o "Bitter" (comprese le versioni Box). Tutto il resto è merch.
+  Uso: {%- capture kind -%}{%- render 'product-kind', product: p -%}{%- endcapture -%}
+{%- endcomment -%}
+{%- if product.type contains 'Gin' or product.type contains 'Bitter' or product.title contains 'Gin' or product.title contains 'Bitter' -%}
+  spirit
+{%- else -%}
+  merch
+{%- endif -%}

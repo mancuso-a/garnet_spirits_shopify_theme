@@ -1,18 +1,11 @@
 {%- comment -%}
   Related Products section for product template.
-  Shows other products from the same collection or product type.
+  Shows other products, same kind (spirit/merch) first.
 {%- endcomment -%}
 
-{%- assign related = collections.all.products -%}
+{%- capture current_kind -%}{%- render 'product-kind', product: product -%}{%- endcapture -%}
 {%- assign related_count = 0 -%}
-
-{%- if product.collections.size > 0 -%}
-  {%- assign related = product.collections.first.products -%}
-{%- endif -%}
-
-{%- comment -%}Check we have products other than current one{%- endcomment -%}
-{%- assign other_products = '' -%}
-{%- for p in related -%}
+{%- for p in collections.all.products -%}
   {%- if p.id != product.id -%}
     {%- assign related_count = related_count | plus: 1 -%}
   {%- endif -%}
@@ -26,11 +19,23 @@
 
     <div class="product-grid">
       {%- assign shown = 0 -%}
-      {%- for p in related -%}
-        {%- if p.id != product.id and shown < section.settings.products_to_show -%}
-          {%- render 'product-card', product: p -%}
-          {%- assign shown = shown | plus: 1 -%}
-        {%- endif -%}
+      {%- for giro in (1..2) -%}
+        {%- for p in collections.all.products -%}
+          {%- if p.id != product.id and shown < section.settings.products_to_show -%}
+            {%- capture p_kind -%}{%- render 'product-kind', product: p -%}{%- endcapture -%}
+            {%- comment -%}Giro 1: stesso genere. Giro 2: l'altro genere.{%- endcomment -%}
+            {%- assign show_it = false -%}
+            {%- if forloop.parentloop.first -%}
+              {%- if p_kind == current_kind -%}{%- assign show_it = true -%}{%- endif -%}
+            {%- else -%}
+              {%- if p_kind != current_kind -%}{%- assign show_it = true -%}{%- endif -%}
+            {%- endif -%}
+            {%- if show_it -%}
+              {%- render 'product-card', product: p -%}
+              {%- assign shown = shown | plus: 1 -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
       {%- endfor -%}
     </div>
   </div>

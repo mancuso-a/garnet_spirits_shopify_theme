@@ -620,6 +620,14 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem;
 }
+.collection-group + .collection-group { margin-top: 4rem; }
+.collection-group__title { font-size: 1.6rem; margin-bottom: 1.5rem; }
+.collection-group__text {
+  color: var(--color-gray);
+  font-size: 0.9rem;
+  font-weight: 300;
+  margin: -1rem 0 1.5rem;
+}
 
 /* ── PRODUCT CARD ────────────────────────────────────────── */
 .product-card {

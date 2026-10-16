@@ -13,10 +13,15 @@
         {%- endfor -%}
       </div>
     {%- else -%}
-      <!-- Fallback: show all products -->
+      <!-- Fallback: solo gli spirits, niente merch -->
       <div class="product-grid">
-        {%- for product in collections.all.products limit: section.settings.products_to_show -%}
-          {%- render 'product-card', product: product -%}
+        {%- assign shown = 0 -%}
+        {%- for product in collections.all.products -%}
+          {%- capture p_kind -%}{%- render 'product-kind', product: product -%}{%- endcapture -%}
+          {%- if p_kind == 'spirit' and shown < section.settings.products_to_show -%}
+            {%- render 'product-card', product: product -%}
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endif -%}
         {%- endfor -%}
       </div>
     {%- endif -%}
