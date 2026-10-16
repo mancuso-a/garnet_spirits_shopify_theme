@@ -642,9 +642,9 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   transition: transform 0.5s ease;
 }
 .product-card:hover .product-card__image img { transform: scale(1.04); }
-.product-card__image--landscape img { object-fit: contain; transform: scale(1.25); }
-.product-card:hover .product-card__image--landscape img { transform: scale(1.3); }
-.product-card__image.product-card__image--landscape { background: var(--color-dark); }
+.product-card__slide--landscape { background: var(--color-dark); }
+.product-card__slide--landscape img { object-fit: contain; transform: scale(1.25); }
+.product-card:hover .product-card__slide--landscape img { transform: scale(1.3); }
 .product-card__image--placeholder {
   display: flex;
   align-items: center;
@@ -1838,16 +1838,36 @@ html.has-announcement .site-header { top: var(--ann-height); }
   transition: opacity 0.3s;
 }
 .lightbox.open { opacity: 1; pointer-events: all; }
+.lightbox__track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+.lightbox__track::-webkit-scrollbar { display: none; }
+.lightbox__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 1rem;
+}
 .lightbox__img {
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
   transform: scale(0.95);
   transition: transform 0.3s ease;
 }
-.lightbox.open .lightbox__img { transform: scale(1); }
 .lightbox__close {
   position: absolute;
+  z-index: 2;
+  padding: 0.5rem;
   top: 1.5rem;
   right: 1.5rem;
   background: none;
@@ -1861,6 +1881,7 @@ html.has-announcement .site-header { top: var(--ann-height); }
 .lightbox__close:hover { color: var(--color-white); }
 .lightbox__nav {
   position: absolute;
+  z-index: 2;
   top: 50%;
   transform: translateY(-50%);
   background: rgba(255,255,255,0.08);
@@ -1874,6 +1895,8 @@ html.has-announcement .site-header { top: var(--ann-height); }
 .lightbox__nav:hover { background: rgba(255,255,255,0.15); }
 .lightbox__nav--prev { left: 1rem; }
 .lightbox__nav--next { right: 1rem; }
+.lightbox--single .lightbox__nav { display: none; }
+@media (hover: none) { .lightbox__nav { display: none; } }
 .lightbox__counter {
   position: absolute;
   bottom: 1.5rem;
@@ -1886,6 +1909,69 @@ html.has-announcement .site-header { top: var(--ann-height); }
 
 /* Zoom cursor on product images */
 .product-detail__image img { cursor: zoom-in; }
+
+/* ── CARD: slider immagini ───────────────────────────────── */
+.product-card__slides {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.product-card__slides::-webkit-scrollbar { display: none; }
+.product-card__slide {
+  flex: 0 0 100%;
+  height: 100%;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.product-card__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: rgba(10, 10, 10, 0.55);
+  color: var(--color-white);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition), background var(--transition);
+}
+.product-card__arrow:hover { background: rgba(10, 10, 10, 0.85); }
+.product-card__arrow--prev { left: 0.5rem; }
+.product-card__arrow--next { right: 0.5rem; }
+.product-card:hover .product-card__arrow,
+.product-card__arrow:focus-visible { opacity: 1; }
+@media (hover: none) { .product-card__arrow { display: none; } }
+.product-card__dots {
+  position: absolute;
+  left: 50%;
+  bottom: 3.75rem;
+  z-index: 3;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  pointer-events: none;
+}
+.product-card__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background var(--transition);
+}
+.product-card__dot.is-active { background: var(--color-white); }
 
 /* ── BACK TO TOP ─────────────────────────────────────────── */
 .back-to-top {

@@ -25,9 +25,13 @@
   <div class="product-detail__visual">
     <div class="product-detail__image">
       {%- if product.featured_image != blank -%}
+        {%- capture gallery_srcs -%}{%- for image in product.images -%}{{ image | image_url: width: 1600 }}{%- unless forloop.last -%}|{%- endunless -%}{%- endfor -%}{%- endcapture -%}
+        {%- comment -%} Il click apre il visualizzatore a schermo intero (vedi Lightbox in theme.js) {%- endcomment -%}
         <a href="{{ product.featured_image | image_url: width: 1600 }}"
-           data-lightbox-src="{{ product.featured_image | image_url: width: 1600 }}"
-           aria-label="Ingrandisci immagine">
+           class="product-detail__zoom"
+           data-lightbox-gallery="{{ gallery_srcs | strip }}"
+           data-lightbox-index="0"
+           aria-label="Apri visualizzatore immagini">
           {{ product.featured_image | image_url: width: 800 | image_tag:
             loading: 'eager',
             alt: product.featured_image.alt | escape
@@ -44,7 +48,9 @@
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:.75rem;">
           {%- for image in product.images limit: 4 -%}
             <button
-              onclick="document.querySelector('.product-detail__image img').src='{{ image | image_url: width: 800 }}';document.querySelector('.product-detail__image a').href='{{ image | image_url: width: 1600 }}';document.querySelector('.product-detail__image a').dataset.lightboxSrc='{{ image | image_url: width: 1600 }}';"
+              type="button"
+              data-gallery-thumb="{{ forloop.index0 }}"
+              data-src="{{ image | image_url: width: 800 }}"
               style="border:1px solid var(--color-border);background:var(--color-card);overflow:hidden;aspect-ratio:1;cursor:pointer;"
               aria-label="Mostra immagine {{ forloop.index }}"
             >

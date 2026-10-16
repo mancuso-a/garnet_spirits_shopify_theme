@@ -682,41 +682,72 @@ const StickyATC = {
 };
 
 /* ── IMAGE LIGHTBOX ───────────────────────────────────────── */
+// Visualizzatore a schermo intero: swipe su mobile (scroll-snap), frecce/tastiera su desktop
 const Lightbox = {
   box: null,
-  img: null,
+  track: null,
   images: [],
   current: 0,
 
   init() {
     this.box = document.getElementById('lightbox');
-    this.img = document.getElementById('lightbox-img');
-    if (!this.box) return;
+    this.track = document.getElementById('lightbox-track');
+    if (!this.box || !this.track) return;
 
     document.getElementById('lightbox-close')?.addEventListener('click', () => this.close());
-    document.getElementById('lightbox-prev')?.addEventListener('click', () => this.prev());
-    document.getElementById('lightbox-next')?.addEventListener('click', () => this.next());
-    this.box.addEventListener('click', (e) => { if (e.target === this.box) this.close(); });
+    document.getElementById('lightbox-prev')?.addEventListener('click', () => this.go(this.current - 1));
+    document.getElementById('lightbox-next')?.addEventListener('click', () => this.go(this.current + 1));
+    // Tap fuori dall'immagine chiude
+    this.box.addEventListener('click', (e) => {
+      if (e.target === this.box || e.target.classList.contains('lightbox__slide')) this.close();
+    });
     document.addEventListener('keydown', (e) => {
       if (!this.box.classList.contains('open')) return;
       if (e.key === 'Escape') this.close();
-      if (e.key === 'ArrowLeft') this.prev();
-      if (e.key === 'ArrowRight') this.next();
+      if (e.key === 'ArrowLeft') this.go(this.current - 1);
+      if (e.key === 'ArrowRight') this.go(this.current + 1);
     });
+    let raf;
+    this.track.addEventListener('scroll', () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const w = this.track.clientWidth || 1;
+        this.current = Math.round(this.track.scrollLeft / w);
+        this.updateUi();
+      });
+    }, { passive: true });
 
-    // Attach to product images
-    document.querySelectorAll('[data-lightbox-src]').forEach((el, i) => {
-      this.images.push(el.dataset.lightboxSrc);
-      el.addEventListener('click', () => this.open(i));
+    // Galleria pagina prodotto
+    const main = document.querySelector('[data-lightbox-gallery]');
+    if (!main) return;
+    const gallery = main.dataset.lightboxGallery.split('|').filter(Boolean);
+    main.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.open(gallery, parseInt(main.dataset.lightboxIndex, 10) || 0);
+    });
+    document.querySelectorAll('[data-gallery-thumb]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const img = main.querySelector('img');
+        if (img) { img.src = btn.dataset.src; img.removeAttribute('srcset'); }
+        main.href = gallery[btn.dataset.galleryThumb] || main.href;
+        main.dataset.lightboxIndex = btn.dataset.galleryThumb;
+      });
     });
   },
 
-  open(index) {
-    if (!this.box || !this.images.length) return;
-    this.current = index;
-    this.show();
+  open(images, index = 0) {
+    if (!images.length) return;
+    this.images = images;
+    this.track.innerHTML = images.map((src, i) =>
+      `<div class="lightbox__slide"><img class="lightbox__img" src="${src}" alt="Immagine ${i + 1}" ${Math.abs(i - index) > 1 ? 'loading="lazy"' : ''}></div>`
+    ).join('');
+    this.box.classList.toggle('lightbox--single', images.length < 2);
     this.box.classList.add('open');
     document.body.style.overflow = 'hidden';
+    this.current = index;
+    this.track.scrollLeft = index * this.track.clientWidth;
+    this.updateUi();
+    document.getElementById('lightbox-close')?.focus({ preventScroll: true });
   },
 
   close() {
@@ -724,18 +755,42 @@ const Lightbox = {
     document.body.style.overflow = '';
   },
 
-  prev() { this.current = (this.current - 1 + this.images.length) % this.images.length; this.show(); },
-  next() { this.current = (this.current + 1) % this.images.length; this.show(); },
+  go(index) {
+    if (!this.images.length) return;
+    const i = (index + this.images.length) % this.images.length;
+    this.track.scrollTo({ left: i * this.track.clientWidth, behavior: 'smooth' });
+  },
 
-  show() {
-    if (this.img) {
-      this.img.src = this.images[this.current];
-      this.img.alt = `Immagine ${this.current + 1}`;
-    }
+  updateUi() {
     const counter = document.getElementById('lightbox-counter');
-    if (counter) counter.textContent = `${this.current + 1} / ${this.images.length}`;
-    const nav = document.querySelectorAll('.lightbox__nav');
-    nav.forEach(n => n.style.display = this.images.length > 1 ? 'block' : 'none');
+    if (counter) counter.textContent = this.images.length > 1 ? `${this.current + 1} / ${this.images.length}` : '';
+  }
+};
+
+/* ── CARD IMAGE SLIDER ────────────────────────────────────── */
+// Scorrimento immagini nella card: swipe nativo + frecce (desktop) + puntini.
+// Delegato sul document così funziona anche per card caricate via AJAX.
+const CardSlider = {
+  init() {
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-card-prev], [data-card-next]');
+      if (!btn) return;
+      e.preventDefault();
+      const slides = btn.closest('.product-card__img-wrap')?.querySelector('[data-card-slides]');
+      if (!slides) return;
+      const w = slides.clientWidth;
+      const count = slides.children.length;
+      let i = Math.round(slides.scrollLeft / w) + (btn.hasAttribute('data-card-next') ? 1 : -1);
+      i = (i + count) % count;
+      slides.scrollTo({ left: i * w, behavior: 'smooth' });
+    });
+    document.addEventListener('scroll', (e) => {
+      const slides = e.target;
+      if (!(slides instanceof Element) || !slides.matches('[data-card-slides]')) return;
+      const i = Math.round(slides.scrollLeft / (slides.clientWidth || 1));
+      slides.closest('.product-card__img-wrap')?.querySelectorAll('.product-card__dot')
+        .forEach((d, n) => d.classList.toggle('is-active', n === i));
+    }, { capture: true, passive: true });
   }
 };
 
@@ -1027,6 +1082,7 @@ document.addEventListener('DOMContentLoaded', () => {
   CollectionFilters.init();
   StickyATC.init();
   Lightbox.init();
+  CardSlider.init();
   BackToTop.init();
   NewsletterPopup.init();
   CookieConsent.init();
