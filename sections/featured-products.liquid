@@ -13,12 +13,15 @@
         {%- endfor -%}
       </div>
     {%- else -%}
-      <!-- Fallback: solo gli spirits, niente merch -->
+      <!-- Fallback: solo gli spirits, niente merch né Box -->
       <div class="product-grid">
         {%- assign shown = 0 -%}
         {%- for product in collections.all.products -%}
           {%- capture p_kind -%}{%- render 'product-kind', product: product -%}{%- endcapture -%}
-          {%- if p_kind == 'spirit' and shown < section.settings.products_to_show -%}
+          {%- assign p_tags = product.tags | join: ',' | downcase | prepend: ',' | append: ',' -%}
+          {%- assign is_box = false -%}
+          {%- if p_tags contains ',box,' or product.title contains 'Box' or product.title contains 'box' -%}{%- assign is_box = true -%}{%- endif -%}
+          {%- if p_kind == 'spirit' and is_box == false and shown < section.settings.products_to_show -%}
             {%- render 'product-card', product: product -%}
             {%- assign shown = shown | plus: 1 -%}
           {%- endif -%}

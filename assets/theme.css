@@ -1593,7 +1593,7 @@ html.has-announcement .site-header { top: var(--ann-height); }
   font-size: 0.62rem;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: var(--color-gray);
+  color: var(--color-light);
 }
 .collection-filters__clear {
   background: none;
@@ -1650,16 +1650,17 @@ html.has-announcement .site-header { top: var(--ann-height); }
 }
 .filter-option__label {
   font-size: 0.82rem;
-  color: var(--color-gray);
+  color: var(--color-light);
   transition: color var(--transition);
   user-select: none;
 }
 .filter-option:hover .filter-option__label { color: var(--color-white); }
 .filter-option__count {
   margin-left: auto;
-  font-size: 0.65rem;
-  color: var(--color-border);
+  font-size: 0.7rem;
+  color: var(--color-gray);
 }
+.filter-option input:disabled + .filter-option__label { color: #666; }
 
 /* Price range filter */
 .price-range { padding: 0.5rem 0; }
