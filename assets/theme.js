@@ -309,7 +309,11 @@ document.addEventListener('click', (e) => {
   if (!link || !target) return;
   e.preventDefault();
   target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  setTimeout(() => target.querySelector('input[type="email"]')?.focus({ preventScroll: true }), 700);
+  // Solo con mouse: su telefono il focus automatico (senza scroll) apriva la tastiera sopra il modulo
+  // e il browser non lo spostava più quando poi si toccava il campo. Lì lasciamo che sia il tocco a farlo.
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    setTimeout(() => target.querySelector('input[type="email"]')?.focus({ preventScroll: true }), 700);
+  }
 });
 
 // Freccia hero: scorre alla sezione successiva, tenendo conto del menu fisso
