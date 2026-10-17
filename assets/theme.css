@@ -1982,6 +1982,32 @@ html.has-announcement .site-header { top: var(--ann-height); }
 }
 .product-card__dot.is-active { background: var(--color-white); }
 
+/* ── PAGINA PRODOTTO: anteprima scorrevole ───────────────── */
+.product-detail__gallery { position: relative; }
+.product-detail__slides {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.product-detail__slides::-webkit-scrollbar { display: none; }
+.product-detail__slide {
+  flex: 0 0 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.product-detail__slide img { width: 100%; height: 100%; object-fit: contain; }
+.product-detail__gallery:hover .product-card__arrow { opacity: 1; }
+.product-detail__dots { bottom: 0.75rem; }
+.product-detail__thumb { border: 1px solid var(--color-border); transition: border-color var(--transition); }
+.product-detail__thumb.is-active { border-color: var(--product-color, var(--color-white)); }
+
 /* ── BACK TO TOP ─────────────────────────────────────────── */
 .back-to-top {
   position: fixed;

@@ -717,20 +717,20 @@ const Lightbox = {
       });
     }, { passive: true });
 
-    // Galleria pagina prodotto
-    const main = document.querySelector('[data-lightbox-gallery]');
-    if (!main) return;
-    const gallery = main.dataset.lightboxGallery.split('|').filter(Boolean);
-    main.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.open(gallery, parseInt(main.dataset.lightboxIndex, 10) || 0);
+    // Galleria pagina prodotto: tap su un'immagine dell'anteprima apre il visualizzatore
+    const track = document.querySelector('[data-lightbox-gallery]');
+    if (!track) return;
+    const gallery = track.dataset.lightboxGallery.split('|').filter(Boolean);
+    track.querySelectorAll('[data-lightbox-index]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.open(gallery, parseInt(a.dataset.lightboxIndex, 10) || 0);
+      });
     });
+    // Miniature: scorrono l'anteprima all'immagine scelta
     document.querySelectorAll('[data-gallery-thumb]').forEach(btn => {
       btn.addEventListener('click', () => {
-        const img = main.querySelector('img');
-        if (img) { img.src = btn.dataset.src; img.removeAttribute('srcset'); }
-        main.href = gallery[btn.dataset.galleryThumb] || main.href;
-        main.dataset.lightboxIndex = btn.dataset.galleryThumb;
+        track.scrollTo({ left: parseInt(btn.dataset.galleryThumb, 10) * track.clientWidth, behavior: 'smooth' });
       });
     });
   },
@@ -768,7 +768,7 @@ const Lightbox = {
 };
 
 /* ── CARD IMAGE SLIDER ────────────────────────────────────── */
-// Scorrimento immagini nella card: swipe nativo + frecce (desktop) + puntini.
+// Scorrimento immagini nella card e nell'anteprima prodotto: swipe nativo + frecce (desktop) + puntini.
 // Delegato sul document così funziona anche per card caricate via AJAX.
 const CardSlider = {
   init() {
@@ -776,7 +776,7 @@ const CardSlider = {
       const btn = e.target.closest('[data-card-prev], [data-card-next]');
       if (!btn) return;
       e.preventDefault();
-      const slides = btn.closest('.product-card__img-wrap')?.querySelector('[data-card-slides]');
+      const slides = btn.closest('.product-card__img-wrap, .product-detail__gallery')?.querySelector('[data-card-slides]');
       if (!slides) return;
       const w = slides.clientWidth;
       const count = slides.children.length;
@@ -788,8 +788,12 @@ const CardSlider = {
       const slides = e.target;
       if (!(slides instanceof Element) || !slides.matches('[data-card-slides]')) return;
       const i = Math.round(slides.scrollLeft / (slides.clientWidth || 1));
-      slides.closest('.product-card__img-wrap')?.querySelectorAll('.product-card__dot')
+      slides.closest('.product-card__img-wrap, .product-detail__gallery')?.querySelectorAll('.product-card__dot')
         .forEach((d, n) => d.classList.toggle('is-active', n === i));
+      if (slides.matches('[data-lightbox-gallery]')) {
+        document.querySelectorAll('[data-gallery-thumb]')
+          .forEach(t => t.classList.toggle('is-active', +t.dataset.galleryThumb === i));
+      }
     }, { capture: true, passive: true });
   }
 };

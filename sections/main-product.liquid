@@ -28,17 +28,36 @@
     <div class="product-detail__image">
       {%- if product.featured_image != blank -%}
         {%- capture gallery_srcs -%}{%- for image in product.images -%}{{ image | image_url: width: 1600 }}{%- unless forloop.last -%}|{%- endunless -%}{%- endfor -%}{%- endcapture -%}
-        {%- comment -%} Il click apre il visualizzatore a schermo intero (vedi Lightbox in theme.js) {%- endcomment -%}
-        <a href="{{ product.featured_image | image_url: width: 1600 }}"
-           class="product-detail__zoom"
-           data-lightbox-gallery="{{ gallery_srcs | strip }}"
-           data-lightbox-index="0"
-           aria-label="Apri visualizzatore immagini">
-          {{ product.featured_image | image_url: width: 800 | image_tag:
-            loading: 'eager',
-            alt: product.featured_image.alt | escape
-          }}
-        </a>
+        {%- comment -%}
+          Anteprima scorrevole (swipe su mobile, frecce su desktop).
+          Il tap su un'immagine apre il visualizzatore a schermo intero (vedi Lightbox in theme.js).
+        {%- endcomment -%}
+        <div class="product-detail__gallery">
+          <div class="product-detail__slides" data-card-slides data-lightbox-gallery="{{ gallery_srcs | strip }}"
+               style="aspect-ratio: {{ product.featured_image.aspect_ratio | default: 0.6667 }};">
+            {%- for image in product.images -%}
+              <a href="{{ image | image_url: width: 1600 }}"
+                 class="product-detail__slide"
+                 data-lightbox-index="{{ forloop.index0 }}"
+                 aria-label="Apri visualizzatore immagini ({{ forloop.index }} di {{ product.images.size }})">
+                {%- if forloop.first -%}
+                  {{ image | image_url: width: 800 | image_tag: loading: 'eager', alt: image.alt | escape }}
+                {%- else -%}
+                  {{ image | image_url: width: 800 | image_tag: loading: 'lazy', alt: image.alt | escape }}
+                {%- endif -%}
+              </a>
+            {%- endfor -%}
+          </div>
+          {%- if product.images.size > 1 -%}
+            <button type="button" class="product-card__arrow product-card__arrow--prev" data-card-prev aria-label="Immagine precedente">‹</button>
+            <button type="button" class="product-card__arrow product-card__arrow--next" data-card-next aria-label="Immagine successiva">›</button>
+            <div class="product-card__dots product-detail__dots" aria-hidden="true">
+              {%- for image in product.images -%}
+                <span class="product-card__dot{% if forloop.first %} is-active{% endif %}"></span>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
       {%- else -%}
         <div style="width:100%;aspect-ratio:2/3;background:var(--color-card);display:flex;align-items:center;justify-content:center;">
           <span style="color:var(--color-border);font-size:.7rem;letter-spacing:.2em;">IMMAGINE PRODOTTO</span>
@@ -51,9 +70,9 @@
           {%- for image in product.images limit: 4 -%}
             <button
               type="button"
+              class="product-detail__thumb{% if forloop.first %} is-active{% endif %}"
               data-gallery-thumb="{{ forloop.index0 }}"
-              data-src="{{ image | image_url: width: 800 }}"
-              style="border:1px solid var(--color-border);background:var(--color-card);overflow:hidden;aspect-ratio:1;cursor:pointer;"
+              style="background:var(--color-card);overflow:hidden;aspect-ratio:1;cursor:pointer;"
               aria-label="Mostra immagine {{ forloop.index }}"
             >
               {{ image | image_url: width: 150 | image_tag: loading: 'lazy', alt: image.alt }}
