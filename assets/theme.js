@@ -561,12 +561,13 @@ const CollectionFilters = {
 
     // Mobile sidebar
     document.getElementById('mobile-filter-toggle')?.addEventListener('click', () => {
-      this.filterSidebar?.classList.toggle('open');
+      this.filterSidebar?.classList.contains('open') ? this.close() : this.open();
     });
 
-    // Close on overlay click (mobile)
-    document.getElementById('filter-overlay')?.addEventListener('click', () => {
-      this.filterSidebar?.classList.remove('open');
+    // Close on overlay click / Escape (mobile)
+    document.getElementById('filter-overlay')?.addEventListener('click', () => this.close());
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.filterSidebar?.classList.contains('open')) this.close();
     });
 
     // Sort select
@@ -584,6 +585,24 @@ const CollectionFilters = {
         if (cb) { cb.checked = false; this.apply(); }
       }
     });
+  },
+
+  open() {
+    if (!this.filterSidebar) return;
+    this.filterSidebar.classList.add('open');
+    const overlay = document.getElementById('filter-overlay');
+    if (overlay) overlay.style.display = 'block';
+  },
+
+  close() {
+    this.filterSidebar?.classList.remove('open');
+    const overlay = document.getElementById('filter-overlay');
+    if (overlay) overlay.style.display = 'none';
+  },
+
+  applyAndClose() {
+    this.apply();
+    this.close();
   },
 
   apply() {

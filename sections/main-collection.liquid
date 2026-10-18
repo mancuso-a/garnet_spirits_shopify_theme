@@ -59,7 +59,7 @@
                 <input id="filter-price-max" type="number" class="price-range__input" placeholder="Max"
                   value="{{ filter.max_value.value | money_without_currency | strip_html }}">
               </div>
-              <button class="price-range__apply" onclick="CollectionFilters.apply()">Applica</button>
+              <button class="price-range__apply" onclick="CollectionFilters.applyAndClose()">Applica</button>
             </div>
           {%- else -%}
             {%- for value in filter.values -%}
@@ -97,7 +97,7 @@
               <span class="price-range__sep">—</span>
               <input id="filter-price-max" type="number" class="price-range__input" placeholder="Max">
             </div>
-            <button class="price-range__apply" onclick="CollectionFilters.apply()">Applica</button>
+            <button class="price-range__apply" onclick="CollectionFilters.applyAndClose()">Applica</button>
           </div>
         </div>
       </div>
