@@ -2835,3 +2835,115 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
   text-transform: uppercase;
   white-space: nowrap;
 }
+
+/* ── JUDGE.ME RECENSIONI ─────────────────────────────────────
+   Adatta il widget dell'app allo stile scuro del tema.
+   Judge.me inietta i propri stili, quindi servono !important.
+   ──────────────────────────────────────────────────────────── */
+.shopify-app-block:has(.jdgm-rev-widg),
+.jdgm-widget.jdgm-review-widget { background: transparent; }
+.jdgm-rev-widg {
+  max-width: 1200px;
+  margin: 0 auto !important;
+  padding: 4rem 3rem !important;
+  border: 0 !important;
+  border-top: 1px solid var(--color-border) !important;
+  background: transparent !important;
+  color: var(--color-light) !important;
+  font-family: var(--font-body) !important;
+}
+.jdgm-rev-widg *,
+.jdgm-rev-widg__title,
+.jdgm-rev-widg__summary-text,
+.jdgm-rev__author,
+.jdgm-rev__body,
+.jdgm-rev__title,
+.jdgm-rev__timestamp { font-family: var(--font-body) !important; }
+
+.jdgm-rev-widg__title {
+  font-size: clamp(1.4rem, 2.4vw, 2rem) !important;
+  font-weight: 500 !important;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--color-white) !important;
+}
+.jdgm-rev-widg__summary-text,
+.jdgm-rev-widg__summary-average,
+.jdgm-rev__title,
+.jdgm-rev__author { color: var(--color-white) !important; }
+.jdgm-rev__body,
+.jdgm-rev__body p { color: var(--color-light) !important; font-weight: 300; line-height: 1.7; }
+.jdgm-rev__timestamp,
+.jdgm-histogram__frequency,
+.jdgm-rev__icon,
+.jdgm-rev-widg__summary-inner .jdgm-rev-widg__summary-text { color: var(--color-gray) !important; }
+
+/* Stelle in ambra */
+.jdgm-star,
+.jdgm-prev-badge__stars .jdgm-star,
+.jdgm-rev-widg .jdgm-star { color: var(--color-amber-light) !important; }
+
+/* Istogramma */
+.jdgm-histogram__bar { background: var(--color-card) !important; border-radius: 0 !important; }
+.jdgm-histogram__bar-content { background: var(--color-amber) !important; border-radius: 0 !important; }
+.jdgm-histogram__row { color: var(--color-light) !important; }
+
+/* Singola recensione */
+.jdgm-rev {
+  border-top: 1px solid var(--color-border) !important;
+  border-bottom: 0 !important;
+  padding: 1.5rem 0 !important;
+}
+.jdgm-rev-widg__reviews { border: 0 !important; }
+
+/* Pulsanti (scrivi recensione, invia, carica altre) */
+.jdgm-btn,
+.jdgm-write-rev-link,
+.jdgm-form__submit-btn,
+.jdgm-paginate__load-more {
+  background: var(--color-red) !important;
+  color: var(--color-white) !important;
+  border: 1px solid var(--color-red) !important;
+  border-radius: var(--radius) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .85rem 1.75rem !important;
+  transition: var(--transition);
+}
+.jdgm-btn:hover,
+.jdgm-write-rev-link:hover,
+.jdgm-form__submit-btn:hover,
+.jdgm-paginate__load-more:hover {
+  background: var(--color-red-light) !important;
+  border-color: var(--color-red-light) !important;
+}
+.jdgm-btn--border { background: transparent !important; }
+
+/* Form e campi */
+.jdgm-form,
+.jdgm-form__fieldset { background: transparent !important; color: var(--color-light) !important; }
+.jdgm-form__title,
+.jdgm-form__fieldset label { color: var(--color-white) !important; }
+.jdgm-input,
+.jdgm-form input[type="text"],
+.jdgm-form input[type="email"],
+.jdgm-form textarea,
+.jdgm-sort-dropdown,
+.jdgm-sort-dropdown-wrapper select {
+  background: var(--color-card) !important;
+  color: var(--color-white) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius) !important;
+}
+.jdgm-input:focus,
+.jdgm-form textarea:focus { border-color: var(--color-red-light) !important; outline: none; }
+
+/* Link e badge "verificato" */
+.jdgm-rev-widg a { color: var(--color-amber-light) !important; }
+.jdgm-rev__buyer-badge { color: var(--color-amber-light) !important; }
+
+@media (max-width: 768px) {
+  .jdgm-rev-widg { padding: 3rem 1.5rem !important; }
+}
