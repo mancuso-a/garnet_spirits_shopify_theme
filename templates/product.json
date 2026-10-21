@@ -13,6 +13,24 @@
       "type": "main-product",
       "settings": {}
     },
+    "17925810786a4ea149": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_HFHgLh": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "other_products_reviews"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_HFHgLh"
+      ],
+      "settings": {}
+    },
     "related-products": {
       "type": "related-products",
       "settings": {
@@ -45,31 +63,13 @@
         "vat": "08743730726",
         "alcohol_warning": "Bevi responsabilmente. Vietato ai minori di 18 anni. L'abuso di alcol è dannoso per la salute."
       }
-    },
-    "17925810786a4ea149": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_review_widget_HFHgLh": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "real_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "other_products_reviews"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_HFHgLh"
-      ],
-      "settings": {}
     }
   },
   "order": [
     "main",
+    "17925810786a4ea149",
     "related-products",
     "recently-viewed",
-    "footer",
-    "17925810786a4ea149"
+    "footer"
   ]
 }
