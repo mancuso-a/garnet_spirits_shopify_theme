@@ -2947,3 +2947,38 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 @media (max-width: 768px) {
   .jdgm-rev-widg { padding: 3rem 1.5rem !important; }
 }
+
+/* ── JUDGE.ME: finestra dettaglio recensione e modulo "scrivi recensione" ──
+   Il popup sta fuori dal widget, quindi il CSS personalizzato dell'app non lo raggiunge:
+   gli stili vanno qui, nel tema. */
+.jdgm-modal,
+.jdgm-modal * {
+  --jm-review-widget-form-background-color: #111111 !important;
+  --jm-review-widget-form-field-background-color: #1a1a1a !important;
+  --jm-review-widget-form-text-color: #ffffff !important;
+  --jm-review-widget-text-color: #ffffff !important;
+  --jm-review-widget-lighter-text-color: #999999 !important;
+}
+.jdgm-modal .jm-slide,
+.jdgm-modal .jm-slide--content-only,
+.jdgm-modal .jm-content {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+.jdgm-modal .jm-slide--content-only { border: 1px solid var(--color-border) !important; }
+.jdgm-modal,
+.jdgm-modal .jm-text,
+.jdgm-modal p,
+.jdgm-modal label { font-family: var(--font-body) !important; color: #ffffff !important; }
+.jdgm-modal .jm-reviewer-info__details .jm-text:not(.jm-reviewer-info__name),
+.jdgm-modal .jm-transparency-badge-list .jm-text { color: #999999 !important; }
+.jdgm-modal input,
+.jdgm-modal textarea,
+.jdgm-modal select {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 0 !important;
+}
+.jdgm-modal input::placeholder,
+.jdgm-modal textarea::placeholder { color: #777777 !important; }
