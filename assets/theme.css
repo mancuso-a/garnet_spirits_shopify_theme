@@ -3101,3 +3101,12 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .jdgm-write-review-modal .jdgm-write-review-modal__nav-btn-back:hover,
 .jdgm-write-review-modal .jdgm-write-review-modal__btn--leave-review:hover,
 .jdgm-write-review-modal .jdgm-write-review-modal__btn--repeat-not-now:hover { background-color: #1a1a1a !important; border-color: #ffffff !important; }
+
+/* ── JUDGE.ME: sfumature ai lati del carosello recensioni ──
+   Judge.me le fa bianche: le portiamo al colore di sfondo della pagina. */
+.jm-carousel__viewport::before {
+  background-image: linear-gradient(to right, var(--color-bg) 0%, rgba(10, 10, 10, .95) 20%, rgba(10, 10, 10, .6) 60%, rgba(10, 10, 10, 0) 100%) !important;
+}
+.jm-carousel__viewport::after {
+  background-image: linear-gradient(to left, var(--color-bg) 0%, rgba(10, 10, 10, .95) 20%, rgba(10, 10, 10, .6) 60%, rgba(10, 10, 10, 0) 100%) !important;
+}
