@@ -1059,11 +1059,21 @@ const SocialShare = {
         if (type === 'whatsapp') shareUrl = `https://wa.me/?text=${title}%20${url}`;
         if (type === 'facebook') shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
         if (type === 'twitter')  shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
-        if (type === 'copy') {
+        const copyLink = () => {
           navigator.clipboard?.writeText(window.location.href).then(() => {
             const fb = btn.closest('.social-share')?.querySelector('.social-share__copy-feedback');
             if (fb) { fb.classList.add('show'); setTimeout(() => fb.classList.remove('show'), 2000); }
           });
+        };
+        if (type === 'copy') { copyLink(); return; }
+        if (type === 'instagram') {
+          // Instagram non ha un link di condivisione web: su telefono si apre il menu di
+          // condivisione (con Instagram tra le app), su desktop si copia il link.
+          if (navigator.share) {
+            navigator.share({ title: document.title, url: window.location.href }).catch(() => {});
+          } else {
+            copyLink();
+          }
           return;
         }
         if (shareUrl) window.open(shareUrl, '_blank', 'width=600,height=400');
