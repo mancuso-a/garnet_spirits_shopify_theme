@@ -3008,3 +3008,96 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .jdgm-modal [class*="jm-btn"]:hover,
 .jdgm-modal [class*="jm-button"]:hover { background-color: #C0392B !important; border-color: #C0392B !important; }
 .jdgm-modal [class*="jm-"] svg { fill: currentColor; }
+
+/* ── JUDGE.ME: modulo "scrivi recensione" a passaggi ──
+   Il modulo vero (stelle, testo, dati, foto, grazie) è .jdgm-write-review-modal,
+   figlio diretto di body e fuori da .jdgm-modal: Judge.me gli dà sfondo bianco
+   con uno <style> in linea, quindi servono !important. */
+.jdgm-write-review-modal .jdgm-write-review-modal__overlay { background-color: rgba(0, 0, 0, .85) !important; }
+.jdgm-write-review-modal .jdgm-write-review-modal__content {
+  background-color: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-border) !important;
+  font-family: var(--font-body) !important;
+}
+.jdgm-write-review-modal .jdgm-write-review-modal__close-btn,
+.jdgm-write-review-modal .jdgm-write-review-modal__close-btn svg { color: #ffffff !important; fill: currentColor; }
+.jdgm-write-review-modal .jdgm-write-review-modal__close-btn svg path { stroke: currentColor; }
+.jdgm-write-review-modal .jdgm-write-review-modal__title,
+.jdgm-write-review-modal .jdgm-write-review-modal__product-title,
+.jdgm-write-review-modal .jdgm-write-review-modal__negative-resolution-title,
+.jdgm-write-review-modal .jdgm-write-review-modal__field-label,
+.jdgm-write-review-modal .jdgm-write-review-modal__chip-label,
+.jdgm-write-review-modal .jdgm-write-review-modal__checkbox-text,
+.jdgm-write-review-modal .jdgm-write-review-modal__repeat-prompt-text,
+.jdgm-write-review-modal .jdgm-write-review-modal__other-products-title,
+.jdgm-write-review-modal .jdgm-write-review-modal__other-product-title,
+.jdgm-write-review-modal .jdgm-write-review-modal__stars::before,
+.jdgm-write-review-modal .jdgm-write-review-modal__stars::after {
+  color: #ffffff !important;
+  font-family: var(--font-body) !important;
+}
+.jdgm-write-review-modal .jdgm-write-review-modal__intro,
+.jdgm-write-review-modal .jdgm-write-review-modal__text,
+.jdgm-write-review-modal .jdgm-write-review-modal__negative-resolution-text,
+.jdgm-write-review-modal .jdgm-write-review-modal__field-help,
+.jdgm-write-review-modal .jdgm-write-review-modal__field-label-help,
+.jdgm-write-review-modal .jdgm-write-review-modal__media-upload-prompt,
+.jdgm-write-review-modal .jdgm-media-input-prompt-text,
+.jdgm-write-review-modal .jdgm-write-review-modal__gdpr-statement,
+.jdgm-write-review-modal .jdgm-write-review-modal__gdpr-statement a { color: #999999 !important; }
+.jdgm-write-review-modal .jdgm-write-review-modal__stars .jdgm-star,
+.jdgm-write-review-modal .jdgm-write-review-modal__other-product-stars .jdgm-star { color: var(--color-amber-light) !important; }
+
+/* Campi */
+.jdgm-write-review-modal .jdgm-write-review-modal__field-input {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 0 !important;
+}
+.jdgm-write-review-modal .jdgm-write-review-modal__field-input::placeholder { color: #777777 !important; }
+.jdgm-write-review-modal .jdgm-write-review-modal__field-input:focus { border-color: var(--color-red-light) !important; box-shadow: none !important; outline: none; }
+.jdgm-write-review-modal .jdgm-write-review-modal__field-input.error { background-color: #1a1a1a !important; border-color: #EF4444 !important; }
+.jdgm-write-review-modal .jdgm-write-review-modal__checkbox-custom { background-color: #1a1a1a !important; border-color: #777777 !important; }
+.jdgm-write-review-modal .jdgm-write-review-modal__checkbox-input:checked + .jdgm-write-review-modal__checkbox-custom { background-color: var(--color-red) !important; border-color: var(--color-red) !important; }
+.jdgm-write-review-modal .jdgm-write-review-modal__chip-label { background-color: #1a1a1a !important; border: 1px solid var(--color-border); }
+.jdgm-write-review-modal .jdgm-write-review-modal__chip-input:checked + .jdgm-write-review-modal__chip-label,
+.jdgm-write-review-modal .jdgm-write-review-modal__chip-label:hover { background-color: var(--color-red) !important; border-color: var(--color-red); }
+.jdgm-write-review-modal .jdgm-write-review-modal__field-group--media-upload { border-color: #555555 !important; }
+.jdgm-write-review-modal .jdgm-write-review-modal__field-group--media-upload:hover { background-color: #1a1a1a !important; }
+.jdgm-write-review-modal .jdgm-write-review-modal__media-upload-icon,
+.jdgm-write-review-modal .jdgm-write-review-modal__media-upload-icon svg { color: #999999 !important; fill: currentColor; }
+.jdgm-write-review-modal .jdgm-write-review-modal__other-product-image { background-color: #1a1a1a !important; }
+.jdgm-write-review-modal .jdgm-coupon-banner { background: #1a1a1a !important; color: #ffffff !important; border-color: var(--color-border) !important; }
+
+/* Pulsanti */
+.jdgm-write-review-modal .jdgm-write-review-modal__nav-btn,
+.jdgm-write-review-modal .jdgm-write-review-modal__btn--contact-us,
+.jdgm-write-review-modal .jdgm-write-review-modal__btn--repeat-write-another {
+  background-color: var(--color-red) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-red) !important;
+  border-radius: 0 !important;
+  font-family: var(--font-body) !important;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+.jdgm-write-review-modal .jdgm-write-review-modal__nav-btn:hover:not(:disabled),
+.jdgm-write-review-modal .jdgm-write-review-modal__btn--contact-us:hover,
+.jdgm-write-review-modal .jdgm-write-review-modal__btn--repeat-write-another:hover { background-color: var(--color-red-light) !important; border-color: var(--color-red-light) !important; }
+.jdgm-write-review-modal .jdgm-write-review-modal__nav-btn:disabled { background-color: #3a1414 !important; border-color: #3a1414 !important; color: #999999 !important; }
+.jdgm-write-review-modal .jdgm-write-review-modal__nav-btn-back,
+.jdgm-write-review-modal .jdgm-write-review-modal__btn--back,
+.jdgm-write-review-modal .jdgm-write-review-modal__btn--leave-review,
+.jdgm-write-review-modal .jdgm-write-review-modal__btn--repeat-not-now {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  border: 1px solid #555555 !important;
+  border-radius: 0 !important;
+}
+.jdgm-write-review-modal .jdgm-write-review-modal__nav-btn-back svg,
+.jdgm-write-review-modal .jdgm-write-review-modal__btn--back svg { color: #ffffff !important; fill: currentColor; }
+.jdgm-write-review-modal .jdgm-write-review-modal__nav-btn-back:hover,
+.jdgm-write-review-modal .jdgm-write-review-modal__btn--leave-review:hover,
+.jdgm-write-review-modal .jdgm-write-review-modal__btn--repeat-not-now:hover { background-color: #1a1a1a !important; border-color: #ffffff !important; }
