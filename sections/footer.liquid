@@ -26,7 +26,12 @@
   <div class="site-footer__col">
     <h4>{{ section.settings.contact_title }}</h4>
     {%- if section.settings.email != blank -%}
-      <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+      {%- comment -%}
+        Indirizzo offuscato contro i bot che raccolgono email: nell'HTML non c'è mai "nome@dominio",
+        il link mailto viene composto da JavaScript nel browser del visitatore.
+      {%- endcomment -%}
+      {%- assign email_parts = section.settings.email | split: '@' -%}
+      <a href="#" class="js-email" data-u="{{ email_parts[0] }}" data-d="{{ email_parts[1] }}">{{ email_parts[0] }} [at] {{ email_parts[1] }}</a>
     {%- endif -%}
     <a href="{{ section.settings.instagram | default: 'https://www.instagram.com/garnetspirits/' }}" target="_blank" rel="noopener noreferrer">Instagram</a>
     {%- for policy in shop.policies -%}
@@ -73,6 +78,14 @@
   </div>
 
 </footer>
+
+<script>
+  document.querySelectorAll('.js-email').forEach(function (a) {
+    var e = a.dataset.u + String.fromCharCode(64) + a.dataset.d;
+    a.href = 'mailto:' + e;
+    a.textContent = e;
+  });
+</script>
 
 {% schema %}
 {
