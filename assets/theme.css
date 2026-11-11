@@ -3110,3 +3110,7 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .jm-carousel__viewport::after {
   background-image: linear-gradient(to left, var(--color-bg) 0%, rgba(10, 10, 10, .95) 20%, rgba(10, 10, 10, .6) 60%, rgba(10, 10, 10, 0) 100%) !important;
 }
+
+/* Blocchi app nella scheda prodotto (es. Fast Bundle) */
+.product-app-block { margin: 24px 0; }
+.product-app-block:empty { display: none; }

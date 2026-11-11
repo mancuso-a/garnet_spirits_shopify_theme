@@ -233,6 +233,13 @@
       </div>
     {%- endform -%}
 
+    {%- comment -%} Blocchi app (es. Fast Bundle): aggiungili dall'editor del tema in "Main Product". {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        <div class="product-app-block" {{ block.shopify_attributes }}>{%- render block -%}</div>
+      {%- endif -%}
+    {%- endfor -%}
+
     <!-- Social share -->
     {%- render 'social-share', url: product.url, title: product.title -%}
 
@@ -261,6 +268,9 @@
 {% schema %}
 {
   "name": "Main Product",
-  "settings": []
+  "settings": [],
+  "blocks": [
+    { "type": "@app" }
+  ]
 }
 {% endschema %}
