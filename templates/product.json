@@ -12,13 +12,13 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "fbp_fast_bundle_all_bundles_YUH79G": {
-          "type": "shopify://apps/fbp-fast-bundle/blocks/all_bundles/9e87fbe2-9041-4c23-acf5-322413994cef",
+        "fbp_fast_bundle_fbt_position_RBapti": {
+          "type": "shopify://apps/fbp-fast-bundle/blocks/fbt_position/9e87fbe2-9041-4c23-acf5-322413994cef",
           "settings": {}
         }
       },
       "block_order": [
-        "fbp_fast_bundle_all_bundles_YUH79G"
+        "fbp_fast_bundle_fbt_position_RBapti"
       ],
       "settings": {}
     },
