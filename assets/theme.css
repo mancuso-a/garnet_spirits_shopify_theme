@@ -3114,3 +3114,16 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 /* Blocchi app nella scheda prodotto (es. Fast Bundle) */
 .product-app-block { margin: 24px 0; }
 .product-app-block:empty { display: none; }
+
+/* Fast Bundle – riquadro "Frequently Bought Together": ritocchi in stile tema */
+#rbr-container-element-fbt { font-family: var(--font-body); }
+#rbr-container-element-fbt button {
+  font-family: var(--font-body) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+}
+#rbr-container-element-fbt button:hover { filter: brightness(1.12); }
+#rbr-container-element-fbt input[type="checkbox"] { accent-color: var(--color-red-light); }
+#rbr-container-element-fbt s,
+#rbr-container-element-fbt del { color: var(--color-gray) !important; }
