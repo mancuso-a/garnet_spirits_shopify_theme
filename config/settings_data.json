@@ -92,6 +92,14 @@
         "type": "shopify://apps/rockit-discounts-sales/blocks/rockit-embed/f347a9bf-00bf-4eeb-9f4d-159bb9b1cead",
         "disabled": false,
         "settings": {}
+      },
+      "1530068250781986104": {
+        "type": "shopify://apps/fbp-fast-bundle/blocks/fast_bundle/9e87fbe2-9041-4c23-acf5-322413994cef",
+        "disabled": false,
+        "settings": {
+          "home": false,
+          "collection": false
+        }
       }
     }
   }
