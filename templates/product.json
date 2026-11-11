@@ -11,6 +11,15 @@
   "sections": {
     "main": {
       "type": "main-product",
+      "blocks": {
+        "fbp_fast_bundle_product_bundles_H4XzBJ": {
+          "type": "shopify://apps/fbp-fast-bundle/blocks/product_bundles/9e87fbe2-9041-4c23-acf5-322413994cef",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "fbp_fast_bundle_product_bundles_H4XzBJ"
+      ],
       "settings": {}
     },
     "17925810786a4ea149": {
