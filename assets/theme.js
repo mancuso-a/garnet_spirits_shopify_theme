@@ -185,7 +185,10 @@ const CartDrawer = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: variantId, quantity, properties })
     })
-      .then(r => r.json())
+      .then(r => r.json().then(data => {
+        if (!r.ok) throw new Error(data.description || data.message || 'Prodotto non disponibile');
+        return data;
+      }))
       .then(item => {
         this.updateCount();
         this.open();
@@ -193,7 +196,7 @@ const CartDrawer = {
         return item;
       })
       .catch(err => {
-        Toast.show('Errore: prodotto non disponibile');
+        Toast.show(err && err.message ? err.message : 'Errore: prodotto non disponibile');
         console.error(err);
       });
   },
@@ -236,6 +239,11 @@ const ProductForm = {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const variantId = form.querySelector('[name="id"]').value;
+        // Prodotto con varianti e nessuna taglia scelta: evidenzia il selettore
+        if (!variantId) {
+          VariantPicker.requireChoice(form);
+          return;
+        }
         const qtyInput  = form.querySelector('[data-qty-value]');
         const qty       = qtyInput ? parseInt(qtyInput.textContent) : 1;
         const btn       = form.querySelector('[data-add-cart]');
@@ -250,6 +258,130 @@ const ProductForm = {
         CartDrawer.addItem(variantId, qty);
       });
     });
+  }
+};
+
+/* ── SELETTORE VARIANTI (taglia) ──────────────────────────── */
+// Pagina prodotto: scelta taglia con disponibilità per ogni valore.
+// Esaurita = barrata e non selezionabile, scorte basse = "Ultimi N".
+const VariantPicker = {
+  init() {
+    document.querySelectorAll('[data-variant-picker]').forEach(picker => {
+      const form = picker.closest('form');
+      const json = picker.querySelector('[data-variant-json]');
+      if (!form || !json) return;
+      let variants;
+      try { variants = JSON.parse(json.textContent); } catch (e) { return; }
+      const ctx = {
+        picker, form, variants,
+        low: parseInt(picker.dataset.lowStock, 10) || 3,
+        groups: [...picker.querySelectorAll('[data-option-index]')],
+        idInput: form.querySelector('[name="id"]'),
+        btn: form.querySelector('[data-add-cart]'),
+        status: picker.querySelector('[data-variant-status]'),
+        optionName: (picker.querySelector('.variant-picker__legend')?.firstChild?.textContent || 'taglia').trim().toLowerCase()
+      };
+      picker._ctx = ctx;
+      picker.addEventListener('change', () => this.update(ctx, true));
+      this.update(ctx, false);
+    });
+  },
+
+  selected(ctx) {
+    return ctx.groups.map(g => g.querySelector('input:checked')?.value ?? null);
+  },
+
+  stateFor(ctx, list) {
+    const avail = list.filter(v => v.available);
+    if (!avail.length) return { state: 'soldout' };
+    if (avail.some(v => !v.tracked || v.qty > ctx.low)) return { state: 'available' };
+    return { state: 'low', qty: Math.max(...avail.map(v => v.qty)) };
+  },
+
+  update(ctx, fromUser) {
+    const sel = this.selected(ctx);
+    ctx.picker.classList.remove('is-error');
+
+    // Disponibilità di ogni valore, tenendo conto delle altre opzioni già scelte
+    ctx.groups.forEach((g, i) => {
+      const chosen = g.querySelector('[data-option-chosen]');
+      if (chosen) chosen.textContent = sel[i] ? ': ' + sel[i] : '';
+      g.querySelectorAll('[data-value-label]').forEach(label => {
+        const input = label.querySelector('input');
+        const list = ctx.variants.filter(v =>
+          v.options[i] === input.value && sel.every((s, j) => j === i || s === null || v.options[j] === s));
+        const st = this.stateFor(ctx, list);
+        label.classList.remove('is-available', 'is-low', 'is-soldout');
+        label.classList.add('is-' + st.state);
+        // Con una sola opzione (es. solo taglia) la taglia esaurita non è selezionabile
+        if (ctx.groups.length === 1) input.disabled = st.state === 'soldout' && !input.checked;
+        const stock = label.querySelector('[data-value-stock]');
+        if (stock) {
+          stock.textContent = st.state === 'soldout' ? 'Esaurita'
+            : st.state === 'low' ? (st.qty === 1 ? 'Ultimo pezzo' : 'Ultimi ' + st.qty)
+            : 'Disponibile';
+        }
+      });
+    });
+
+    const complete = sel.every(s => s !== null);
+    const variant = complete ? ctx.variants.find(v => v.options.every((o, i) => o === sel[i])) : null;
+    const setBtn = (text, disabled, pending) => {
+      if (!ctx.btn) return;
+      ctx.btn.textContent = text;
+      ctx.btn.disabled = disabled;
+      ctx.btn.classList.toggle('is-pending', !!pending);
+    };
+
+    if (!variant) {
+      ctx.idInput.value = '';
+      setBtn('Scegli la ' + ctx.optionName, false, true);
+      ctx.status.textContent = 'Scegli la ' + ctx.optionName + ' per aggiungere al carrello.';
+      ctx.status.className = 'variant-picker__status';
+      return;
+    }
+
+    ctx.idInput.value = variant.available ? variant.id : '';
+    if (!variant.available) {
+      setBtn('Esaurito', true);
+      ctx.status.textContent = 'Questa ' + ctx.optionName + ' è esaurita: scegline un\'altra.';
+      ctx.status.className = 'variant-picker__status is-soldout';
+    } else if (variant.tracked && variant.qty <= ctx.low) {
+      setBtn('Aggiungi al carrello', false);
+      ctx.status.textContent = variant.qty === 1 ? 'Ultimo pezzo disponibile!' : 'Solo ' + variant.qty + ' pezzi disponibili.';
+      ctx.status.className = 'variant-picker__status is-low';
+    } else {
+      setBtn('Aggiungi al carrello', false);
+      ctx.status.textContent = 'Disponibile';
+      ctx.status.className = 'variant-picker__status is-available';
+    }
+
+    // Prezzo (se le taglie avessero prezzi diversi)
+    const priceEl = ctx.form.querySelector('[data-variant-price]');
+    const stickyEl = document.querySelector('[data-sticky-price]');
+    const fm = c => CartDrawer.formatMoney(c);
+    const onSale = variant.compare_at_price > variant.price;
+    if (priceEl) priceEl.innerHTML = fm(variant.price) + (onSale
+      ? ' <s class="price-compare">' + fm(variant.compare_at_price) + '</s><span class="sale-badge sale-badge--inline">Offerta</span>' : '');
+    if (stickyEl && !stickyEl.querySelector('.price-hidden')) stickyEl.innerHTML = fm(variant.price) + (onSale
+      ? ' <s class="price-compare">' + fm(variant.compare_at_price) + '</s>' : '');
+
+    if (fromUser && window.history.replaceState) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('variant', variant.id);
+      window.history.replaceState({}, '', url.toString());
+    }
+  },
+
+  requireChoice(form) {
+    const picker = form.querySelector('[data-variant-picker]');
+    if (!picker) return;
+    picker.classList.remove('is-error');
+    void picker.offsetWidth; // riavvia l'animazione
+    picker.classList.add('is-error');
+    picker.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const first = picker.querySelector('.is-available input, .is-low input');
+    if (first) first.focus({ preventScroll: true });
   }
 };
 
@@ -1108,6 +1240,7 @@ document.addEventListener('DOMContentLoaded', () => {
   CartDrawer.init();
   CartDrawer.updateCount();
   ProductForm.init();
+  VariantPicker.init();
   DrinkFilter.init();
   Toast.init();
   MobileNav.init();

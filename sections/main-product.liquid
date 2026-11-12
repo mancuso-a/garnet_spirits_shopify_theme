@@ -174,7 +174,18 @@
 
     <!-- Add to cart form -->
     {%- form 'product', product, data-product-form: '', id: 'product-form-main' -%}
-      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      {%- comment -%}
+        Prodotti con varianti (es. t-shirt per taglia): nessuna taglia preselezionata,
+        il cliente deve sceglierla. Con ?variant= nell'URL si parte da quella variante.
+      {%- endcomment -%}
+      {%- assign has_variants = false -%}
+      {%- unless product.has_only_default_variant -%}{%- assign has_variants = true -%}{%- endunless -%}
+      {%- assign preselected = product.selected_variant -%}
+      {%- if has_variants -%}
+        <input type="hidden" name="id" value="{{ preselected.id }}">
+      {%- else -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      {%- endif -%}
 
       <div class="product-form" id="product-form-anchor">
         {%- assign main_variant = product.selected_or_first_available_variant -%}
@@ -182,17 +193,84 @@
           {%- if page_status == 'coming' -%}
             <span class="price-hidden">Presto disponibile</span>
           {%- else -%}
-            {{ main_variant.price | money }}
+            <span data-variant-price>{{ main_variant.price | money }}
             {%- if main_variant.compare_at_price > main_variant.price -%}
               <s class="price-compare">{{ main_variant.compare_at_price | money }}</s>
               <span class="sale-badge sale-badge--inline">Offerta</span>
-            {%- endif -%}
+            {%- endif -%}</span>
           {%- endif -%}
           {%- case page_status -%}
             {%- when 'coming' -%}<span class="sale-badge sale-badge--inline sale-badge--coming">In arrivo</span>
             {%- when 'new' -%}<span class="sale-badge sale-badge--inline sale-badge--new">Novità</span>
           {%- endcase -%}
         </div>
+
+        {%- if has_variants and page_status != 'coming' -%}
+          {%- assign low_stock = 3 -%}
+          <div class="variant-picker" data-variant-picker data-low-stock="{{ low_stock }}">
+            {%- for option in product.options_with_values -%}
+              {%- assign opt_index = forloop.index0 -%}
+              {%- assign opt_key = 'option' | append: forloop.index -%}
+              <fieldset class="variant-picker__group" data-option-index="{{ opt_index }}">
+                <legend class="variant-picker__legend">
+                  {{ option.name }}<span class="variant-picker__chosen" data-option-chosen>{%- if preselected -%}: {{ preselected.options[opt_index] }}{%- endif -%}</span>
+                </legend>
+                <div class="variant-picker__values">
+                  {%- for value in option.values -%}
+                    {%- comment -%} Stato iniziale calcolato lato server (con una sola opzione è già definitivo). {%- endcomment -%}
+                    {%- assign v_state = 'soldout' -%}
+                    {%- assign v_qty = '' -%}
+                    {%- for v in product.variants -%}
+                      {%- if v[opt_key] == value -%}
+                        {%- if v.available -%}
+                          {%- if v.inventory_management == 'shopify' and v.inventory_policy == 'deny' and v.inventory_quantity <= low_stock -%}
+                            {%- if v_state != 'available' -%}{%- assign v_state = 'low' -%}{%- assign v_qty = v.inventory_quantity -%}{%- endif -%}
+                          {%- else -%}
+                            {%- assign v_state = 'available' -%}{%- assign v_qty = '' -%}
+                          {%- endif -%}
+                        {%- endif -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                    <label class="variant-picker__value is-{{ v_state }}" data-value-label>
+                      <input type="radio"
+                        name="garnet-option-{{ opt_index }}"
+                        value="{{ value | escape }}"
+                        class="variant-picker__input"
+                        {% if preselected and preselected.options[opt_index] == value %}checked{% endif %}
+                        {% if v_state == 'soldout' and product.options.size == 1 %}disabled{% endif %}>
+                      <span class="variant-picker__name">{{ value }}</span>
+                      <span class="variant-picker__stock" data-value-stock>
+                        {%- case v_state -%}
+                          {%- when 'soldout' -%}Esaurita
+                          {%- when 'low' -%}{%- if v_qty == 1 -%}Ultimo pezzo{%- else -%}Ultimi {{ v_qty }}{%- endif -%}
+                          {%- else -%}Disponibile
+                        {%- endcase -%}
+                      </span>
+                    </label>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- endfor -%}
+            <p class="variant-picker__status" data-variant-status role="status" aria-live="polite">
+              {%- if preselected -%}
+                {%- if preselected.available == false -%}Questa {{ product.options.first | downcase }} è esaurita.{%- endif -%}
+              {%- else -%}
+                Scegli la {{ product.options.first | downcase }} per aggiungere al carrello.
+              {%- endif -%}
+            </p>
+            <script type="application/json" data-variant-json>
+              [{%- for v in product.variants -%}{
+                "id": {{ v.id }},
+                "options": {{ v.options | json }},
+                "available": {{ v.available | json }},
+                "tracked": {% if v.inventory_management == 'shopify' and v.inventory_policy == 'deny' %}true{% else %}false{% endif %},
+                "qty": {{ v.inventory_quantity | default: 0 | json }},
+                "price": {{ v.price | json }},
+                "compare_at_price": {{ v.compare_at_price | default: 0 | json }}
+              }{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+            </script>
+          </div>
+        {%- endif -%}
 
         <div class="product-form__row">
           <div class="qty-selector" aria-label="Quantità">
@@ -208,9 +286,19 @@
               In arrivo · Avvisami
             </a>
           {%- elsif product.available -%}
-            <button type="submit" class="btn {{ btn_class }} btn-add-cart" data-add-cart>
-              Aggiungi al carrello
-            </button>
+            {%- if has_variants and preselected == blank -%}
+              <button type="submit" class="btn {{ btn_class }} btn-add-cart is-pending" data-add-cart>
+                Scegli la {{ product.options.first | downcase }}
+              </button>
+            {%- elsif has_variants and preselected.available == false -%}
+              <button type="submit" class="btn {{ btn_class }} btn-add-cart" data-add-cart disabled>
+                Esaurito
+              </button>
+            {%- else -%}
+              <button type="submit" class="btn {{ btn_class }} btn-add-cart" data-add-cart>
+                Aggiungi al carrello
+              </button>
+            {%- endif -%}
           {%- else -%}
             <a href="/#newsletter" class="btn {{ btn_class }} btn-add-cart">
               Esaurito · Avvisami
@@ -250,7 +338,7 @@
 <div id="sticky-atc" class="sticky-atc" aria-hidden="true" style="--product-color: {{ product_color }};">
   <div class="sticky-atc__inner">
     <span class="sticky-atc__name">{{ product.title }}</span>
-    <span class="sticky-atc__price {{ price_class }}">{%- if page_status == 'coming' -%}<span class="price-hidden">Presto disponibile</span>{%- else -%}{{ product.selected_or_first_available_variant.price | money }}{%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%} <s class="price-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</s>{%- endif -%}{%- endif -%}</span>
+    <span class="sticky-atc__price {{ price_class }}" data-sticky-price>{%- if page_status == 'coming' -%}<span class="price-hidden">Presto disponibile</span>{%- else -%}{{ product.selected_or_first_available_variant.price | money }}{%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%} <s class="price-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</s>{%- endif -%}{%- endif -%}</span>
     {%- if page_status == 'coming' or product.available == false -%}
     <a href="/#newsletter" class="btn {{ btn_class }} sticky-atc__btn">Avvisami</a>
     {%- else -%}

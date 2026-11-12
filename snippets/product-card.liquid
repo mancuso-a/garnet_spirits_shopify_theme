@@ -62,6 +62,12 @@
            aria-label="Avvisami quando {{ product.title | escape }} è disponibile">
           Avvisami
         </a>
+      {%- elsif product.available and product.has_only_default_variant == false -%}
+        {%- comment -%} Prodotti con taglie: la scelta si fa nella pagina prodotto {%- endcomment -%}
+        <a href="{{ product.url }}" class="product-card__quickadd btn {{ btn_class }}" style="--product-color: {{ cart_color }};"
+           aria-label="Scegli {{ product.options.first | downcase }} per {{ product.title | escape }}">
+          Scegli {{ product.options.first | downcase }}
+        </a>
       {%- elsif product.available -%}
         <button
           class="product-card__quickadd btn {{ btn_class }}"
