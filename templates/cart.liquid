@@ -9,6 +9,21 @@
   </p>
 
   {%- if cart.item_count > 0 -%}
+    {%- comment -%}
+      Prezzo di riferimento per riga = il maggiore tra prezzo di confronto della variante
+      (compare_at_price, impostato dagli sconti Rockit) e prezzo originale (prima degli sconti
+      sulla riga), per la quantità. Il risparmio totale è la differenza con il totale finale,
+      quindi include anche gli sconti a livello di carrello.
+    {%- endcomment -%}
+    {%- assign cart_reference_total = 0 -%}
+    {%- for item in cart.items -%}
+      {%- assign ref_unit = item.original_price -%}
+      {%- if item.variant.compare_at_price > ref_unit -%}{%- assign ref_unit = item.variant.compare_at_price -%}{%- endif -%}
+      {%- assign ref_line = ref_unit | times: item.quantity -%}
+      {%- if item.original_line_price > ref_line -%}{%- assign ref_line = item.original_line_price -%}{%- endif -%}
+      {%- assign cart_reference_total = cart_reference_total | plus: ref_line -%}
+    {%- endfor -%}
+    {%- assign cart_savings = cart_reference_total | minus: cart.total_price -%}
     {%- form 'cart', cart -%}
       <div class="cart-page__grid">
 
@@ -40,9 +55,19 @@
                   <button type="button" class="qty-selector__btn" aria-label="Aumenta quantità"
                     onclick="this.previousElementSibling.value=parseInt(this.previousElementSibling.value)+1;this.closest('form').submit()">+</button>
                 </div>
-                <span class="cart-item__price" style="color:{{ item_color }};">
-                  {{ item.final_line_price | money }}
-                </span>
+                {%- assign ref_unit = item.original_price -%}
+                {%- if item.variant.compare_at_price > ref_unit -%}{%- assign ref_unit = item.variant.compare_at_price -%}{%- endif -%}
+                {%- assign ref_line = ref_unit | times: item.quantity -%}
+                {%- if item.original_line_price > ref_line -%}{%- assign ref_line = item.original_line_price -%}{%- endif -%}
+                <div class="cart-item__prices">
+                  <span class="cart-item__price" style="color:{{ item_color }};">{{ item.final_line_price | money }}</span>
+                  {%- if ref_line > item.final_line_price -%}
+                    <s class="price-compare cart-item__compare" aria-label="Prezzo precedente">{{ ref_line | money }}</s>
+                  {%- endif -%}
+                </div>
+                {%- for allocation in item.line_level_discount_allocations -%}
+                  <div class="cart-item__discount">{{ allocation.discount_application.title | escape }} (−{{ allocation.amount | money }})</div>
+                {%- endfor -%}
                 <a href="{{ item.url_to_remove }}" class="cart-item__remove">Rimuovi</a>
               </div>
             </div>
@@ -58,6 +83,22 @@
               <span>{{ item.final_line_price | money }}</span>
             </div>
           {%- endfor -%}
+          {%- for discount in cart.cart_level_discount_applications -%}
+            <div class="summary-row">
+              <span>{{ discount.title | escape }}</span>
+              <span>−{{ discount.total_allocated_amount | money }}</span>
+            </div>
+          {%- endfor -%}
+          {%- if cart_savings > 0 -%}
+            <div class="summary-row">
+              <span>Prezzo precedente</span>
+              <s class="price-compare">{{ cart_reference_total | money }}</s>
+            </div>
+            <div class="summary-row cart-savings">
+              <span>Risparmi</span>
+              <span class="cart-savings__amount">−{{ cart_savings | money }}</span>
+            </div>
+          {%- endif -%}
           <div class="summary-row">
             <span>Spedizione</span>
             <span>Calcolata al checkout</span>

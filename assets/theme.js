@@ -114,6 +114,7 @@ const CartDrawer = {
 
     fetch('/cart.js')
       .then(r => r.json())
+      .then(cart => this.loadComparePrices(cart).then(() => cart))
       .then(cart => {
         if (cart.item_count === 0) {
           itemsEl.innerHTML = `
@@ -148,9 +149,15 @@ const CartDrawer = {
                     <span class="qty-selector__val">${item.quantity}</span>
                     <button type="button" class="qty-selector__btn" onclick="CartDrawer.changeQty('${item.key}', ${item.quantity + 1})" aria-label="Aumenta quantità">+</button>
                   </div>
-                  <span class="cart-item__price" ${priceStyle}>
-                    ${this.formatMoney(item.final_line_price)}
-                  </span>
+                  <div class="cart-item__prices">
+                    <span class="cart-item__price" ${priceStyle}>${this.formatMoney(item.final_line_price)}</span>
+                    ${this.referenceLinePrice(item) > item.final_line_price
+                      ? `<s class="price-compare cart-item__compare" aria-label="Prezzo precedente">${this.formatMoney(this.referenceLinePrice(item))}</s>`
+                      : ''}
+                  </div>
+                  ${(item.line_level_discount_allocations || []).map(a =>
+                    `<div class="cart-item__discount">${this.escapeHtml((a.discount_application && a.discount_application.title) || 'Sconto')} (−${this.formatMoney(a.amount)})</div>`
+                  ).join('')}
                   <button class="cart-item__remove" onclick="CartDrawer.removeItem('${item.key}')">
                     Rimuovi
                   </button>
@@ -162,6 +169,20 @@ const CartDrawer = {
             footerEl.style.display = 'block';
             const subtotalEl = document.getElementById('cart-drawer-subtotal');
             if (subtotalEl) subtotalEl.textContent = this.formatMoney(cart.total_price);
+            const referenceTotal = cart.items.reduce((sum, item) => sum + this.referenceLinePrice(item), 0);
+            const savings = referenceTotal - cart.total_price;
+            const savingsRow = document.getElementById('cart-drawer-savings-row');
+            const originalEl = document.getElementById('cart-drawer-original');
+            const originalRow = document.getElementById('cart-drawer-original-row');
+            const savingsEl = document.getElementById('cart-drawer-savings');
+            if (savingsRow && savingsEl) {
+              savingsRow.hidden = savings <= 0;
+              savingsEl.textContent = '−' + this.formatMoney(savings);
+            }
+            if (originalRow && originalEl) {
+              originalRow.hidden = savings <= 0;
+              originalEl.textContent = this.formatMoney(referenceTotal);
+            }
             const bar = document.getElementById('free-shipping-bar');
             if (bar) {
               const threshold = parseInt(bar.dataset.threshold, 10) || 0;
@@ -229,6 +250,36 @@ const CartDrawer = {
 
   formatMoney(cents) {
     return '€ ' + (cents / 100).toFixed(2).replace('.', ',');
+  },
+
+  escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  },
+
+  /* /cart.js non include il prezzo di confronto della variante (compare_at_price, usato dagli
+     sconti Rockit): lo leggiamo da /products/<handle>.js, una richiesta per prodotto, con cache. */
+  comparePrices: {},
+  loadComparePrices(cart) {
+    const handles = [...new Set((cart.items || []).map(i => i.handle))]
+      .filter(h => h && !(h in this.comparePrices));
+    return Promise.all(handles.map(handle =>
+      fetch('/products/' + encodeURIComponent(handle) + '.js')
+        .then(r => r.ok ? r.json() : null)
+        .then(product => {
+          const map = {};
+          (product && product.variants || []).forEach(v => { map[v.id] = v.compare_at_price || 0; });
+          this.comparePrices[handle] = map;
+        })
+        .catch(() => { this.comparePrices[handle] = {}; })
+    ));
+  },
+
+  /* Prezzo di riferimento della riga: il maggiore tra prezzo di confronto della variante e
+     prezzo originale (prima degli sconti automatici/codici sulla riga), per la quantità. */
+  referenceLinePrice(item) {
+    const compare = (this.comparePrices[item.handle] || {})[item.variant_id] || 0;
+    const unit = Math.max(compare, item.original_price || 0);
+    return Math.max(unit * item.quantity, item.original_line_price || 0, item.final_line_price);
   }
 };
 

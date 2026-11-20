@@ -27,6 +27,14 @@
       </div>
     {%- endif -%}
     <div class="cart-drawer__totals">
+      <div class="cart-drawer__total-row" id="cart-drawer-original-row" hidden>
+        <span>Prezzo precedente</span>
+        <s class="price-compare" id="cart-drawer-original"></s>
+      </div>
+      <div class="cart-drawer__total-row cart-savings" id="cart-drawer-savings-row" hidden>
+        <span>Risparmi</span>
+        <span class="cart-savings__amount" id="cart-drawer-savings"></span>
+      </div>
       <div class="cart-drawer__total-row">
         <span>Subtotale</span>
         <span id="cart-drawer-subtotal">€ 0,00</span>

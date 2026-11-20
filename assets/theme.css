@@ -3200,3 +3200,24 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 @media (max-width: 768px) {
   .variant-picker__value { min-width: 0; flex: 1 1 calc(33.333% - 0.5rem); }
 }
+
+/* ── CARRELLO: prezzo barrato, sconti e risparmio totale ──── */
+.cart-item__prices { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 0.1em; }
+.cart-item__compare { font-size: 0.85rem; }
+.cart-item__discount {
+  font-size: 0.72rem;
+  color: var(--color-light);
+  letter-spacing: 0.04em;
+  margin-top: 0.2rem;
+}
+.cart-drawer__total-row[hidden] { display: none; }
+.cart-drawer__total-row .price-compare,
+.summary-row .price-compare { margin-left: 0; font-size: 1em; }
+.cart-savings { color: var(--color-white); align-items: center; }
+.cart-savings__amount {
+  background: var(--color-red);
+  color: var(--color-white);
+  font-weight: 500;
+  padding: 0.15rem 0.5rem;
+  letter-spacing: 0.03em;
+}
