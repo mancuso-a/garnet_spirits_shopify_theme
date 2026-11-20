@@ -1,0 +1,87 @@
+{%- comment -%}
+  Spazio app in alto: fascia sotto barra annunci e menu, su tutte le pagine.
+  Accetta blocchi delle app (es. timer, countdown, banner). Senza blocchi non occupa spazio.
+  Personalizza tema → gruppo "Spazio app in alto" → Aggiungi blocco → scegli il blocco dell'app.
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <div class="top-apps{% if section.settings.border %} top-apps--border{% endif %}"
+       style="--top-apps-bg: {{ section.settings.bg_color | default: '#0a0a0a' }}; --top-apps-pt: {{ section.settings.padding_top }}px; --top-apps-pb: {{ section.settings.padding_bottom }}px;">
+    <div class="top-apps__inner{% if section.settings.full_width %} top-apps__inner--full{% endif %}">
+      {%- for block in section.blocks -%}
+        {%- if block.type == '@app' -%}
+          <div class="top-apps__block" {{ block.shopify_attributes }}>{%- render block -%}</div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  <script>
+    /* Se i blocchi app non mostrano nulla (es. timer fuori dalla scheda prodotto) la fascia si azzera */
+    (function () {
+      var bar = document.currentScript.previousElementSibling;
+      if (!bar || !bar.classList.contains('top-apps')) return;
+      var inner = bar.querySelector('.top-apps__inner');
+      var check = function () { bar.classList.toggle('is-empty', inner.offsetHeight < 2); };
+      check();
+      if (window.ResizeObserver) new ResizeObserver(check).observe(inner);
+      document.addEventListener('DOMContentLoaded', check);
+      window.addEventListener('load', check);
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Spazio app in alto",
+  "class": "top-apps-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Aggiungi qui i blocchi delle app (es. timer). Compare sotto il menu su tutte le pagine; se non ci sono blocchi non occupa spazio."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Colore sfondo",
+      "default": "#0A0A0A"
+    },
+    {
+      "type": "checkbox",
+      "id": "border",
+      "label": "Linea sottile in basso",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Larghezza piena",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spazio sopra",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spazio sotto",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "blocks": [
+    { "type": "@app" }
+  ],
+  "presets": [
+    { "name": "Spazio app in alto" }
+  ]
+}
+{% endschema %}

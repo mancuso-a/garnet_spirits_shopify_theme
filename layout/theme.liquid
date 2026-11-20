@@ -116,6 +116,8 @@
 
   <!-- Main content -->
   <main id="main-content" class="page-wrap" tabindex="-1">
+    {%- comment -%} Spazio app in alto (blocchi app, es. timer): vuoto = nessuno spazio {%- endcomment -%}
+    {% sections 'top-apps-group' %}
     {{ content_for_layout }}
   </main>
 

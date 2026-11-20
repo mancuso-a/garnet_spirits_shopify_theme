@@ -3221,3 +3221,17 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
   padding: 0.15rem 0.5rem;
   letter-spacing: 0.03em;
 }
+
+/* ── SPAZIO APP IN ALTO (sections/top-apps) ──────────────── */
+.top-apps {
+  background: var(--top-apps-bg, #0a0a0a);
+  padding: var(--top-apps-pt, 8px) 0 var(--top-apps-pb, 8px);
+}
+.top-apps--border { border-bottom: 1px solid var(--color-border); }
+.top-apps__inner { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
+.top-apps__inner--full { max-width: none; padding: 0 1.5rem; }
+.top-apps__block:empty { display: none; }
+@media (max-width: 768px) {
+  .top-apps__inner, .top-apps__inner--full { padding: 0 1rem; }
+}
+.top-apps.is-empty { padding: 0; border-bottom: 0; }
