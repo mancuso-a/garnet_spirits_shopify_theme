@@ -1,0 +1,21 @@
+{
+  "layout": false,
+  "sections": {
+    "main": {
+      "type": "rockit-timer-data",
+      "blocks": {
+        "rockit_timer": {
+          "type": "shopify://apps/rockit-discounts-sales/blocks/timer/f347a9bf-00bf-4eeb-9f4d-159bb9b1cead",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "rockit_timer"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

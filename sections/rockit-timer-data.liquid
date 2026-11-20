@@ -1,0 +1,18 @@
+{%- comment -%}
+  Solo dati: usata dal template prodotto "rockit-timer" (layout vuoto) per leggere
+  scadenza e stile del timer Rockit. La legge lo "Spazio app in alto" su tutte le pagine.
+  Non assegnare il template "rockit-timer" ai prodotti.
+{%- endcomment -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == '@app' -%}{%- render block -%}{%- endif -%}
+{%- endfor -%}
+
+{% schema %}
+{
+  "name": "Dati timer Rockit",
+  "settings": [],
+  "blocks": [
+    { "type": "@app" }
+  ]
+}
+{% endschema %}

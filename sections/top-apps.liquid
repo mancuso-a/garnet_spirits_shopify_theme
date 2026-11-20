@@ -1,12 +1,31 @@
 {%- comment -%}
   Spazio app in alto: fascia sotto barra annunci e menu, su tutte le pagine.
-  Accetta blocchi delle app (es. timer, countdown, banner). Senza blocchi non occupa spazio.
-  Personalizza tema → gruppo "Spazio app in alto" → Aggiungi blocco → scegli il blocco dell'app.
+  - Timer Rockit: legge scadenza e stile dal timer configurato in Rockit (vedi template
+    product.rockit-timer) e lo mostra con il widget di Rockit stesso, su tutte le pagine.
+  - Blocchi app: Personalizza tema → "Spazio app in alto" → Aggiungi blocco.
+  Se non c'è niente da mostrare (nessuna promo attiva, nessun blocco) non occupa spazio.
 {%- endcomment -%}
-{%- if section.blocks.size > 0 -%}
+{%- liquid
+  assign show_rockit = section.settings.rockit_timer
+  if show_rockit and section.settings.rockit_hide_on_product and template.name == 'product'
+    assign show_rockit = false
+  endif
+  assign rockit_handle = section.settings.rockit_product.handle
+  if rockit_handle == blank
+    assign rockit_handle = 'garnet-gin-almandino'
+  endif
+-%}
+{%- if section.blocks.size > 0 or show_rockit -%}
   <div class="top-apps{% if section.settings.border %} top-apps--border{% endif %}"
        style="--top-apps-bg: {{ section.settings.bg_color | default: '#0a0a0a' }}; --top-apps-pt: {{ section.settings.padding_top }}px; --top-apps-pb: {{ section.settings.padding_bottom }}px;">
     <div class="top-apps__inner{% if section.settings.full_width %} top-apps__inner--full{% endif %}">
+      {%- if show_rockit -%}
+        <div class="top-apps__block top-apps__rockit"
+             data-rockit-timer
+             data-product-url="{{ routes.root_url | append: '/products/' | append: rockit_handle | replace: '//', '/' }}">
+          <div id="top-apps-rockit-timer-{{ section.id | handle }}" style="display:none;"></div>
+        </div>
+      {%- endif -%}
       {%- for block in section.blocks -%}
         {%- if block.type == '@app' -%}
           <div class="top-apps__block" {{ block.shopify_attributes }}>{%- render block -%}</div>
@@ -15,16 +34,94 @@
     </div>
   </div>
   <script>
-    /* Se i blocchi app non mostrano nulla (es. timer fuori dalla scheda prodotto) la fascia si azzera */
     (function () {
       var bar = document.currentScript.previousElementSibling;
       if (!bar || !bar.classList.contains('top-apps')) return;
       var inner = bar.querySelector('.top-apps__inner');
+
+      /* Se i blocchi non mostrano nulla la fascia si azzera */
       var check = function () { bar.classList.toggle('is-empty', inner.offsetHeight < 2); };
       check();
       if (window.ResizeObserver) new ResizeObserver(check).observe(inner);
       document.addEventListener('DOMContentLoaded', check);
       window.addEventListener('load', check);
+
+      /* Timer Rockit su tutte le pagine */
+      var wrap = bar.querySelector('[data-rockit-timer]');
+      if (!wrap) return;
+      var box = wrap.firstElementChild;
+      var base = wrap.getAttribute('data-product-url');
+      var CACHE = 'garnet_rockit_timer:' + base;
+
+      function grabObject(html, key) {
+        var i = html.indexOf(key);
+        if (i < 0) return null;
+        i = html.indexOf('{', i);
+        if (i < 0) return null;
+        var depth = 0, inStr = false, esc = false;
+        for (var j = i; j < html.length; j++) {
+          var c = html[j];
+          if (inStr) { if (esc) esc = false; else if (c === '\\') esc = true; else if (c === '"') inStr = false; continue; }
+          if (c === '"') inStr = true;
+          else if (c === '{') depth++;
+          else if (c === '}') { depth--; if (depth === 0) { try { return JSON.parse(html.slice(i, j + 1)); } catch (e) { return null; } } }
+        }
+        return null;
+      }
+      function parse(html) {
+        var timers = grabObject(html, 'const timers');
+        var variants = grabObject(html, 'productVariants');
+        var src = (html.match(/src="([^"]+\/timer\.js)"/) || [])[1];
+        var locale = (html.match(/const localeCode = "([^"]*)"/) || [])[1] || 'it';
+        if (!timers || !variants || !src) return null;
+        return { timers: timers, variants: variants, src: src, locale: locale };
+      }
+      function pickVariant(d) {
+        var now = Date.now() / 1000;
+        for (var id in d.variants) {
+          var sale = d.variants[id] && d.variants[id].sale;
+          if (typeof sale === 'string') { try { sale = JSON.parse(sale); } catch (e) { sale = null; } }
+          if (sale && sale.end_at > now && d.timers[sale.timer_id]) return id;
+        }
+        return null;
+      }
+      function loadScript(src, cb) {
+        if (window.RockitSalesManager && window.RockitSalesManager.TimerWidgetController) return cb();
+        var s = document.createElement('script');
+        s.src = src; s.onload = cb; document.head.appendChild(s);
+      }
+      function show(d) {
+        var vid = pickVariant(d);
+        if (!vid) return;
+        loadScript(d.src, function () {
+          var C = window.RockitSalesManager && window.RockitSalesManager.TimerWidgetController;
+          if (!C) return;
+          var ctrl = new C({ blockId: box.id, templates: d.timers, productVariants: d.variants,
+                             localeCode: d.locale, timerIcon: '', showPlaceholder: false });
+          /* Il widget segue ?variant= della pagina: qui resta sempre sulla promo scelta */
+          var orig = ctrl.onProductVariantChange.bind(ctrl);
+          ctrl.onProductVariantChange = function (id) { return orig(d.variants[id] ? id : vid); };
+          ctrl.start({ selectedProductVariantId: vid });
+          check();
+        });
+      }
+      function fetchData(url, next) {
+        return fetch(url, { credentials: 'same-origin' })
+          .then(function (r) { return r.ok ? r.text() : ''; })
+          .then(function (html) { var d = parse(html); return d || (next ? fetchData(next) : null); })
+          .catch(function () { return next ? fetchData(next) : null; });
+      }
+      function run() {
+        try {
+          var c = JSON.parse(sessionStorage.getItem(CACHE) || 'null');
+          if (c && Date.now() - c.t < 5 * 60 * 1000) { if (c.d) show(c.d); return; }
+        } catch (e) {}
+        fetchData(base + '?view=rockit-timer', base).then(function (d) {
+          try { sessionStorage.setItem(CACHE, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {}
+          if (d) show(d);
+        });
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
     })();
   </script>
 {%- endif -%}
@@ -36,7 +133,35 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Aggiungi qui i blocchi delle app (es. timer). Compare sotto il menu su tutte le pagine; se non ci sono blocchi non occupa spazio."
+      "content": "Fascia sotto il menu su tutte le pagine. Se non c'è niente da mostrare non occupa spazio."
+    },
+    {
+      "type": "header",
+      "content": "Timer Rockit"
+    },
+    {
+      "type": "checkbox",
+      "id": "rockit_timer",
+      "label": "Mostra il timer di Rockit Discounts & Sales",
+      "info": "Usa la scadenza e lo stile del timer impostati in Rockit. Compare solo se la promo del prodotto qui sotto è attiva.",
+      "default": true
+    },
+    {
+      "type": "product",
+      "id": "rockit_product",
+      "label": "Prodotto in promo da cui prendere il timer",
+      "info": "Se vuoto: Garnet Gin."
+    },
+    {
+      "type": "checkbox",
+      "id": "rockit_hide_on_product",
+      "label": "Nascondi nelle schede prodotto",
+      "info": "Utile se la scheda prodotto mostra già il timer di Rockit.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Aspetto"
     },
     {
       "type": "color",
@@ -64,7 +189,7 @@
       "max": 40,
       "step": 2,
       "unit": "px",
-      "default": 8
+      "default": 0
     },
     {
       "type": "range",
@@ -74,7 +199,7 @@
       "max": 40,
       "step": 2,
       "unit": "px",
-      "default": 8
+      "default": 0
     }
   ],
   "blocks": [
