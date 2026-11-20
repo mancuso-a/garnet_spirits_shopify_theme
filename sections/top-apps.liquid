@@ -41,7 +41,11 @@
       var inner = bar.querySelector('.top-apps__inner');
 
       /* Se i blocchi non mostrano nulla la fascia si azzera */
-      var check = function () { bar.classList.toggle('is-empty', inner.offsetHeight < 2); };
+      var check = function () {
+        bar.classList.toggle('is-empty', inner.offsetHeight < 2);
+        /* Altezza della fascia: le colonne fisse (filtri, foto prodotto, riepilogo carrello) si spostano sotto */
+        document.documentElement.style.setProperty('--top-apps-h', bar.offsetHeight + 'px');
+      };
       check();
       if (window.ResizeObserver) new ResizeObserver(check).observe(inner);
       document.addEventListener('DOMContentLoaded', check);

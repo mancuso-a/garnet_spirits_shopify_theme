@@ -733,7 +733,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
 }
 .product-detail__visual {
   position: sticky;
-  top: calc(var(--header-offset) + 2rem);
+  top: calc(var(--header-offset) + var(--top-apps-h, 0px) + 2rem);
   height: fit-content;
   display: flex;
   align-items: center;
@@ -1131,7 +1131,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   padding: 2rem;
   height: fit-content;
   position: sticky;
-  top: calc(var(--header-offset) + 2rem);
+  top: calc(var(--header-offset) + var(--top-apps-h, 0px) + 2rem);
 }
 .cart-page__summary h3 {
   font-size: 0.65rem;
@@ -1574,9 +1574,9 @@ html.has-announcement .site-header { top: var(--ann-height); }
   border-right: 1px solid var(--color-border);
   padding: 2rem 1.75rem;
   position: sticky;
-  top: var(--header-offset);
+  top: calc(var(--header-offset) + var(--top-apps-h, 0px));
   height: fit-content;
-  max-height: calc(100vh - var(--header-offset));
+  max-height: calc(100vh - var(--header-offset) - var(--top-apps-h, 0px));
   overflow-y: auto;
 }
 .collection-filters::-webkit-scrollbar { width: 3px; }
@@ -3249,3 +3249,9 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
 .top-apps__rockit--compact > div > div > span > div { padding-top: 0 !important; row-gap: 2px !important; column-gap: 3px !important; }
 .top-apps__rockit--compact > div > div > span > div > div:nth-child(-n+7) { font-size: 16px !important; }
 .top-apps__rockit--compact > div > div > span > div > div:nth-child(n+8) { font-size: 8px !important; padding-right: 0 !important; }
+/* Fascia fissa sotto il menu durante lo scorrimento (il wrapper Shopify è figlio di <main>) */
+.shopify-section.top-apps-section {
+  position: sticky;
+  top: var(--header-offset);
+  z-index: 99;
+}
