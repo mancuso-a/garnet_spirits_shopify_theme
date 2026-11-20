@@ -3235,3 +3235,17 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
   .top-apps__inner, .top-apps__inner--full { padding: 0 1rem; }
 }
 .top-apps.is-empty { padding: 0; border-bottom: 0; }
+/* Timer Rockit compatto su una riga (gli stili in linea di Rockit vanno sovrascritti) */
+.top-apps__rockit--compact > div > div {
+  flex-flow: row wrap !important;
+  justify-content: center !important;
+  gap: 0.25rem 1.25rem;
+  padding: 6px 12px !important;
+  margin: 6px 0 !important;
+}
+.top-apps__rockit--compact > div > div > div:first-child { display: flex; align-items: baseline; gap: 0.5rem; }
+.top-apps__rockit--compact h2 { font-size: 12px !important; letter-spacing: 0.12em; }
+.top-apps__rockit--compact p { font-size: 11px !important; }
+.top-apps__rockit--compact > div > div > span > div { padding-top: 0 !important; row-gap: 2px !important; column-gap: 3px !important; }
+.top-apps__rockit--compact > div > div > span > div > div:nth-child(-n+7) { font-size: 16px !important; }
+.top-apps__rockit--compact > div > div > span > div > div:nth-child(n+8) { font-size: 8px !important; padding-right: 0 !important; }

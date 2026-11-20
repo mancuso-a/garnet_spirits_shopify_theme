@@ -7,7 +7,8 @@
 {%- endcomment -%}
 {%- liquid
   assign show_rockit = section.settings.rockit_timer
-  if show_rockit and section.settings.rockit_hide_on_product and template.name == 'product'
+  assign rockit_where = section.settings.rockit_where | default: 'collection'
+  if show_rockit and rockit_where != 'all' and template.name != rockit_where
     assign show_rockit = false
   endif
   assign rockit_handle = section.settings.rockit_product.handle
@@ -20,7 +21,7 @@
        style="--top-apps-bg: {{ section.settings.bg_color | default: '#0a0a0a' }}; --top-apps-pt: {{ section.settings.padding_top }}px; --top-apps-pb: {{ section.settings.padding_bottom }}px;">
     <div class="top-apps__inner{% if section.settings.full_width %} top-apps__inner--full{% endif %}">
       {%- if show_rockit -%}
-        <div class="top-apps__block top-apps__rockit"
+        <div class="top-apps__block top-apps__rockit top-apps__rockit--compact"
              data-rockit-timer
              data-product-url="{{ routes.root_url | append: '/products/' | append: rockit_handle | replace: '//', '/' }}">
           <div id="top-apps-rockit-timer-{{ section.id | handle }}" style="display:none;"></div>
@@ -153,11 +154,15 @@
       "info": "Se vuoto: Garnet Gin."
     },
     {
-      "type": "checkbox",
-      "id": "rockit_hide_on_product",
-      "label": "Nascondi nelle schede prodotto",
-      "info": "Utile se la scheda prodotto mostra già il timer di Rockit.",
-      "default": false
+      "type": "select",
+      "id": "rockit_where",
+      "label": "Dove mostrare il timer",
+      "options": [
+        { "value": "collection", "label": "Solo pagina Prodotti (collezioni)" },
+        { "value": "product", "label": "Solo schede prodotto" },
+        { "value": "all", "label": "Tutte le pagine" }
+      ],
+      "default": "collection"
     },
     {
       "type": "header",
