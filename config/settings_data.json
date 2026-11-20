@@ -26,6 +26,13 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "blocks": {
+          "offer_memFz9": {
+            "type": "offer",
+            "settings": {
+              "text": "BLACK FRIDAY · -10% fino al 30 novembre",
+              "link": "shopify://collections/all"
+            }
+          },
           "offer_biDPh3": {
             "type": "offer",
             "settings": {
@@ -42,6 +49,7 @@
           }
         },
         "block_order": [
+          "offer_memFz9",
           "offer_biDPh3",
           "offer_UyKAmc"
         ],
