@@ -108,6 +108,16 @@
           "home": false,
           "collection": false
         }
+      },
+      "13433517325689821891": {
+        "type": "shopify://apps/rockit-discounts-sales/blocks/savings-embed/f347a9bf-00bf-4eeb-9f4d-159bb9b1cead",
+        "disabled": false,
+        "settings": {}
+      },
+      "16191182845589407845": {
+        "type": "shopify://apps/rockit-discounts-sales/blocks/timer-embed/f347a9bf-00bf-4eeb-9f4d-159bb9b1cead",
+        "disabled": false,
+        "settings": {}
       }
     }
   }
