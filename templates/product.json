@@ -11,15 +11,25 @@
   "sections": {
     "main": {
       "type": "main-product",
+      "blocks": {
+        "rockit_discounts_sales_timer_zJggdh": {
+          "type": "shopify://apps/rockit-discounts-sales/blocks/timer/f347a9bf-00bf-4eeb-9f4d-159bb9b1cead",
+          "settings": {}
+        },
+        "rockit_discounts_sales_discount_app_block_bgKtKi": {
+          "type": "shopify://apps/rockit-discounts-sales/blocks/discount-app-block/f347a9bf-00bf-4eeb-9f4d-159bb9b1cead",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "rockit_discounts_sales_timer_zJggdh",
+        "rockit_discounts_sales_discount_app_block_bgKtKi"
+      ],
       "settings": {}
     },
     "17925810786a4ea149": {
       "type": "apps",
       "blocks": {
-        "rockit_discounts_sales_timer_Ye7qhN": {
-          "type": "shopify://apps/rockit-discounts-sales/blocks/timer/f347a9bf-00bf-4eeb-9f4d-159bb9b1cead",
-          "settings": {}
-        },
         "fbp_fast_bundle_fbt_position_zGLtXn": {
           "type": "shopify://apps/fast-bundle-upsell/blocks/fbt_position/9e87fbe2-9041-4c23-acf5-322413994cef",
           "settings": {}
@@ -35,7 +45,6 @@
         }
       },
       "block_order": [
-        "rockit_discounts_sales_timer_Ye7qhN",
         "fbp_fast_bundle_fbt_position_zGLtXn",
         "judge_me_reviews_review_widget_HFHgLh"
       ],
