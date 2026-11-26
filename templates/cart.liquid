@@ -101,7 +101,20 @@
           {%- endif -%}
           <div class="summary-row">
             <span>Spedizione</span>
-            <span>Calcolata al checkout</span>
+            {%- liquid
+              assign fs_free = false
+              if settings.free_shipping_threshold != blank
+                if settings.free_shipping_threshold <= 0
+                  assign fs_free = true
+                else
+                  assign fs_cents = settings.free_shipping_threshold | times: 100
+                  if cart.total_price >= fs_cents
+                    assign fs_free = true
+                  endif
+                endif
+              endif
+            -%}
+            <span{% if fs_free %} class="cart-shipping--free"{% endif %}>{% if fs_free %}Gratuita{% else %}Calcolata al checkout{% endif %}</span>
           </div>
           {%- if settings.free_shipping_threshold != blank and settings.free_shipping_threshold > 0 -%}
             {%- assign fs_threshold = settings.free_shipping_threshold | times: 100 -%}

@@ -3255,3 +3255,6 @@ h1 em, h2 em, h3 em { font-style: normal; color: var(--color-red-light); }
   top: var(--header-offset);
   z-index: 99;
 }
+
+/* Riga spedizione nel carrello quando è gratuita */
+.cart-shipping--free { color: var(--color-white); font-weight: 500; letter-spacing: 0.03em; text-transform: uppercase; }

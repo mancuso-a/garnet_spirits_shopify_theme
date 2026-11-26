@@ -41,7 +41,9 @@
       </div>
       <div class="cart-drawer__total-row">
         <span>Spedizione</span>
-        <span>Calcolata al checkout</span>
+        {%- assign fs_always_free = false -%}
+        {%- if settings.free_shipping_threshold != blank and settings.free_shipping_threshold <= 0 -%}{%- assign fs_always_free = true -%}{%- endif -%}
+        <span id="cart-drawer-shipping"{% if fs_always_free %} class="cart-shipping--free" data-always-free{% endif %}>{% if fs_always_free %}Gratuita{% else %}Calcolata al checkout{% endif %}</span>
       </div>
     </div>
     {%- render 'age-confirm' -%}

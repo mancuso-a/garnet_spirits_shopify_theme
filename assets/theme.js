@@ -192,6 +192,12 @@ const CartDrawer = {
               if (fill) { fill.style.width = pct + '%'; fill.classList.toggle('complete', pct >= 100); }
               if (msg) msg.innerHTML = pct >= 100 ? '<strong>Spedizione gratuita applicata.</strong>' : 'Ancora <strong>' + this.formatMoney(threshold - cart.total_price) + '</strong> per la spedizione gratuita';
             }
+            const shipEl = document.getElementById('cart-drawer-shipping');
+            if (shipEl && !shipEl.hasAttribute('data-always-free')) {
+              const free = !!bar && (parseInt(bar.dataset.threshold, 10) || 0) > 0 && cart.total_price >= (parseInt(bar.dataset.threshold, 10) || 0);
+              shipEl.textContent = free ? 'Gratuita' : 'Calcolata al checkout';
+              shipEl.classList.toggle('cart-shipping--free', free);
+            }
           }
         }
       })
