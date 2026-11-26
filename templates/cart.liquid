@@ -114,7 +114,7 @@
                 endif
               endif
             -%}
-            <span{% if fs_free %} class="cart-shipping--free"{% endif %}>{% if fs_free %}Gratuita{% else %}Calcolata al checkout{% endif %}</span>
+            <span id="cart-page-shipping"{% if fs_free %} class="cart-shipping--free" data-always-free{% endif %}>{% if fs_free %}Gratuita{% else %}Calcolata al checkout{% endif %}</span>
           </div>
           {%- if settings.free_shipping_threshold != blank and settings.free_shipping_threshold > 0 -%}
             {%- assign fs_threshold = settings.free_shipping_threshold | times: 100 -%}

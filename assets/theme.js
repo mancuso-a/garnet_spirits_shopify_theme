@@ -198,6 +198,7 @@ const CartDrawer = {
               shipEl.textContent = free ? 'Gratuita' : 'Calcolata al checkout';
               shipEl.classList.toggle('cart-shipping--free', free);
             }
+            if (shipEl) ShippingCheck.apply(cart, [shipEl]);
           }
         }
       })
@@ -290,6 +291,38 @@ const CartDrawer = {
 };
 
 /* ── PRODUCT FORM ─────────────────────────────────────────── */
+/* Spedizione gratuita rilevata dalle tariffe Shopify (Impostazioni → Spedizione).
+   Gli sconti "spedizione gratuita" si applicano solo al checkout e non sono visibili qui. */
+const ShippingCheck = {
+  query: 'shipping_address%5Bcountry%5D=Italy&shipping_address%5Bzip%5D=20121&shipping_address%5Bprovince%5D=MI',
+  apply(cart, els) {
+    els = (els || []).filter(el => el && !el.hasAttribute('data-always-free'));
+    if (!cart || !cart.item_count || !cart.requires_shipping || !els.length) return;
+    const key = 'gs-ship-free:' + cart.token + ':' + cart.total_price + ':' + cart.item_count;
+    let cached = null;
+    try { cached = sessionStorage.getItem(key); } catch (e) {}
+    const done = free => {
+      if (!free) return;
+      els.forEach(el => { el.textContent = 'Gratuita'; el.classList.add('cart-shipping--free'); });
+    };
+    if (cached !== null) return done(cached === '1');
+    fetch('/cart/shipping_rates.json?' + this.query, { headers: { Accept: 'application/json' } })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        const rates = (d && d.shipping_rates) || [];
+        const free = rates.length > 0 && rates.some(rt => parseFloat(rt.price) === 0);
+        try { sessionStorage.setItem(key, free ? '1' : '0'); } catch (e) {}
+        done(free);
+      })
+      .catch(() => {});
+  },
+  initCartPage() {
+    const el = document.getElementById('cart-page-shipping');
+    if (!el || el.hasAttribute('data-always-free')) return;
+    fetch('/cart.js').then(r => r.json()).then(cart => this.apply(cart, [el])).catch(() => {});
+  }
+};
+
 const ProductForm = {
   init() {
     document.querySelectorAll('[data-product-form]').forEach(form => {
@@ -1295,6 +1328,7 @@ const PageLoader = {
 document.addEventListener('DOMContentLoaded', () => {
   AgeGate.init();
   CartDrawer.init();
+  ShippingCheck.initCartPage();
   CartDrawer.updateCount();
   ProductForm.init();
   VariantPicker.init();
